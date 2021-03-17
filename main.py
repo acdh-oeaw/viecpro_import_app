@@ -251,9 +251,7 @@ def run_import():
                 print(f"working on row {idx}")
                 p1 = process_row(idx, row, src_base)
 
-
 print("running import")
-run_import()
 
 
 
