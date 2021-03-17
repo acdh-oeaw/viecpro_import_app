@@ -1,0 +1,16 @@
+# Fill in the data and rename file to settings.yaml
+
+# SharepointInfo
+---
+username : ""  # NEEDS TO BE SET for testrun
+password : "" # NEEDS TO BE SET for testrun
+var_password : "" # todo : NOT IMPLEMENTED - value is expected to be an env-variable name
+
+# ReversionInfo # todo: NOT IMPLEMENTED  – UNUSED FOR NOW
+---
+user : ""
+reversion_comment : ""
+n_collections : "" # todo : NOT IMPLEMENTED - import will be split into n-collections
+src_base :
+  orig_filename : ""
+  pubinfo : ""
