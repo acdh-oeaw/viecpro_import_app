@@ -15,3 +15,13 @@ Sharepoint Password and Username need to be set, the rest is not yet implemented
 
 Import is run via the 'manage.py run_import' - command.
 
+## TODO
+
+- update pipeline, insert entity ruler
+- refactor file/module structure (split functions into modules within directories)
+- fully implement settings.yaml
+- implement settings.yaml management-command
+- write unit tests for modules/functions/pipeline steps
+- write integration test for pipeline
+- implement test management-command
+- pickle xlsx files and only reload and overwrite them when needed
