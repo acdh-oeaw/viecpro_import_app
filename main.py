@@ -1,3 +1,7 @@
+import django
+
+django.setup()
+
 import spacy
 import os
 import reversion
@@ -8,12 +12,33 @@ from pathlib import Path
 import sys
 
 import importlib
-import django
 from django.conf import settings
 
 from pipeline.components.components import *
 
 from yaml import load_all, Loader
+
+from pipeline.helper_functions.helper_functions import (
+    get_or_create_amt,
+    process_names,
+    create_text_entries,
+)
+from pipeline.file_processing import (
+    get_list_abbreviations,
+    get_lst_hofst,
+    get_aemter_index,
+    resolve_abbreviations,
+)
+
+from apis_core.apis_entities.models import Person, Institution, Title
+from apis_core.apis_metainfo.models import Source, Collection
+from apis_core.apis_relations.models import (
+    PersonInstitution,
+    InstitutionInstitution,
+)
+from apis_core.apis_labels.models import Label
+from apis_core.apis_vocabularies.models import PersonInstitutionRelation
+from django.contrib.auth.models import User
 
 # reversion = data[1] # todo: refactor reversion
 
@@ -24,7 +49,7 @@ from yaml import load_all, Loader
 map_text_type = {}
 
 
-def process_row(idx, row, src_base):
+def process_row(idx, row, src_base, col):
     src_base["orig_id"] = idx
     src = Source.objects.create(**src_base)
     if isinstance(row["Vorname"], str):
@@ -249,7 +274,7 @@ def process_row(idx, row, src_base):
         "Path of spacy model to use. Defaults to viecpro_import/models/viecpro_ner_hzab_12-20/",
         "option",
         None,
-        Path,
+        str,
         None,
     ),
     existing_annotations=(
@@ -264,43 +289,29 @@ def run_import(
     username=None,
     django_settings="django_settings.viecpro_testing",
     collection="Import Collection",
-    spacy_model="viecpro_import/models/viecpro_ner_hzab_12-20/",
-    existing_annotations="viecpro_import/data/viecpro_HZAB_funktion_0.jsonl",
+    spacy_model="de_VieCPro_HZAB",
+    existing_annotations="data/viecpro_HZAB_funktion_0.jsonl",
     path_df="data/1_Hofzahlamtsbücher-HZAB-2020-12-06.xlsx",
     path_hofstaat="data/Kürzel-Hofstaate-EX-ACC-2021-02-08.xlsx",
     path_aemter="data/Kürzel-Ämter-ACC-EX-2021-02-08.xlsx",
     path_abbreviations="data/EXCEL-ACCESS_Kürzel-Titel-Orden-2021-01-28.xlsx",
 ):
-    if os.getenv("DJANGO_SETTINGS_MODULE") is None:
-        os.environ.setdefault("DJANGO_SETTINGS_MODULE", django_settings)
-    django.setup()
 
-    from pipeline.helper_functions.helper_functions import (
-        get_or_create_amt,
-        process_names,
-        create_text_entries,
-    )
-    from pipeline.file_processing import (
-        get_list_abbreviations,
-        get_lst_hofst,
-        get_aemter_index,
-        resolve_abbreviations,
-    )
+    global df_aemter
+    global df_hofstaat
+    global df_abbreviations
+    global df
+    global list_abbreviations
+    global lst_hofst
+    global df_aemter_index
+    global nlp
 
-    from apis_core.apis_entities.models import Person, Institution, Title
-    from apis_core.apis_metainfo.models import Source
-    from apis_core.apis_relations.models import (
-        PersonInstitution,
-        InstitutionInstitution,
+    df_aemter = pd.read_excel(path_aemter, header=2, engine="openpyxl")
+    df_hofstaat = pd.read_excel(path_hofstaat, engine="openpyxl")
+    df_abbreviations = pd.read_excel(
+        path_abbreviations, sheet_name="Titel", header=3, engine="openpyxl"
     )
-    from apis_core.apis_labels.models import Label
-    from apis_core.apis_vocabularies.models import PersonInstitutionRelation
-    from django.contrib.auth.models import User
-
-    df_aemter = pd.read_excel(path_aemter, header=2)
-    df_hofstaat = pd.read_excel(path_hofstaat)
-    df_abbreviations = pd.read_excel(path_abbreviations, sheet_name="Titel", header=3)
-    df = pd.read_excel(path_df, sheet_name="Original")
+    df = pd.read_excel(path_df, sheet_name="Original", engine="openpyxl")
     list_abbreviations = get_list_abbreviations(df_abbreviations)
     lst_hofst = get_lst_hofst(df_hofstaat)
     df_aemter_index = get_aemter_index(df_aemter)
@@ -324,18 +335,19 @@ def run_import(
         else:
             off_end = lst_offs[idx5 + 1]
         with reversion.create_revision():
+            col, crt = Collection.objects.get_or_create(name=collection)
             if me:
                 reversion.set_user(me)
             reversion.set_comment(f"import rows {offs} - {off_end}")
             src_base = {
                 "orig_filename": "{path_df}",
-                "pubinfo": f"File from GIT commit {subprocess.check_output(['git', 'describe']).strip()}",
+                "pubinfo": f"File from GIT commit {subprocess.check_output(['git', 'show-ref', 'HEAD']).strip()}",
             }
             for idx, row in df.loc[
                 offs:off_end,
             ].iterrows():
                 print(f"working on row {idx}")
-                p1 = process_row(idx, row, src_base)
+                p1 = process_row(idx, row, src_base, col)
 
 
 print("running import")
