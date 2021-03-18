@@ -1,66 +1,27 @@
 import spacy
 import os
 import reversion
+import pandas as pd
+import subprocess
+import plac
+from pathlib import Path
+import sys
 
-from viecpro_import.pipeline.helper_functions.helper_functions import *
+import importlib
+import django
+from django.conf import settings
+
 from pipeline.components.components import *
-from pipeline.file_processing import get_list_abbreviations, get_lst_hofst, get_aemter_index, resolve_abbreviations
-from viecpro_import.pipeline.helper_functions.LoadSharepoint import LoadXlsxSharepoint
-
-from apis_core.apis_entities.models import Person, Institution, Title
-from apis_core.apis_metainfo.models import Source
-from apis_core.apis_relations.models import PersonInstitution, InstitutionInstitution
-from apis_core.apis_labels.models import Label
-from apis_core.apis_vocabularies.models import PersonInstitutionRelation
-from django.contrib.auth.models import User
 
 from yaml import load_all, Loader
 
-with open("viecpro_import/settings/settings.yaml", "r") as file:
-    text = file.read()
-    data = load_all(text, Loader=Loader)
+# reversion = data[1] # todo: refactor reversion
 
-data = list(data)
+# VAR = sharepoint["var_password"] # todo: implement environment-variable password
+# pw = os.environ[VAR]
 
-sharepoint = data[0]
-#reversion = data[1] # todo: refactor reversion
 
-#VAR = sharepoint["var_password"] # todo: implement environment-variable password
-#pw = os.environ[VAR]
-
-PW = sharepoint["password"]
-username = sharepoint["username"]
-
-xlsx_loader = LoadXlsxSharepoint(username=username, password=PW)
-
-print("importing dataframes")
-df_aemter = xlsx_loader.load("https://oeawacat.sharepoint.com/:x:/r/sites/ACDH-CH_p_TheVienneseCourt_ProsopographicalPortal_ElitesRule/Shared%20Documents/Datasets/K%C3%BCrzel-%C3%84mter-ACC-EX-2021-02-08.xlsx?d=wa5eb35dc53fc4fe58637f3c7ebae3f2e&csf=1&web=1&e=ALMZEZ", header=2)
-df_hofstaat = xlsx_loader.load("https://oeawacat.sharepoint.com/:x:/r/sites/ACDH-CH_p_TheVienneseCourt_ProsopographicalPortal_ElitesRule/Shared%20Documents/Datasets/K%C3%BCrzel-Hofstaate-EX-ACC-2021-02-08.xlsx?d=w406dd3fa704c4003a1ce818438a81dc0&csf=1&web=1&e=E3UiaT")
-df_abbreviations = xlsx_loader.load("https://oeawacat.sharepoint.com/:x:/r/sites/ACDH-CH_p_TheVienneseCourt_ProsopographicalPortal_ElitesRule/Shared%20Documents/IT%20Import/EXCEL-ACCESS_Ku%CC%88rzel-Titel-Orden-2021-01-28.xlsx?d=w2f417ea273024c88ae95b9755164ee00&csf=1&web=1&e=cHfSlp", sheet_name='Titel', header=3)
-df = xlsx_loader.load("https://oeawacat.sharepoint.com/:x:/r/sites/ACDH-CH_p_TheVienneseCourt_ProsopographicalPortal_ElitesRule/Shared%20Documents/Datasets/Dataset%20Leopold%201657%E2%80%931705/%C3%96STA-Leopold-Projekt-Gesamte-Datenblaetter/1_Hofzahlamtsb%C3%BCcher-HZAB-2020-12-06.xlsx?d=w2d27c5d724c44e04a16146aab4a63f7e&csf=1&web=1&e=gqMpKv", sheet_name='Original')
-list_abbreviations = get_list_abbreviations(df_abbreviations)
-lst_hofst = get_lst_hofst(df_hofstaat)
-df_aemter_index = get_aemter_index(df_aemter)
-
-print("dataframes imported")
-
-nlp = spacy.load("viecpro_import/models/viecpro_ner_hzab_12-20/")
-print(nlp)
-
-pipe_comps = [
-    UseExistingAnnotations(nlp, "viecpro_import/data/viecpro_HZAB_funktion_0.jsonl"),
-    AddBrackets(nlp),
-    ExtendEntities(),
-    RenameFunctions(nlp, lst_hofst=lst_hofst, df_aemter_index=df_aemter_index),
-    RemoveNames(nlp),
-    DatePrepocissions(nlp),
-    CreateChunks(nlp),
-]
-
-for c in pipe_comps:
-    nlp.add_pipe(c)
-print("Pipeline Constructed: ", [name for name, proc in nlp.pipeline])
-
+map_text_type = {}
 
 
 def process_row(idx, row, src_base):
@@ -109,10 +70,7 @@ def process_row(idx, row, src_base):
             if len(prep_proc_name) > 0:
                 labels_fam.extend(prep_proc_name)
         labels_fam.append(sn_alternative)
-    pers = {
-        "first_name": vn,
-        "name": sn
-    }
+    pers = {"first_name": vn, "name": sn}
     if isinstance(row["Geschlecht"], str):
         if row["Geschlecht"] == "M":
             pers["gender"] = "male"
@@ -128,24 +86,36 @@ def process_row(idx, row, src_base):
         t_list, subst = re.subn(r"\(.*\)", "", row["Titel"])
         t_list = [x.strip() for x in t_list.split(",")]
         for tit in t_list:
-            t2, created = Title.objects.get_or_create(name=resolve_abbreviations(tit, list_abbreviations))
+            t2, created = Title.objects.get_or_create(
+                name=resolve_abbreviations(tit, list_abbreviations)
+            )
             pers.title.add(t2)
     if len(vorname) > 1:
         for v in vorname[1:]:
-            Label.objects.create(label=v, label_type=lt_vorname_alternativ, temp_entity=pers)
+            Label.objects.create(
+                label=v, label_type=lt_vorname_alternativ, temp_entity=pers
+            )
     if labels_fam:
         for f in labels_fam:
-            Label.objects.create(label=f, label_type=lt_nachname_alternativ, temp_entity=pers)
+            Label.objects.create(
+                label=f, label_type=lt_nachname_alternativ, temp_entity=pers
+            )
     for f in labels_fam_hzt:
-        Label.objects.create(label=f[0], label_type=lt_nachname_verheiratet, temp_entity=pers)
+        Label.objects.create(
+            label=f[0], label_type=lt_nachname_verheiratet, temp_entity=pers
+        )
         if f[1]:
             for f2 in f[1]:
-                Label.objects.create(label=f2, label_type=lt_nachname_alternativ_verheiratet, temp_entity=pers)
+                Label.objects.create(
+                    label=f2,
+                    label_type=lt_nachname_alternativ_verheiratet,
+                    temp_entity=pers,
+                )
     create_text_entries(row, pers, df, src_base)
     pers.collection.add(col)
     if not isinstance(row["Funktion"], str):
         return pers
-    #doc = nlp(row["Funktion"])
+    # doc = nlp(row["Funktion"])
     doc = nlp.make_doc(row["Funktion"])
 
     # Associate the metadata
@@ -184,16 +154,26 @@ def process_row(idx, row, src_base):
         if nm_hst == "UNSICHER - Collection, manuelle Entscheidung":
             nm_hst = "UNSICHER"
             test_unsicher = True
-        inst, created = Institution.objects.get_or_create(name=nm_hst, kind=inst_type_hst)
+        inst, created = Institution.objects.get_or_create(
+            name=nm_hst, kind=inst_type_hst
+        )
         inst.collection.add(col_unsicher)
         if test_hs:
-            PersonInstitution.objects.get_or_create(related_institution=inst, related_person=pers, relation_type=rl_pers_hst)
+            PersonInstitution.objects.get_or_create(
+                related_institution=inst, related_person=pers, relation_type=rl_pers_hst
+            )
 
         if isinstance(row["Amt/Behörde"], str) and idx3 == 0:
             try:
-                inst2, inst3, created = get_or_create_amt(row, df_aemter_index, lst_hofst)
+                inst2, inst3, created = get_or_create_amt(
+                    row, df_aemter_index, lst_hofst
+                )
                 if created:
-                    InstitutionInstitution.objects.create(related_institutionA=inst3, related_institutionB=inst, relation_type=rl_teil_von)
+                    InstitutionInstitution.objects.create(
+                        related_institutionA=inst3,
+                        related_institutionB=inst,
+                        relation_type=rl_teil_von,
+                    )
             except Exception as e:
                 inst2 = amt_dummy
                 inst3 = False
@@ -210,17 +190,22 @@ def process_row(idx, row, src_base):
             print(amt_name)
             if len(amt_name) > 254:
                 print(f"len amtname {(len(amt_name)-250)}")
-                ln_minus = len(f"{amt_name} ({nm_hst})")-250
+                ln_minus = len(f"{amt_name} ({nm_hst})") - 250
                 print(f"{amt_name[:-ln_minus]} ({nm_hst})")
                 amt_name = f"{amt_name[:-ln_minus]} ({nm_hst})"
             inst2, created = Institution.objects.get_or_create(name=amt_name)
         else:
-            inst2, created = Institution.objects.get_or_create(name=f"Dummy Amt ({nm_hst})")
+            inst2, created = Institution.objects.get_or_create(
+                name=f"Dummy Amt ({nm_hst})"
+            )
         rel["related_institution"] = inst2
         if len(c["FUNKTION"]) > 0:
             for rel_type in c["FUNKTION"]:
                 try:
-                    rel_t_obj, created = PersonInstitutionRelation.objects.get_or_create(name=rel_type)
+                    (
+                        rel_t_obj,
+                        created,
+                    ) = PersonInstitutionRelation.objects.get_or_create(name=rel_type)
                     rel["relation_type"] = rel_t_obj
                     PersonInstitution.objects.create(**rel)
                 except Exception as e:
@@ -228,32 +213,132 @@ def process_row(idx, row, src_base):
     return pers
 
 
-
 # todo: create a helper function that splits import into collections
+@plac.annotations(
+    path_df=("Path of the DF to import, defaults to HZAB", "option", None, Path, None),
+    path_hofstaat=(
+        "Path of the Hofstaat list to use, defaults to data/Kürzel-Hofstaate-EX-ACC-2021-02-08.xlsx",
+        "option",
+        None,
+        Path,
+        None,
+    ),
+    path_aemter=(
+        "Path of the Ämter list to use, defaults to data/Kürzel-Ämter-ACC-EX-2021-02-08.xlsx",
+        "option",
+        None,
+        Path,
+        None,
+    ),
+    path_abbreviations=(
+        "Path of the Abkürzungen list to use, defaults to data/EXCEL-ACCESS_Kürzel-Titel-Orden-2021-01-28.xlsx",
+        "option",
+        None,
+        Path,
+        None,
+    ),
+    username=("username to use in reversions", "option", None, str, None),
+    django_settings=(
+        "Dot notation of django settings to use",
+        "option",
+        None,
+        str,
+        None,
+    ),
+    spacy_model=(
+        "Path of spacy model to use. Defaults to viecpro_import/models/viecpro_ner_hzab_12-20/",
+        "option",
+        None,
+        Path,
+        None,
+    ),
+    existing_annotations=(
+        "Path of jsonl file with existing annotations to use. Defaults to viecpro_import/data/viecpro_HZAB_funktion_0.jsonl",
+        "option",
+        None,
+        Path,
+        None,
+    ),
+)
+def run_import(
+    username=None,
+    django_settings="django_settings.viecpro_testing",
+    collection="Import Collection",
+    spacy_model="viecpro_import/models/viecpro_ner_hzab_12-20/",
+    existing_annotations="viecpro_import/data/viecpro_HZAB_funktion_0.jsonl",
+    path_df="data/1_Hofzahlamtsbücher-HZAB-2020-12-06.xlsx",
+    path_hofstaat="data/Kürzel-Hofstaate-EX-ACC-2021-02-08.xlsx",
+    path_aemter="data/Kürzel-Ämter-ACC-EX-2021-02-08.xlsx",
+    path_abbreviations="data/EXCEL-ACCESS_Kürzel-Titel-Orden-2021-01-28.xlsx",
+):
+    if os.getenv("DJANGO_SETTINGS_MODULE") is None:
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", django_settings)
+    django.setup()
 
-def run_import():
-    me = User.objects.get(username="gregorpirgie")
+    from pipeline.helper_functions.helper_functions import (
+        get_or_create_amt,
+        process_names,
+        create_text_entries,
+    )
+    from pipeline.file_processing import (
+        get_list_abbreviations,
+        get_lst_hofst,
+        get_aemter_index,
+        resolve_abbreviations,
+    )
+
+    from apis_core.apis_entities.models import Person, Institution, Title
+    from apis_core.apis_metainfo.models import Source
+    from apis_core.apis_relations.models import (
+        PersonInstitution,
+        InstitutionInstitution,
+    )
+    from apis_core.apis_labels.models import Label
+    from apis_core.apis_vocabularies.models import PersonInstitutionRelation
+    from django.contrib.auth.models import User
+
+    df_aemter = pd.read_excel(path_aemter, header=2)
+    df_hofstaat = pd.read_excel(path_hofstaat)
+    df_abbreviations = pd.read_excel(path_abbreviations, sheet_name="Titel", header=3)
+    df = pd.read_excel(path_df, sheet_name="Original")
+    list_abbreviations = get_list_abbreviations(df_abbreviations)
+    lst_hofst = get_lst_hofst(df_hofstaat)
+    df_aemter_index = get_aemter_index(df_aemter)
+
+    nlp = spacy.load(
+        spacy_model,
+        annotations=existing_annotations,
+        lst_hofst=lst_hofst,
+        df_aemter_index=df_aemter_index,
+    )
+    print(nlp)
+
+    me = False
+    if username is not None:
+        me = User.objects.get(username=username)
     Doc.set_extension("excel_row", default=-1, force=True)
-    lst_offs = list(range(0, len(df), int(len(df)/4)+1))[3:]
+    lst_offs = list(range(0, len(df), int(len(df) / 4) + 1))[3:]
     for idx5, offs in enumerate(lst_offs):
         if idx5 == len(lst_offs) - 1:
             off_end = len(df)
         else:
-            off_end = lst_offs[idx5+1]
+            off_end = lst_offs[idx5 + 1]
         with reversion.create_revision():
-            reversion.set_user(me)
-            reversion.set_comment(f"third import HZAB full, {offs} - {off_end}")
+            if me:
+                reversion.set_user(me)
+            reversion.set_comment(f"import rows {offs} - {off_end}")
             src_base = {
-                "orig_filename": "1_Hofzahlamtsbücher-HZAB-2020-12-06.xlsx",
-                "pubinfo": "File downloaded from Sharepoint 10-3-2021"
+                "orig_filename": "{path_df}",
+                "pubinfo": f"File from GIT commit {subprocess.check_output(['git', 'describe']).strip()}",
             }
-            for idx, row in df.loc[offs:off_end,].iterrows():
+            for idx, row in df.loc[
+                offs:off_end,
+            ].iterrows():
                 print(f"working on row {idx}")
                 p1 = process_row(idx, row, src_base)
 
+
 print("running import")
 
-
-
-
-
+if __name__ == "__main__":
+    plac.call(run_import)

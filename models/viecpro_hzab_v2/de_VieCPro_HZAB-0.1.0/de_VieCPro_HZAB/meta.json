@@ -1,0 +1,37 @@
+{
+  "lang": "de",
+  "name": "VieCPro_HZAB",
+  "version": "0.1.0",
+  "spacy_version": ">=2.3.2",
+  "description": "Model to extract chunks from the VieCPro excel sheets",
+  "author": "matthias.schloegl@oeaw.ac.at",
+  "email": "",
+  "url": "",
+  "license": "MIT",
+  "spacy_git_version": "bf778f59c",
+  "vectors": {
+    "width": 0,
+    "vectors": 0,
+    "keys": 0,
+    "name": "spacy_pretrained_vectors"
+  },
+  "pipeline": [
+    "ner",
+    "use_existing_annotations",
+    "add_brackets",
+    "extend_entities",
+    "rename_functions",
+    "date_prepocissions",
+    "create_chunks"
+  ],
+  "factories": {
+    "ner": "ner"
+  },
+  "labels": {
+    "ner": [
+      "DATUM",
+      "FUNKTION",
+      "HOFSTAAT"
+    ]
+  }
+}
