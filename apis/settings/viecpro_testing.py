@@ -45,7 +45,7 @@ SPECTACULAR_SETTINGS["COMPONENT_NO_READ_ONLY_REQUIRED"] = True
 
 DATABASES = {}
 
-DATABASES["default"] = dj_database_url.config(conn_max_age=600)
+DATABASES["default"] = dj_database_url.config(env="DATABASE_TESTING_URL", conn_max_age=600)
 
 # MAIN_TEXT_NAME = "ÖBL Haupttext"
 
