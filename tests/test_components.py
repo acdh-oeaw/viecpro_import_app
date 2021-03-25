@@ -92,7 +92,3 @@ class PipelineTestCase(TestCase):
     def test_pipeline(self):
         pass
 
-
-
-# todo: shall we implement a shadow update test case? that checks if an entry has not been reviewed and allows for updates of these?
-# todo: wouldn't that allow for working in parallel? on the script and on in person review? And couldn't we use the reviewed cases to improve the model?
