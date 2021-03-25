@@ -25,5 +25,4 @@ python manage.py test tests
 - update pipeline, insert entity ruler
 - refactor file/module structure (split functions into modules within directories)
 - write end-to-end test for import-pipeline
-- pickle xlsx files and only reload and overwrite them when needed
 - implement EntityRuler for Hofstaate and Ämter, to improve performance
