@@ -1,25 +1,29 @@
 # VieCPro Import App
 
-Django Application to automate and test the data import for VieCPro.
-
-## Installation
-*WARNING*: **Only run the import on a test-database as the import is not completely up-to-date.**
-
-- Clone Repository.
-- Symlink in Project and add App to Installed-Apps in django-settings-module.
-- Customize the settings_template.yml in viecpro_import_app/settings and rename it to settings.yml before running the import. 
-Sharepoint Password and Username need to be set, the rest is not yet implemented.
+Project to automate and test the data import for VieCPro.
 
 
-Import is run via the 'manage.py run_import' - command.
+## STATUS 
+
+- command line tool implemented wit plac (for starting the import)
+- component-tests implemented for RenameFunctions, date_apis-extension and
+    CreateChunks
+- testset is stored as a random selection of the original .xlsx, the random seed
+    is stored in the filename to be reproducable
+- tests are run via:
+
+~~~bash 
+python manage.py test tests
+~~~
 
 ## TODO
 
+- setup dev-branch 
+- setup dev-server
+- setup CI/CD
+- expand testset with more and better selected cases
 - update pipeline, insert entity ruler
 - refactor file/module structure (split functions into modules within directories)
-- fully implement settings.yaml
-- implement settings.yaml management-command
-- write unit tests for modules/functions/pipeline steps
-- write integration test for pipeline
-- implement test management-command
+- write end-to-end test for import-pipeline
 - pickle xlsx files and only reload and overwrite them when needed
+- implement EntityRuler for Hofstaate and Ämter, to improve performance
