@@ -27,23 +27,3 @@ def convert_ents_to_string(doc, label=None):
 
 
 
-if __name__ == '__main__':
-    res = run_nlp_on_sample(nlp, "/Users/gregorpirgie/gregor/arbeit/acdh/viecpro_import/viecpro_import_app/notebook/sample_data/prefix_sample_len_20_seed_145.xlsx" )
-    for el in res:
-        print(el, type(el))
-        idx = el._.excel_row
-        print(idx, el.ents)
-        compare = {}
-        reslist = []
-        for part in el.ents:
-            print(part, part.label_)
-            if part.label_ == "FUNKTION":
-                print(part, "renamed = ", part._.renamed)
-                if part._.renamed:
-                    reslist.append(part._.renamed)
-                    compare.update({idx: reslist})
-                else:
-                    reslist.append(part)
-                    compare.update({idx:reslist})
-        print(compare)
-        print("\n\n")
