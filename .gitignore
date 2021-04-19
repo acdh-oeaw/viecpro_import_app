@@ -3,6 +3,12 @@ environ_variables.py
 yaml_test.py
 env_variables.py
 settings/settings.yaml
+django_settings/*
+django_settings/viecpro_testing.py
 __pycache__/
 settings/.DS_*
 .DS_*
+django_settings*
+webpage
+webpage*
+notebook*
