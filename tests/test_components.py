@@ -2,12 +2,9 @@ from django.test import TestCase
 from viecpro_import_app.tests.helper_functions.functions import run_nlp_on_sample, convert_ents_to_string
 from viecpro_import_app.tests.helper_functions.get_data_variables import *
 
-
-# Call with ' python manage.py test tests ' or './manage.py test tests'
 class PrefixNamesTestCase(TestCase):
     def setUp(self):
-        #nlp.disable_pipes("rename_functions")
-
+        #nlp.disable_pipes("rename_functions") # uncommend to see if test fails as expected
         sample = "tests/sample_data/prefix_sample_len_20_seed_145.xlsx"
         res = run_nlp_on_sample(nlp, sample)
 
@@ -64,8 +61,9 @@ class ApisDateTestCase(TestCase):
 
 class ChunksTestCase(TestCase):
     def setUp(self):
+
         sample = "tests/sample_data/prefix_sample_len_20_seed_145.xlsx"
-        #nlp.disable_pipes("rename_functions") # uncomment to test if tests fails correctly.
+        # nlp.disable_pipes("rename_functions") # uncomment to test if tests fails correctly.
         res = run_nlp_on_sample(nlp, sample)
 
         self.res_chunk_dic = {}

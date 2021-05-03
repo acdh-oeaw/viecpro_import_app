@@ -2,10 +2,9 @@ import pandas as pd
 import spacy, pathlib, pickle
 
 try:
-    from pipeline.file_processing import get_list_abbreviations, get_lst_hofst, get_aemter_index
+    from import_src.file_processing import get_list_abbreviations, get_lst_hofst, get_aemter_index
 except:
-    from viecpro_import_app.pipeline.file_processing import get_list_abbreviations, get_lst_hofst, get_aemter_index
-
+    from viecpro_import_app.import_src.file_processing import get_list_abbreviations, get_lst_hofst, get_aemter_index
 if __file__:
     path = pathlib.Path(__file__).parent.parent.parent
 else:
@@ -28,6 +27,7 @@ df = pd.read_excel(path_df, sheet_name="Original", engine="openpyxl")
 list_abbreviations = get_list_abbreviations(df_abbreviations)
 lst_hofst = get_lst_hofst(df_hofstaat)
 df_aemter_index = get_aemter_index(df_aemter)
+
 
 with open(compare, "rb") as file:
     comp_docs_dic = pickle.load(file)
