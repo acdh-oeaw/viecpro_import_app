@@ -1,4 +1,4 @@
-import reversion, subprocess, plac, spacy
+import reversion, subprocess, plac, spacy, logging
 import pandas as pd
 
 from import_src.file_processing import (
@@ -7,6 +7,7 @@ from import_src.file_processing import (
     get_aemter_index,
 )
 from import_src.process_row import process_row
+from nlp_pipeline_components.build_pipeline import get_model
 
 from spacy.tokens import Doc
 from pathlib import Path
@@ -15,6 +16,10 @@ from apis_core.apis_metainfo.models import Collection
 from django.contrib.auth.models import User
 
 
+logger = logging.getLogger(__name__)
+handler = logging.StreamHandler()
+logger.addHandler(handler)
+logger.setLevel(logging.DEBUG)
 
 
 @plac.annotations(
@@ -62,6 +67,13 @@ from django.contrib.auth.models import User
         Path,
         None,
     ),
+    use_local_pipeline=(
+            "loads local model from pipeline components in /pipeline/build_pipeline.py. Defaults to true",
+            "option",
+            None,
+            bool,
+            None,
+    ),
 )
 def run_import(
 
@@ -71,10 +83,12 @@ def run_import(
     collection="Import Collection",
     spacy_model="de_VieCPro_HZAB",
     existing_annotations="data/viecpro_HZAB_funktion_0.jsonl",
-    path_df="data/1_Hofzahlamtsbücher-HZAB-2020-12-06.xlsx",
+    #path_df="data/1_Hofzahlamtsbücher-HZAB-2020-12-06.xlsx",
+    path_df="data/3_HSV-angepasst-IMPORT.xlsx",
     path_hofstaat="data/Kürzel-Hofstaate-EX-ACC-2021-02-08.xlsx",
     path_aemter="data/Kürzel-Ämter-ACC-EX-2021-02-08.xlsx",
     path_abbreviations="data/EXCEL-ACCESS_Kürzel-Titel-Orden-2021-01-28.xlsx",
+    use_local_pipeline=True,
 ):
 
     global df_aemter
@@ -91,22 +105,30 @@ def run_import(
     df_abbreviations = pd.read_excel(
         path_abbreviations, sheet_name="Titel", header=3, engine="openpyxl"
     )
-    df = pd.read_excel(path_df, sheet_name="Original", engine="openpyxl")
+    try:
+        df = pd.read_excel(path_df, sheet_name="Original", engine="openpyxl")
+    except:
+        df = pd.read_excel(path_df, engine="openpyxl")
+
     list_abbreviations = get_list_abbreviations(df_abbreviations)
     lst_hofst = get_lst_hofst(df_hofstaat)
     df_aemter_index = get_aemter_index(df_aemter)
 
-    nlp = spacy.load(spacy_model,
-                     annotations=existing_annotations,
-                          lst_hofst=lst_hofst,
-                          df_aemter_index=df_aemter_index,
-                     )
+    if use_local_pipeline:
+        logger.debug("USING LOCAL MODEL")
+        nlp = get_model()
+    else:
+        nlp = spacy.load(spacy_model,
+                         annotations=existing_annotations,
+                              lst_hofst=lst_hofst,
+                              df_aemter_index=df_aemter_index,
+                         )
 
     me = False
     if username is not None:
         me = User.objects.get(username=username)
     Doc.set_extension("excel_row", default=-1, force=True)
-    lst_offs = list(range(0, len(df), int(len(df) / 4) + 1))[3:]
+    lst_offs = list(range(0, len(df), int(len(df) / 4) + 1))#[:1]
     for idx5, offs in enumerate(lst_offs):
         if idx5 == len(lst_offs) - 1:
             off_end = len(df)
@@ -124,11 +146,11 @@ def run_import(
             for idx, row in df.loc[
                 offs:off_end,
             ].iterrows():
-                print(f"working on row {idx}")
-                p1 = process_row(idx, row, src_base, col)
+                logger.debug(f"working on row {idx}")
+                p1 = process_row(idx, row, src_base, col, nlp)
 
 
-print("running import")
+logger.debug("FROM LOGGER: running import")
 
 if __name__ == "__main__":
     plac.call(run_import)

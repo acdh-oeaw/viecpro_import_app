@@ -20,8 +20,16 @@ from apis_core.apis_vocabularies.models import (
 )
 
 from import_src.create_database_objects import *
+import logging
+
+logger = logging.getLogger(__name__)
+handler = logging.StreamHandler()
+logger.addHandler(handler)
+logger.setLevel(logging.DEBUG)
+
 
 def person_process_field_vorname(r_vor):
+    logger.debug("person_process_field_vorname")
     if isinstance(r_vor, str):
         vorname = r_vor.split(",")
     else:
@@ -31,18 +39,23 @@ def person_process_field_vorname(r_vor):
 
 
 def person_process_field_familienname(r_fam, idx):
+    if ", de" in r_fam:
+        logger.debug(f"Init test: 'de in fam' INPUT: {r_fam} END INPUT, ROW:{idx}")
+    if ", von" in r_fam:
+        logger.debug(f"Init test: 'von in fam' INPUT: {r_fam} END INPUT, ROW:{idx}")
     familienname = r_fam
     if isinstance(familienname, str):
         labels_fam_hzt = []
         labels_fam = False
-        for idx_fam, familienname in enumerate(familienname.split(", oo")):
+        for idx_fam, familienname in enumerate(familienname.split(", oo")): # todo: split on "Ioo or IIoo also"
             if "(" in familienname:
-                fam1_ = familienname.split(" (")[0]
-                fam2 = re.search(r"\(([^\)]+)\)", familienname)
+                fam1_ = familienname.split(" (")[0] #todo: also process "[" or "]" maybe simply replace [ with ( at the start
+                fam2 = re.search(r"\(([^\)]+)\)", familienname) # todo: looks for closing ) but there are nested () like so: (idx = 12180) (Carraffa, Carraffa et Eril (1690, 1691))
+                logger.debug(f"here: {fam2.group(0)}")
                 if fam2:
-                    fam2 = fam2.group(1).split(",")
+                    fam2 = fam2.group(1).split(",") # todo: split on semikolon also / only
                     fam2 = [x.strip() for x in fam2]
-            else:
+            else: # todo: don't split ,von , de
                 fam1_ = familienname
                 fam2 = False
             if idx_fam == 0:
@@ -69,6 +82,11 @@ def person_process_field_familienname(r_fam, idx):
             if len(prep_proc_name) > 0:
                 labels_fam.extend(prep_proc_name)
         labels_fam.append(sn_alternative)
+
+    if ", de" in r_fam:
+        logger.debug(f"sn {sn}, labels_fam {labels_fam}, labels_fam_hzt {labels_fam_hzt}")
+    if ", von" in r_fam:
+        logger.debug(f"sn {sn}, labels_fam {labels_fam}, labels_fam_hzt {labels_fam_hzt}")
 
     return sn, labels_fam, labels_fam_hzt
 
@@ -139,7 +157,7 @@ def person_create_person_labels(pers, vorname, labels_fam, labels_fam_hzt):
                     temp_entity=pers,
                 )
 
-def create_and_process_doc(r_F, idx):
+def create_and_process_doc(r_F, idx, nlp):
     doc = nlp.make_doc(r_F)
 
     doc._.excel_row = idx
@@ -265,7 +283,8 @@ def chunk_process_amt(c_A, r_A, c_H, inst, nm_hst, idx_chunk, row):
         except Exception as e:
             inst2 = amt_dummy
             inst3 = False
-            print(f"Exception in Amt function: {e}")
+            #logger.debug(f"Exception in Amt function: {e}")
+            logger.debug(f"Exception in Amt function: {e}")
 
     elif c_A is not None:
         if c_A.strip() in df_aemter_index.keys():
@@ -277,11 +296,11 @@ def chunk_process_amt(c_A, r_A, c_H, inst, nm_hst, idx_chunk, row):
             amt_name = f"{amt} ({nm_hst})"
         else:
             amt_name = f"{amt} (Dummy Hofstaat)"
-        print(amt_name)
+        logger.debug(amt_name)
         if len(amt_name) > 254:
-            print(f"len amtname {(len(amt_name) - 250)}")
+            logger.debug(f"len amtname {(len(amt_name) - 250)}")
             ln_minus = len(f"{amt_name} ({nm_hst})") - 250
-            print(f"{amt_name[:-ln_minus]} ({nm_hst})")
+            logger.debug(f"{amt_name[:-ln_minus]} ({nm_hst})")
             amt_name = f"{amt_name[:-ln_minus]} ({nm_hst})"
         inst2, created = Institution.objects.get_or_create(name=amt_name)
     else:
@@ -301,7 +320,7 @@ def chunk_create_relations(c_F, rel):
                 PersonInstitution.objects.create(**rel)
 
             except Exception as e:
-                print(f"Exception: {e}")
+                logger.debug(f"Exception: {e}")
 
 
 def process_chunks(doc, pers, row):
@@ -317,7 +336,6 @@ def process_chunks(doc, pers, row):
         rel = {"related_person": pers}
         if c_D is not None:
             rel = chunk_process_datum(c_D, rel)
-
 
         nm_hst, test_hs = chunk_get_nm_hst(c_H, r_H, idx_chunk)
 
@@ -338,7 +356,7 @@ def process_chunks(doc, pers, row):
     return pers
 
 
-def process_row(idx, row, src_base, col):
+def process_row(idx, row, src_base, col, nlp):
     r_vor = row["Vorname"]
     r_fam = row["Familienname"]
     r_ges = row["Geschlecht"]
@@ -378,7 +396,7 @@ def process_row(idx, row, src_base, col):
     if not isinstance(r_fun, str):
         return pers
 
-    doc = create_and_process_doc(r_fun, idx)
+    doc = create_and_process_doc(r_fun, idx, nlp)
     pers = process_chunks(doc, pers, row)
 
     return pers
