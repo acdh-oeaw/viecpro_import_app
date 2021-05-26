@@ -57,7 +57,7 @@ DATABASES = {
          'ENGINE': 'django.db.backends.postgresql_psycopg2',
          'NAME': "temporary_for_tests", # delete the first test_ to reset to old db
          'USER': "postgres",
-         'PASSWORD': "ookh59PM",
+         'PASSWORD': "postgres",
          'HOST': "localhost",
          'PORT': 5432,
      }
