@@ -1,5 +1,11 @@
+import os, django, re
+
+os.environ["DJANGO_SETTINGS_MODULE"] = "django_settings.viecpro_testing"
+django.setup()
+
 import reversion, subprocess, plac, spacy, logging
 import pandas as pd
+from config import cfg
 
 from import_src.file_processing import (
     get_list_abbreviations,
@@ -91,51 +97,45 @@ def run_import(
     use_local_pipeline=True,
 ):
 
-    global df_aemter
-    global df_hofstaat
-    global df_abbreviations
-    global df
-    global list_abbreviations
-    global lst_hofst
-    global df_aemter_index
-    global nlp
-
-    df_aemter = pd.read_excel(path_aemter, header=2, engine="openpyxl")
-    df_hofstaat = pd.read_excel(path_hofstaat, engine="openpyxl")
-    df_abbreviations = pd.read_excel(
+   
+    cfg.collection = collection
+    cfg.df_aemter = pd.read_excel(path_aemter, header=2, engine="openpyxl")
+    cfg.df_hofstaat = pd.read_excel(path_hofstaat, engine="openpyxl")
+    cfg.df_abbreviations = pd.read_excel(
         path_abbreviations, sheet_name="Titel", header=3, engine="openpyxl"
     )
     try:
-        df = pd.read_excel(path_df, sheet_name="Original", engine="openpyxl")
+        cfg.df = pd.read_excel(path_df, sheet_name="Original", engine="openpyxl")
     except:
-        df = pd.read_excel(path_df, engine="openpyxl")
+        cfg.df = pd.read_excel(path_df, engine="openpyxl")
 
-    list_abbreviations = get_list_abbreviations(df_abbreviations)
-    lst_hofst = get_lst_hofst(df_hofstaat)
-    df_aemter_index = get_aemter_index(df_aemter)
+    cfg.list_abbreviations = get_list_abbreviations(cfg.df_abbreviations)
+    cfg.lst_hofst = get_lst_hofst(cfg.df_hofstaat)
+    cfg.df_aemter_index = get_aemter_index(cfg.df_aemter)
 
     if use_local_pipeline:
         logger.debug("USING LOCAL MODEL")
-        nlp = get_model()
+        cfg.nlp = get_model(cfg=cfg)
     else:
-        nlp = spacy.load(spacy_model,
+        cfg.nlp = spacy.load(spacy_model,
                          annotations=existing_annotations,
-                              lst_hofst=lst_hofst,
-                              df_aemter_index=df_aemter_index,
+                              lst_hofst=cfg.lst_hofst,
+                              df_aemter_index=cfg.df_aemter_index,
                          )
 
     me = False
     if username is not None:
         me = User.objects.get(username=username)
     Doc.set_extension("excel_row", default=-1, force=True)
-    lst_offs = list(range(0, len(df), int(len(df) / 4) + 1))#[:1]
+    lst_offs = list(range(0, len(cfg.df), int(len(cfg.df) / 4) + 1))#[:1]
+
     for idx5, offs in enumerate(lst_offs):
         if idx5 == len(lst_offs) - 1:
-            off_end = len(df)
+            off_end = len(cfg.df)
         else:
             off_end = lst_offs[idx5 + 1]
         with reversion.create_revision():
-            col, crt = Collection.objects.get_or_create(name=collection)
+            col, crt = Collection.objects.get_or_create(name=cfg.collection)
             if me:
                 reversion.set_user(me)
             reversion.set_comment(f"import rows {offs} - {off_end}")
@@ -143,11 +143,14 @@ def run_import(
                 "orig_filename": f"{path_df}", # todo: cut path to filename only
                 "pubinfo": f"File from GIT commit {subprocess.check_output(['git', 'show-ref', 'HEAD']).strip()}",
             }
-            for idx, row in df.loc[
+            for idx, row in cfg.df.loc[
                 offs:off_end,
             ].iterrows():
                 logger.debug(f"working on row {idx}")
-                p1 = process_row(idx, row, src_base, col, nlp)
+                p1 = process_row(idx,
+                                 row, 
+                                 src_base,
+                                 cfg)
 
 
 logger.debug("FROM LOGGER: running import")

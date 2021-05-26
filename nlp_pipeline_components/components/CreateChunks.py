@@ -13,7 +13,7 @@ class CreateChunks(object):
     def __call__(self, doc):
         chunks = []
         chunk = deepcopy(self._ctrl)
-        lst_chunks = re.finditer(r";|u\.", doc.text)
+        lst_chunks = re.finditer(r";", doc.text) # todo: u. sometimes part of function name, exclude this case to not split then
         lst_chunks = [x.span()[0] for x in lst_chunks]
         if len(lst_chunks) > 0:
             c_idx = (0, lst_chunks[0])
@@ -53,4 +53,6 @@ class CreateChunks(object):
                 chunk = deepcopy(self._ctrl)
         chunks.append(chunk)
         doc._.chunks = chunks
+
+
         return doc

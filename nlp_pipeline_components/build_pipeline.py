@@ -1,10 +1,10 @@
 import sys, pathlib
 parent_path = pathlib.Path().absolute().parent
 sys.path.append(str(parent_path))
-from viecpro_import_app.tests.helper_functions.get_data_variables import *
-import spacy
+import spacy, pickle
 from .components import *
 from spacy.pipeline import EntityRuler
+from viecpro_import_app.hardcode_cfg import run_hardcode
 
 
 try:
@@ -14,13 +14,16 @@ except:
     with open("funktionenliste.pkl", "rb") as file:
         patterns = pickle.load(file)
 
-def get_model(annotations=False):
+def get_model(annotations=False, cfg=None):
+    if not cfg:
+        cfg = run_hardcode()
+
     nlp = spacy.load("models/viecpro_ner_hzab_12-20/")
 
 
     use_existing_annotations = UseExistingAnnotations(nlp, "data/viecpro_HZAB_funktion_0.jsonl")
     add_brackets = AddBrackets(nlp)
-    rename_functions = RenameFunctions(nlp, lst_hofst=lst_hofst, df_aemter_index=df_aemter_index)
+    rename_functions = RenameFunctions(nlp, lst_hofst=cfg.lst_hofst, df_aemter_index=cfg.df_aemter_index)
     date_prepocissions = DatePrepocissions(nlp)
     create_chunks = CreateChunks(nlp)
     extend_func_ents = ExtendFunctions(nlp)
@@ -29,6 +32,7 @@ def get_model(annotations=False):
 
     if annotations:
         nlp.add_pipe(use_existing_annotations)
+
     nlp.add_pipe(extend_func_ents, first=True)
     nlp.add_pipe(ruler, first=True)
     nlp.add_pipe(add_brackets)
@@ -40,9 +44,6 @@ def get_model(annotations=False):
     return nlp
 
 if __name__ == "__main__":
-    print(nlp)
-    print(nlp.pipeline)
-    new = get_model(nlp)
-    breakpoint()
+    pass
 
 
