@@ -1,0 +1,8 @@
+['Kanzlist']
+c_A is not none and amt_test is True
+['Registrant']
+c_A is not none and amt_test is True
+['Krankenwarterin']
+c_A is not none and amt_test is True
+t_tit = Don
+t_list = ['Don']

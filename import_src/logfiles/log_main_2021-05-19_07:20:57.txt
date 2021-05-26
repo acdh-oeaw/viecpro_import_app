@@ -1,0 +1,262 @@
+['Kanzlist']
+c_A is not none and amt_test is True
+['Registrant']
+c_A is not none and amt_test is True
+['Krankenwarterin']
+c_A is not none and amt_test is True
+t_tit = Don
+t_list = ['Don']
+['Kammerdienerin']
+c_A is not none and amt_test is True
+['Kammerdienerin']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer', 'Kämmerer']
+c_A is not none and amt_test is True
+['Rottmeister']
+c_A is not none and amt_test is True
+['Hartschier']
+c_A is not none and amt_test is True
+t_tit = Freiherr
+t_list = ['Freiherr']
+['Sekretär']
+c_A is not none and amt_test is True
+t_tit = Freiherr
+t_list = ['Freiherr']
+['Sekretär', 'Beamter,']
+['Hofkammerpräsident']
+c_A is not none and amt_test is True
+c_A is not none and amt_test is True
+['Instrumentalist']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Oberkommissar']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+c_A is not none
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Geh. Rat']
+c_A is not none and amt_test is True
+['Kanzlist']
+c_A is not none and amt_test is True
+['Hartschier', 'Entlassung']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+['Meisterkoch']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+['Konzipist']
+c_A is not none and amt_test is True
+['Konzipist']
+c_A is not none and amt_test is True
+['Sattelknecht']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Edler
+t_list = ['Edler']
+['Reichshofrat']
+c_A is not none and amt_test is True
+t_tit = Freiherr
+t_list = ['Freiherr']
+['Hofkaplan']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+['Raitrat', 'Buchhalter', 'Raitrat', 'Expeditor']
+c_A is not none and amt_test is True
+['Leiblakai']
+c_A is not none and amt_test is True
+['Kammermaler']
+c_A is not none and amt_test is True
+['Registrant']
+c_A is not none and amt_test is True
+['Landschreiber']
+c_A is not none and amt_test is True
+['Untermarschall']
+c_A is not none and amt_test is True
+t_tit = Freiherr 1685-12-10Graf 1705-01-31
+t_list = ['Freiherr 1685-12-10Graf 1705-01-31']
+DATE in tit: Freiherr 1685-12-10Graf 1705-01-31 -- 46
+['Landschreiber']
+c_A is not none and amt_test is True
+['Landrechtsbeisitzer']
+c_A is not none and amt_test is True
+t_tit = 1625-00-00 Adelsstand
+t_list = ['1625-00-00 Adelsstand']
+DATE in tit: 1625-00-00 Adelsstand -- 51
+['Kanzlist']
+c_A is not none and amt_test is True
+['Kanzlist']
+c_A is not none and amt_test is True
+['Kanzlist']
+c_A is not none and amt_test is True
+['Raitoffizier']
+c_A is not none and amt_test is True
+['Oberjäger']
+c_A is not none and amt_test is True
+['Kanzlist']
+c_A is not none and amt_test is True
+['Heizer']
+c_A is not none and amt_test is True
+['Reitknecht']
+c_A is not none and amt_test is True
+ row iloc 11, row iloc 7: ksl. --- nan
+row target_iloc[7]: Verwaltungswesen (ldsftl.)
+['Sekretär']
+c_A is not none and amt_test is True
+t_tit = Reichsgraf
+t_list = ['Reichsgraf']
+['Edelknabe']
+c_A is not none and amt_test is True
+['Instrumentalist']
+c_A is not none and amt_test is True
+['Konzipist']
+c_A is not none and amt_test is True
+['Sommelier']
+c_A is not none and amt_test is True
+['Kanzlist']
+c_A is not none and amt_test is True
+['Kanzlist']
+c_A is not none and amt_test is True
+['Kanzlist']
+c_A is not none and amt_test is True
+['Hofglasrmeister']
+c_A is not none and amt_test is True
+['Wirtschaftssekretär']
+c_A is not none and amt_test is True
+['Syndikus', 'Verordneter']
+c_A is not none and amt_test is True
+t_tit = von Lauterburg
+t_list = ['von Lauterburg']
+row target_iloc[7]: Verwaltungswesen (Reich)
+['Sekretär', 'Referendar']
+c_A is not none and amt_test is True
+ row iloc 11, row iloc 7: L --- nan
+row target_iloc[7]: Finanzwesen
+['Kammerdiener']
+c_A is not none and amt_test is True
+['Kammersekretär']
+c_A is not none and amt_test is True
+t_tit = Freiherr
+t_list = ['Freiherr']
+['Kämmerer']
+c_A is not none and amt_test is True
+['Kammerdienerin']
+c_A is not none and amt_test is True
+['Trabant']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer', 'Gundaker']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Obersthof-', 'Landjägermeister']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+ row iloc 11, row iloc 7: L --- nan
+row target_iloc[7]: Hofstaat
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer', 'Ehrenschlüssel']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+['Grafenhofkammerrat']
+c_A is not none and amt_test is True
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Oberstjägermeister']
+c_A is not none and amt_test is True
+t_tit = Gräfin; Fürstin
+t_list = ['Gräfin', 'Fürstin']
+['Regimentsrat']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Oberstküchenmeister']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Graf
+t_list = ['Graf']
+['Kämmerer']
+c_A is not none and amt_test is True
+t_tit = Marques
+t_list = ['Marques']
+['Mundschenk']
+c_A is not none and amt_test is True

@@ -7,6 +7,7 @@ def create_checklist(id_R=None, id_K=None, id_S=None):
     K = []
     R = []
     S = []
+
     for person in Person.objects.all():
         for collection in person.collection.values_list():
             if collection[0] == 4:

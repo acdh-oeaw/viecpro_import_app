@@ -1,0 +1,64 @@
+FIRST HOFSTAAT = None
+['Kanzlist']
+c_A is not none and amt_test is True
+FIRST HOFSTAAT = None
+['Registrant']
+c_A is not none and amt_test is True
+HOFSTAATE PROCESSING ----> h: AW
+NO CHUNK HOFSTAAT
+FIRST HOFSTAAT = AW
+['Krankenwarterin']
+c_A is not none and amt_test is True
+HOFSTAATE PROCESSING ----> h: EM
+NO CHUNK HOFSTAAT
+FIRST HOFSTAAT = EM
+t_tit = Don
+t_list = ['Don']
+HOFSTAATE PROCESSING ----> h: EM
+NO CHUNK HOFSTAAT
+FIRST HOFSTAAT = EM
+HOFSTAATE PROCESSING ----> h: EM
+NO CHUNK HOFSTAAT
+FIRST HOFSTAAT = EM
+HOFSTAATE PROCESSING ----> h: EM
+NO CHUNK HOFSTAAT
+FIRST HOFSTAAT = EM
+['Kammerdienerin']
+c_A is not none and amt_test is True
+HOFSTAATE PROCESSING ----> h: EM
+NO CHUNK HOFSTAAT
+FIRST HOFSTAAT = EM
+HOFSTAATE PROCESSING ----> h: EM
+NO CHUNK HOFSTAAT
+FIRST HOFSTAAT = EM
+HOFSTAATE PROCESSING ----> h: EM
+NO CHUNK HOFSTAAT
+FIRST HOFSTAAT = EM
+HOFSTAATE PROCESSING ----> h: EM
+NO CHUNK HOFSTAAT
+FIRST HOFSTAAT = EM
+['Kammerdienerin']
+c_A is not none and amt_test is True
+HOFSTAATE PROCESSING ----> h: EM
+NO CHUNK HOFSTAAT
+FIRST HOFSTAAT = EM
+t_tit = Graf
+t_list = ['Graf']
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+FIRST HOFSTAAT = L
+['Kämmerer', 'Kämmerer']
+c_A is not none and amt_test is True
+HOFSTAATE PROCESSING ----> h: LW
+NO CHUNK HOFSTAAT
+FIRST HOFSTAAT = LW
+['Rottmeister']
+c_A is not none and amt_test is True
+HOFSTAATE PROCESSING ----> h: J
+NO CHUNK HOFSTAAT
+FIRST HOFSTAAT = J
+['Hartschier']
+c_A is not none and amt_test is True
+t_tit = Freiherr
+t_list = ['Freiherr']
+FIRST HOFSTAAT = L
