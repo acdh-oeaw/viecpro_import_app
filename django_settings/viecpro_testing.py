@@ -7,6 +7,12 @@ import os
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "^mm-24*i-6iecm7c@z9l+7%^ns^4g^z!8=dgffg4ulggr-4=1%"
 
+IPYTHON_ARGUMENTS = [
+    '--ext', 'django_extensions.management.notebook_extension',
+    '--ext', 'myproject.notebook_extension',
+    '--debug',
+]
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # REDMINE_ID = "14590"
@@ -40,12 +46,35 @@ SECRET_KEY = (
 DEBUG = True
 DEV_VERSION = False
 
+
+INSTALLED_APPS += ["browsing", "apis_core", "django_extensions"]
+
 SPECTACULAR_SETTINGS["COMPONENT_SPLIT_REQUEST"] = True
 SPECTACULAR_SETTINGS["COMPONENT_NO_READ_ONLY_REQUIRED"] = True
 
-DATABASES = {}
+DATABASES = {
+    'default': {
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+         'NAME': "temporary_for_tests", # delete the first test_ to reset to old db
+         'USER': "postgres",
+         'PASSWORD': "ookh59PM",
+         'HOST': "localhost",
+         'PORT': 5432,
+     }
+ }
 
-DATABASES["default"] = dj_database_url.config(conn_max_age=600)
+# DATABASES = {
+#    'default': {
+#          'ENGINE': 'django.db.backends.mysql',
+#          'NAME': 'apis_backup_dump',
+#          'USER': 'gregorpirgie',
+#          'PASSWORD': 'ookh59pm',
+#          'HOST': 'localhost',
+#          'PORT': 3306,
+#      }
+#  }
+
+#DATABASES["default"] = dj_database_url.config(conn_max_age=600)
 
 # MAIN_TEXT_NAME = "ÖBL Haupttext"
 
