@@ -680,5 +680,7 @@ def process_row(idx, row, src_base, conf):
         doc = create_and_process_doc(r_fun, idx)
         pers = process_chunks(doc, pers, row)
 
+        #todo : debug open parantheses within dates: causes the import to stop
+
 
         return pers
