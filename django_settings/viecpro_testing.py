@@ -63,16 +63,7 @@ DATABASES = {
      }
  }
 
-# DATABASES = {
-#    'default': {
-#          'ENGINE': 'django.db.backends.mysql',
-#          'NAME': 'apis_backup_dump',
-#          'USER': 'gregorpirgie',
-#          'PASSWORD': 'ookh59pm',
-#          'HOST': 'localhost',
-#          'PORT': 3306,
-#      }
-#  }
+
 
 #DATABASES["default"] = dj_database_url.config(conn_max_age=600)
 
