@@ -97,7 +97,7 @@ def run_import(
     use_local_pipeline=True,
 ):
 
-   
+
     cfg.collection = collection
     cfg.df_aemter = pd.read_excel(path_aemter, header=2, engine="openpyxl")
     cfg.df_hofstaat = pd.read_excel(path_hofstaat, engine="openpyxl")
@@ -127,7 +127,7 @@ def run_import(
     if username is not None:
         me = User.objects.get(username=username)
     Doc.set_extension("excel_row", default=-1, force=True)
-    lst_offs = list(range(0, len(cfg.df), int(len(cfg.df) / 4) + 1))#[:1]
+    lst_offs = list(range(0, len(cfg.df), int(len(cfg.df) / 4) + 1))[:1]
 
     for idx5, offs in enumerate(lst_offs):
         if idx5 == len(lst_offs) - 1:
@@ -148,7 +148,7 @@ def run_import(
             ].iterrows():
                 logger.debug(f"working on row {idx}")
                 p1 = process_row(idx,
-                                 row, 
+                                 row,
                                  src_base,
                                  cfg)
 
