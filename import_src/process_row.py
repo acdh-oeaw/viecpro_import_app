@@ -31,7 +31,7 @@ logger.addHandler(handler)
 timestamp = time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime())
 filehandler = logging.FileHandler(f"import_src/logfiles/log_main_{timestamp}.txt", mode="w")
 logger.addHandler(filehandler)
-logger.setLevel(logging.WARNING)
+logger.setLevel(logging.INFO)
 
 
 global cfg
@@ -59,16 +59,20 @@ def person_process_field_vorname(r_vor):
 
 def person_process_field_familienname(r_fam, idx):
     logger.info(cfg.df.Familienname.iloc[idx])
-    if ", de" in r_fam:
-        logger.info(f"Init test: 'de in fam' INPUT: {r_fam} END INPUT, ROW:{idx}")
-    if ", von" in r_fam:
-        logger.info(f"Init test: 'von in fam' INPUT: {r_fam} END INPUT, ROW:{idx}")
-    familienname = r_fam
-    familienname = familienname.replace("(?)", "?")
-
+    if isinstance(r_fam, str):
+        if ", de" in r_fam:
+            logger.info(f"Init test: 'de in fam' INPUT: {r_fam} END INPUT, ROW:{idx}")
+        if ", von" in r_fam:
+            logger.info(f"Init test: 'von in fam' INPUT: {r_fam} END INPUT, ROW:{idx}")
+        familienname = r_fam
+        familienname = familienname.replace("(?)", "?")
+    else:
+        familienname = None
+    labels_fam_hzt = []
+    labels_fam = False
     if isinstance(familienname, str):
-        labels_fam_hzt = []
-        labels_fam = False
+        #labels_fam_hzt = []
+        #labels_fam = False
         for idx_fam, familienname in enumerate(familienname.split(", oo")):
             if "(" in familienname:
                 fam1_ = familienname.split(" (")[0]
@@ -134,7 +138,7 @@ def person_process_field_familienname(r_fam, idx):
     else:
         fam1 = "NEEDS REVIEW"
 
-    # todo: maybe split function here
+
     sn, sn_alternative = helper_process_names(fam1)
     if sn_alternative is not None:
         if not labels_fam:
@@ -149,11 +153,11 @@ def person_process_field_familienname(r_fam, idx):
             if len(prep_proc_name) > 0:
                 labels_fam.extend(prep_proc_name)
         labels_fam.append(sn_alternative)
-
-    if ", de" in r_fam:
-        logger.debug(f"sn {sn}, labels_fam {labels_fam}, labels_fam_hzt {labels_fam_hzt}")
-    if ", von" in r_fam:
-        logger.debug(f"sn {sn}, labels_fam {labels_fam}, labels_fam_hzt {labels_fam_hzt}")
+    if isinstance(r_fam, str):
+        if ", de" in r_fam:
+            logger.debug(f"sn {sn}, labels_fam {labels_fam}, labels_fam_hzt {labels_fam_hzt}")
+        if ", von" in r_fam:
+            logger.debug(f"sn {sn}, labels_fam {labels_fam}, labels_fam_hzt {labels_fam_hzt}")
 
     return sn, labels_fam, labels_fam_hzt
 
@@ -233,7 +237,7 @@ def person_process_field_titel(r_tit, pers):
     if r_tit in change.keys():
         r_tit = change[r_tit]
     t_list, subst = re.subn(r"\(.*\)", "", r_tit)
-    t_list = [x.strip() for x in t_list.split(";")] # todo: changed from "," to ";"
+    t_list = [x.strip() for x in t_list.split(";")] # changed from "," to ";" for HSV
     logger.warning(f"t_list = {t_list}")
 
     def create_title(tit):
@@ -350,10 +354,9 @@ def chunk_process_datum(c_D, rel):
 
 
 def chunk_get_nm_hst(c_H, r_H, idx_chunk, first_hs):
-    # todo not on the process: das soll so bleiben, hier werden ja nurdie hofstaate genutzt.
     test_hs = False
     if c_H:
-        test_hs = True # todo: check that this is right? Do i still need this test?
+        test_hs = True
         if c_H in cfg.lst_hofst.keys():
             nm_hst = cfg.lst_hofst[c_H][0]
         else:
@@ -401,14 +404,14 @@ def get_or_create_amt(row):
     except:
         raise ValueError(f"couldnt find matching Amt entry for {amt}")
 
-    if isinstance(row.iloc[11], str):  # todo  wenn es einen hofstaat gibt dann wird der hier verarbeitet
+    if isinstance(row.iloc[11], str):
         logger.warning(f" row iloc 11, row iloc 7: {row.iloc[11]} --- {row.iloc[7]}")
         if row.iloc[11] in cfg.lst_hofst.keys():
-            name_hst_1 = cfg.lst_hofst[row.iloc[11]][0]  # todo: name_hst_1 wird aus row[11] gewonnen
+            name_hst_1 = cfg.lst_hofst[row.iloc[11]][0]
         else:
             name_hst_1 = row.iloc[11]
     else:
-        name_hst_1 = "Dummy Hofstaat" # todo: das macht doch keinen Sinn oder?
+        name_hst_1 = "Dummy Hofstaat"
 
     test_unsicher = False
     if name_hst_1 == "UNSICHER - Collection, manuelle Entscheidung":
@@ -433,7 +436,7 @@ def get_or_create_amt(row):
 
 
 def create_text_entries(row, pers, src_base, map_text_type, columns=(5,18)):
-    for idx in range(5,18): # todo: is something happening here with the idx? 
+    for idx in range(5,18):
         if isinstance(row.iloc[idx], str):
             col_name = cfg.df.columns[idx]
             if col_name not in map_text_type.keys():
@@ -457,7 +460,7 @@ def chunk_process_amt(c_A, r_A, c_H, inst, nm_hst, idx_chunk, row, amt_test):
         else:
             amt = c_A.strip()
 
-        if c_H is not None: # todo: removed: idx_chunk == 0 or
+        if c_H is not None: # removed: idx_chunk == 0 or
             amt_name = f"{amt} ({nm_hst})"
         else:
             amt_name = f"{amt} (Dummy Hofstaat)"
@@ -469,14 +472,14 @@ def chunk_process_amt(c_A, r_A, c_H, inst, nm_hst, idx_chunk, row, amt_test):
             amt_name = f"{amt_name[:-ln_minus]} ({nm_hst})"
         inst2, created = Institution.objects.get_or_create(name=amt_name)
 
-    elif isinstance(r_A, str) and idx_chunk == 0: # todo if r_a and first chunk (== first funktion)
+    elif isinstance(r_A, str) and idx_chunk == 0:
         try:
-            inst2, inst3, created = get_or_create_amt( # todo here you ahve get _or create amt only from the r_A
+            inst2, inst3, created = get_or_create_amt(
                 row)
             if created:
                 InstitutionInstitution.objects.create(
                     related_institutionA=inst3,
-                    related_institutionB=inst,  # todo inst comes again
+                    related_institutionB=inst,
                     relation_type=rl_teil_von,
                 )
         except Exception as e:
@@ -537,7 +540,6 @@ def helper_hsv_match_amt_with_funct(doc, r_A, r_H):
                 a = a.split("/")[0]
                 if c["AMT"]:
                     logger.warning(f"chunk Amt already exists: {c['AMT']}")
-                    breakpoint()
                 c["AMT"] = a
 
                 logger.warning(c["FUNKTION"])
@@ -604,7 +606,7 @@ def process_chunks(doc, pers, row):
         nm_hst, test_hs = chunk_get_nm_hst(c_H, r_H, idx_chunk, first_hs)
 
         test_unsicher = False
-        if nm_hst == "UNSICHER - Collection, manuelle Entscheidung": #todo: isn't there a new collection unsicher only for Hofstaate?
+        if nm_hst == "UNSICHER - Collection, manuelle Entscheidung":
             nm_hst = "UNSICHER"
             test_unsicher = True
 
@@ -626,52 +628,57 @@ def process_chunks(doc, pers, row):
 
 
 def process_row(idx, row, src_base, conf):
-    logger.info(f"working on row: {idx}")
-    global cfg
-    cfg = conf
-    create_all()
 
-    r_vor = row["Vorname"]
-    r_fam = row["Familienname"]
-    r_ges = row["Geschlecht"]
-    r_leb = row["Lebensdaten"]
-    r_fun = row["Funktion"]
-    r_tit = row["Titel"]
+    if idx == 2183:
+        return None
+    else:
+        logger.info(f"working on row: {idx}")
+        global cfg
+        cfg = conf
+        create_all()
 
-    vorname = person_process_field_vorname(r_vor)
+        r_vor = row["Vorname"]
+        r_fam = row["Familienname"]
+        r_ges = row["Geschlecht"]
+        r_leb = row["Lebensdaten"]
+        r_fun = row["Funktion"]
+        r_tit = row["Titel"]
 
-    vn, vn_alternative = helper_process_names(vorname[0])
-    if vn_alternative:
-        vorname.append(vn_alternative)
+        vorname = person_process_field_vorname(r_vor)
 
-    sn, labels_fam, labels_fam_hzt = person_process_field_familienname(r_fam, idx)
+        vn, vn_alternative = helper_process_names(vorname[0])
+        if vn_alternative:
+            vorname.append(vn_alternative)
 
-    pers_dic = {"first_name": vn, "name": sn}
-    pers_dic = person_process_field_gender(r_ges, pers_dic)
-    pers_dic = person_process_field_lebensdaten(r_leb, pers_dic)
+        sn, labels_fam, labels_fam_hzt = person_process_field_familienname(r_fam, idx)
+
+        pers_dic = {"first_name": vn, "name": sn}
+        pers_dic = person_process_field_gender(r_ges, pers_dic)
+        pers_dic = person_process_field_lebensdaten(r_leb, pers_dic)
 
 
-    src_base["orig_id"] = idx
-    src = Source.objects.create(**src_base)
+        src_base["orig_id"] = idx
+        src = Source.objects.create(**src_base)
 
-    pers_dic["source"] = src
+        pers_dic["source"] = src
 
-    pers = Person.objects.create(**pers_dic)
+        pers = Person.objects.create(**pers_dic)
 
-    if isinstance(r_tit, str):
-        person_process_field_titel(r_tit, pers)
+        if isinstance(r_tit, str):
+            person_process_field_titel(r_tit, pers)
 
-    person_create_person_labels(pers, vorname, labels_fam, labels_fam_hzt)
+        person_create_person_labels(pers, vorname, labels_fam, labels_fam_hzt)
 
-    map_text_type = {}
-    map_text_type = create_text_entries(row, pers, src_base, map_text_type)
-    col, created = Collection.objects.get_or_create(name="Import HZAB full 10-3-21")
-    pers.collection.add(col)
+        map_text_type = {}
+        map_text_type = create_text_entries(row, pers, src_base, map_text_type)
+        col, created = Collection.objects.get_or_create(name="Import HZAB full 10-3-21")
+        pers.collection.add(col)
 
-    if not isinstance(r_fun, str):
+        if not isinstance(r_fun, str):
+            return pers
+
+        doc = create_and_process_doc(r_fun, idx)
+        pers = process_chunks(doc, pers, row)
+
+
         return pers
-
-    doc = create_and_process_doc(r_fun, idx)
-    pers = process_chunks(doc, pers, row)
-
-    return pers
