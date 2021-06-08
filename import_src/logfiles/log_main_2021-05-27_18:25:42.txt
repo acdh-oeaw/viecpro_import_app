@@ -1,0 +1,571 @@
+working on row: 0
+Ketzer (Keczer)
+fam1: Ketzer
+fam2: <re.Match object; span=(7, 15), match='(Keczer)'>
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Agent']
+ this is the full relation: {'related_person': <Person: Ketzer, Georg>}
+c_A is not none and amt_test is True
+working on row: 1
+Wurmbrand
+t_tit = Graf
+t_list = ['Graf']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Kämmerer']
+ this is the full relation: {'related_person': <Person: Wurmbrand, Georg Andre>}
+c_A is not none and amt_test is True
+working on row: 2
+Ladner
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: F3
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: F3
+FIRST HOFSTAAT = F3
+['Kammerdiener']
+ this is the full relation: {'related_person': <Person: Ladner, Linhard>}
+c_A is not none and amt_test is True
+working on row: 3
+Spaur (Spauer)
+fam1: Spaur
+fam2: <re.Match object; span=(6, 14), match='(Spauer)'>
+t_tit = Graf
+t_list = ['Graf']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Kämmerer']
+ this is the full relation: {'related_person': <Person: Spaur, Ferdinand>}
+c_A is not none and amt_test is True
+working on row: 4
+Starnberg, von
+Init test: 'von in fam' INPUT: Starnberg, von END INPUT, ROW:4
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: EM
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: EM
+FIRST HOFSTAAT = EM
+['Hoffräulein', 'Kammerfräulein']
+ this is the full relation: {'related_person': <Person: Starnberg, von, NN>}
+c_A is not none and amt_test is True
+working on row: 5
+Lewenburg, von
+Init test: 'von in fam' INPUT: Lewenburg, von END INPUT, ROW:5
+len_doc_chunks: 1, len Ämter-Spalte: 0
+FIRST HOFSTAAT = None
+old: 1670-00-00, new: 1670-00-00<1670-06-30>
+inner date: <1677-06-30>
+new_i_date: <1677-06-30>
+old: bis 1677<1677-06-30>, new: bis 1677<1677-06-30>
+rel, chunk sdw: 1670-00-00<1670-06-30>
+rel, chunk edw: 1670-00-00<1670-06-30>
+ this is the full relation: {'related_person': <Person: Lewenburg, von, Ferdinand Leopold>, 'start_date_written': '1670-00-00<1670-06-30>', 'end_date_written': 'bis 1677<1677-06-30>'}
+working on row: 6
+Cordona (Codona, Cordonn, Cordona, Cordova)
+fam1: Cordona
+fam2: <re.Match object; span=(8, 43), match='(Codona, Cordonn, Cordona, Cordova)'>
+t_tit = Graf
+t_list = ['Graf']
+len_doc_chunks: 2, len Ämter-Spalte: 1
+FIRST HOFSTAAT = L
+ this is the full relation: {'related_person': <Person: Cordona, Josef >}
+USED first hofstaat in chunk get nm hst: L
+ row iloc 11, row iloc 7: OKäA --- nan
+row target_iloc[7]: Hofstaat
+ this is the full relation: {'related_person': <Person: Cordona, Josef >}
+USED first hofstaat in chunk get nm hst: L
+working on row: 7
+Somogyi
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Sekretär']
+ this is the full relation: {'related_person': <Person: Somogyi, Franz >}
+c_A is not none and amt_test is True
+working on row: 8
+Breuner
+working on row: 9
+Schröder
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Sekretär']
+ this is the full relation: {'related_person': <Person: Schröder, Reinhard>}
+c_A is not none and amt_test is True
+working on row: 10
+Khönigl
+t_tit = Graf
+t_list = ['Graf']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Kämmerer']
+ this is the full relation: {'related_person': <Person: Khönigl, Hanns Georg>}
+c_A is not none and amt_test is True
+working on row: 11
+Osterau/Osterleg von Wien u. Rambstein
+t_tit = Freiherr
+t_list = ['Freiherr']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Hofkriegsrat']
+ this is the full relation: {'related_person': <Person: Osterau/Osterleg von Wien u. Rambstein, Johann Carl >}
+c_A is not none and amt_test is True
+working on row: 12
+Raunacher
+len_doc_chunks: 1, len Ämter-Spalte: 0
+HOFSTAATE PROCESSING ----> h: F3(?)
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: F3(?)
+FIRST HOFSTAAT = F3(?)
+ this is the full relation: {'related_person': <Person: Raunacher, Gotthard>}
+working on row: 13
+Cronnegg [Kronnegg]
+fam1: Cronnegg
+fam2: <re.Match object; span=(9, 19), match='[Kronnegg]'>
+t_tit = Graf
+t_list = ['Graf']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Kämmerer']
+old: 391., new: 391.<391.>
+old: 1675-00-00, new: 1675-00-00<1675-06-30>
+rel, chunk sdw: 391.<391.>
+rel, chunk edw: 391.<391.>
+ this is the full relation: {'related_person': <Person: Cronnegg, Joseph Wilhelm>, 'start_date_written': '391.<391.>', 'end_date_written': '1675-00-00<1675-06-30>'}
+c_A is not none and amt_test is True
+working on row: 14
+Gepferdt (Göpfert)
+fam1: Gepferdt
+fam2: <re.Match object; span=(9, 18), match='(Göpfert)'>
+len_doc_chunks: 1, len Ämter-Spalte: 2
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+ this is the full relation: {'related_person': <Person: Gepferdt, Virgil Andre >}
+working on row: 15
+Fläsching
+t_tit = Graf
+t_list = ['Graf']
+len_doc_chunks: 1, len Ämter-Spalte: 0
+HOFSTAATE PROCESSING ----> h: J
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: J
+FIRST HOFSTAAT = J
+old: 1669-00-00, new: 1669-00-00<1669-06-30>
+rel, chunk sdw: 1669-00-00<1669-06-30>
+ this is the full relation: {'related_person': <Person: Fläsching, NN>, 'start_date_written': '1669-00-00<1669-06-30>'}
+working on row: 16
+Migl (Mizl; Nigl)
+fam1: Migl
+fam2: <re.Match object; span=(5, 17), match='(Mizl; Nigl)'>
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Kanzlist']
+ this is the full relation: {'related_person': <Person: Migl, Gottlieb>}
+c_A is not none and amt_test is True
+working on row: 17
+Englferth [Englfurth]
+fam1: Englferth
+fam2: <re.Match object; span=(10, 21), match='[Englfurth]'>
+t_tit = Graf
+t_list = ['Graf']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Kämmerer']
+old: 268., new: 268.<268.>
+rel, chunk sdw: 268.<268.>
+ this is the full relation: {'related_person': <Person: Englferth, Johann Ferdinand Franz >, 'start_date_written': '268.<268.>'}
+c_A is not none and amt_test is True
+working on row: 18
+Rappach
+t_tit = Freiherr
+t_list = ['Freiherr']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Kämmerer']
+ this is the full relation: {'related_person': <Person: Rappach, Christoph Ferdinand>}
+c_A is not none and amt_test is True
+working on row: 19
+Unrath
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Agent']
+ this is the full relation: {'related_person': <Person: Unrath, Johann Adam>}
+c_A is not none and amt_test is True
+working on row: 20
+Spindler von Wildenstein (Spintler von Wildenstein)
+fam1: Spindler von Wildenstein
+fam2: <re.Match object; span=(25, 51), match='(Spintler von Wildenstein)'>
+t_tit = Edler
+t_list = ['Edler']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Regimentsrat']
+ this is the full relation: {'related_person': <Person: Spindler von Wildenstein, Ignaz Johann>}
+c_A is not none and amt_test is True
+working on row: 21
+Carin
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: J
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: J
+FIRST HOFSTAAT = J
+['Hartschier', 'Entlassung']
+inner date: <1694-10-01>
+new_i_date: <1694-10-01>
+old: ? 1694-10-01<1694-10-01>, new: ? 1694-10-01<1694-10-01>
+inner date: <1699-08-31>
+new_i_date: <1699-08-31>
+old: bis 1699-08-31<1699-08-31>, new: bis 1699-08-31<1699-08-31>
+rel, chunk sdw: ? 1694-10-01<1694-10-01>
+rel, chunk edw: ? 1694-10-01<1694-10-01>
+ this is the full relation: {'related_person': <Person: Carin, Arnoldt>, 'start_date_written': '? 1694-10-01<1694-10-01>', 'end_date_written': 'bis 1699-08-31<1699-08-31>'}
+c_A is not none and amt_test is True
+working on row: 22
+Strell von Strellenburg
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Konzipist']
+ this is the full relation: {'related_person': <Person: Strell von Strellenburg, Johann Anton Karl>}
+c_A is not none and amt_test is True
+working on row: 23
+Kerner; Pitterdorff, von
+Init test: 'von in fam' INPUT: Kerner; Pitterdorff, von END INPUT, ROW:23
+t_tit = NN; Freiherr
+t_list = ['NN', 'Freiherr']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Reichshofrat']
+ this is the full relation: {'related_person': <Person: Kerner; Pitterdorff, von, Johann>}
+c_A is not none and amt_test is True
+working on row: 24
+Dobler
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: LW
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: LW
+FIRST HOFSTAAT = LW
+['Zehrgadengehilfe']
+old: 1663-00-00, new: 1663-00-00<1663-06-30>
+rel, chunk sdw: 1663-00-00<1663-06-30>
+ this is the full relation: {'related_person': <Person: Dobler, Wolff>, 'start_date_written': '1663-00-00<1663-06-30>'}
+c_A is not none and amt_test is True
+working on row: 25
+Schmelzer
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: EM
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: EM
+FIRST HOFSTAAT = EM
+['Kammerdienerin']
+ this is the full relation: {'related_person': <Person: Schmelzer, Theresia>}
+c_A is not none and amt_test is True
+working on row: 26
+Ruckensattel (Ruchensattel; Ruckensadl; Ruckensattl; Ruckhensadl; Rueckhensattl)
+fam1: Ruckensattel
+fam2: <re.Match object; span=(13, 80), match='(Ruchensattel; Ruckensadl; Ruckensattl; Ruckhensa>
+len_doc_chunks: 2, len Ämter-Spalte: 1
+FIRST HOFSTAAT = L
+ this is the full relation: {'related_person': <Person: Ruckensattel, Friedrich>}
+USED first hofstaat in chunk get nm hst: L
+ row iloc 11, row iloc 7: NÖ-R / Kanzlist --- nan
+row target_iloc[7]: Verwaltungswesen (ldsftl.)
+ this is the full relation: {'related_person': <Person: Ruckensattel, Friedrich>}
+USED first hofstaat in chunk get nm hst: L
+working on row: 27
+Trautson; Falkenstein
+t_tit = NN; Graf
+t_list = ['NN', 'Graf']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: J
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: J
+FIRST HOFSTAAT = J
+['Oberstkämmerer', 'Vizeajo']
+ this is the full relation: {'related_person': <Person: Trautson; Falkenstein, Franz Leopold Donat>}
+c_A is not none and amt_test is True
+working on row: 28
+Pacti
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: EG
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: EG
+FIRST HOFSTAAT = EG
+['Kammerdiener']
+ this is the full relation: {'related_person': <Person: Pacti, NN>}
+c_A is not none and amt_test is True
+working on row: 29
+Heidenreich (Heydenreich)
+fam1: Heidenreich
+fam2: <re.Match object; span=(12, 25), match='(Heydenreich)'>
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Hofkammerdiener']
+ this is the full relation: {'related_person': <Person: Heidenreich, Heinrich Theodosius>}
+c_A is not none and amt_test is True
+working on row: 30
+Comazzi
+NOT PARSED LEBENSDATEN -> 1654 bis 1711
+t_tit = Comte, Graf
+t_list = ['Comte, Graf']
+Komma in tit: Comte, Graf
+CREATING SPLIT TITLE Comte from Comte, Graf
+CREATING SPLIT TITLE Graf from Comte, Graf
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Historiker']
+old: 1704-00-00, new: 1704-00-00<1704-06-30>
+rel, chunk sdw: 1704-00-00<1704-06-30>
+ this is the full relation: {'related_person': <Person: Comazzi, Gio>, 'start_date_written': '1704-00-00<1704-06-30>'}
+c_A is not none and amt_test is True
+working on row: 31
+Solimanno
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Postinbereiter', 'Pästinbereiter']
+ this is the full relation: {'related_person': <Person: Solimanno, Gabriel Francesco>}
+c_A is not none and amt_test is True
+working on row: 32
+Serau, von (Saurau, von?)
+Init test: 'von in fam' INPUT: Serau, von (Saurau, von?) END INPUT, ROW:32
+fam1: Serau, von
+fam2: <re.Match object; span=(11, 25), match='(Saurau, von?)'>
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: EG
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: EG
+FIRST HOFSTAAT = EG
+['Kammerfräulein']
+ this is the full relation: {'related_person': <Person: Serau, von, NN>}
+c_A is not none and amt_test is True
+working on row: 33
+Schneeweiß
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Taxator']
+ this is the full relation: {'related_person': <Person: Schneeweiß, Michael>}
+c_A is not none and amt_test is True
+working on row: 34
+Beuerhuber von Hab (Beyerhuber, Beyerhueber von Hueb, Beyrhueber von Hueb)
+fam1: Beuerhuber von Hab
+fam2: <re.Match object; span=(19, 74), match='(Beyerhuber, Beyerhueber von Hueb, Beyrhueber von>
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Registrator']
+old: 1674-00-00, new: 1674-00-00<1674-06-30>
+inner date: <1678-06-30>
+new_i_date: <1678-06-30>
+old: bis 1678<1678-06-30>, new: bis 1678<1678-06-30>
+rel, chunk sdw: 1674-00-00<1674-06-30>
+rel, chunk edw: 1674-00-00<1674-06-30>
+ this is the full relation: {'related_person': <Person: Beuerhuber von Hab, Christoph>, 'start_date_written': '1674-00-00<1674-06-30>', 'end_date_written': 'bis 1678<1678-06-30>'}
+c_A is not none and amt_test is True
+working on row: 35
+Strasoldo
+t_tit = Graf
+t_list = ['Graf']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Kämmerer']
+ this is the full relation: {'related_person': <Person: Strasoldo, NN>}
+c_A is not none and amt_test is True
+working on row: 36
+Nehnuß
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: LW
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: LW
+FIRST HOFSTAAT = LW
+['Raitdiener']
+ this is the full relation: {'related_person': <Person: Nehnuß, Johann Jacob>}
+c_A is not none and amt_test is True
+working on row: 37
+Fischel
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Kanzlist']
+old: 1701-00-00, new: 1701-00-00<1701-06-30>
+inner date: <1704-06-30>
+new_i_date: <1704-06-30>
+old: bis 1704<1704-06-30>, new: bis 1704<1704-06-30>
+rel, chunk sdw: 1701-00-00<1701-06-30>
+rel, chunk edw: 1701-00-00<1701-06-30>
+ this is the full relation: {'related_person': <Person: Fischel, Johann Georg>, 'start_date_written': '1701-00-00<1701-06-30>', 'end_date_written': 'bis 1704<1704-06-30>'}
+c_A is not none and amt_test is True
+working on row: 38
+Scherer
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Taxgegenhandler']
+ this is the full relation: {'related_person': <Person: Scherer, Johann Georg>}
+c_A is not none and amt_test is True
+working on row: 39
+Fuchs von Bimbach u. Dornheim
+t_tit = Freiherr, Graf (1706)
+t_list = ['Freiherr, Graf']
+Komma in tit: Freiherr, Graf
+CREATING SPLIT TITLE Freiherr from Freiherr, Graf
+CREATING SPLIT TITLE Graf from Freiherr, Graf
+len_doc_chunks: 2, len Ämter-Spalte: 2
+FIRST HOFSTAAT = L
+['Grafenreichshofrat', 'Herrenstand']
+['Abgesandter']
+old: 1704-00-00, new: 1704-00-00<1704-06-30>
+rel, chunk sdw: 1704-00-00<1704-06-30>
+ this is the full relation: {'related_person': <Person: Fuchs von Bimbach u. Dornheim, Christoph Ernst>, 'start_date_written': '1704-00-00<1704-06-30>'}
+USED first hofstaat in chunk get nm hst: L
+c_A is not none and amt_test is True
+ this is the full relation: {'related_person': <Person: Fuchs von Bimbach u. Dornheim, Christoph Ernst>}
+USED first hofstaat in chunk get nm hst: L
+c_A is not none and amt_test is True
+working on row: 40
+Mechel
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Konzipist']
+ this is the full relation: {'related_person': <Person: Mechel, Johann Christoph>}
+c_A is not none and amt_test is True
+working on row: 41
+Barbo; Waxenstein
+t_tit = NN; Graf
+t_list = ['NN', 'Graf']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Kämmerer']
+old: 1674-04-26, new: 1674-04-26<1674-04-26>
+rel, chunk sdw: 1674-04-26<1674-04-26>
+ this is the full relation: {'related_person': <Person: Barbo; Waxenstein, Bernardin>, 'start_date_written': '1674-04-26<1674-04-26>'}
+c_A is not none and amt_test is True
+working on row: 42
+Schallenberg
+t_tit = Graf
+t_list = ['Graf']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Kämmerer']
+ this is the full relation: {'related_person': <Person: Schallenberg, Christoph Emerich>}
+c_A is not none and amt_test is True
+working on row: 43
+Stallburg
+t_tit = Graf
+t_list = ['Graf']
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Kämmerer']
+ this is the full relation: {'related_person': <Person: Stallburg, Johann Friedrich>}
+c_A is not none and amt_test is True
+working on row: 44
+Trautson
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: CF
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: CF
+FIRST HOFSTAAT = CF
+['Kammerfräulein']
+ this is the full relation: {'related_person': <Person: Trautson, NN>}
+c_A is not none and amt_test is True
+working on row: 45
+Schwindt
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Taxator']
+ this is the full relation: {'related_person': <Person: Schwindt, Matthias>}
+c_A is not none and amt_test is True
+working on row: 46
+Eysen, von
+Init test: 'von in fam' INPUT: Eysen, von END INPUT, ROW:46
+len_doc_chunks: 1, len Ämter-Spalte: 1
+HOFSTAATE PROCESSING ----> h: L
+NO CHUNK HOFSTAAT
+chunk Hofstaat set to: L
+FIRST HOFSTAAT = L
+['Landrechtsbeisitzer']
+old: 1675-00-00, new: 1675-00-00<1675-06-30>
+rel, chunk sdw: 1675-00-00<1675-06-30>
+ this is the full relation: {'related_person': <Person: Eysen, von, Ferdinand Silvester>, 'start_date_written': '1675-00-00<1675-06-30>'}
+c_A is not none and amt_test is True
+working on row: 47
+nan

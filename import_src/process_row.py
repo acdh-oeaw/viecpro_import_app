@@ -26,8 +26,8 @@ from import_src.create_database_objects import *
 import logging
 
 logger = logging.getLogger(__name__)
-handler = logging.StreamHandler()
-logger.addHandler(handler)
+stream_handler = logging.StreamHandler()
+logger.addHandler(stream_handler)
 timestamp = time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime())
 filehandler = logging.FileHandler(f"import_src/logfiles/log_main_{timestamp}.txt", mode="w")
 logger.addHandler(filehandler)
@@ -244,7 +244,7 @@ def person_process_field_titel(r_tit, pers):
         if re.search(r"\d{4}", tit):
 
             tit_res = resolve_abbreviations(tit, cfg.list_abbreviations)
-            date = re.search(r"(\d{4}){1}(-\d{2}-\d{2}){0,1}", tit).group(0) # todo: hier muss ich das datum noch richtig verarbeiten
+            date = re.search(r"(\d{4}){1}(-\d{2}-\d{2}){0,1}", tit).group(0)
             date = helper_hsv_post_process_dates(date)
             logger.warning(f"tit_res: {tit_res}, date after processing: {date}")
             Label.objects.create(label_type=lt_titel_datiert, temp_entity=pers, label=tit_res, start_date_written=date)
@@ -485,7 +485,6 @@ def chunk_process_amt(c_A, r_A, c_H, inst, nm_hst, idx_chunk, row, amt_test):
         except Exception as e:
             inst2 = amt_dummy
             inst3 = False
-            #logger.debug(f"Exception in Amt function: {e}")
             logger.debug(f"Exception in Amt function: {e}")
 
     elif c_A is not None:
@@ -628,13 +627,13 @@ def process_chunks(doc, pers, row):
 
 
 def process_row(idx, row, src_base, conf):
+    global cfg
+    cfg = conf
 
-    if idx == 2183:
+    if idx == 20000:
         return None
     else:
         logger.info(f"working on row: {idx}")
-        global cfg
-        cfg = conf
         create_all()
 
         r_vor = row["Vorname"]
@@ -643,6 +642,16 @@ def process_row(idx, row, src_base, conf):
         r_leb = row["Lebensdaten"]
         r_fun = row["Funktion"]
         r_tit = row["Titel"]
+
+        if isinstance(r_fun, str):
+            # this is a rough solution for the problem with missing whitespaces after ')' or ',' etc.
+            # todo: make sure that references to the source entry are not using the substitute r_fun value created here
+            def replacer(match):
+                replacement = match.group(0)[:-1]+" "+match.group(0)[-1:]
+                logger.info(f"r_fun: replaced {match.group(0)} with: {replacement}")
+                return replacement
+            pattern = re.compile(r"(\)|\,|;)\S")
+            r_fun = re.sub(pattern, replacer, r_fun)
 
         vorname = person_process_field_vorname(r_vor)
 
@@ -679,8 +688,6 @@ def process_row(idx, row, src_base, conf):
 
         doc = create_and_process_doc(r_fun, idx)
         pers = process_chunks(doc, pers, row)
-
-        #todo : debug open parantheses within dates: causes the import to stop
 
 
         return pers

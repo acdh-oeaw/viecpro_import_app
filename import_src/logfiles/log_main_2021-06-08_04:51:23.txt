@@ -1,0 +1,17 @@
+working on row: 2183
+Herberstein
+t_tit = Graf; Freiherr auf Neuburg u. Gutenhaag
+t_list = ['Graf', 'Freiherr auf Neuburg u. Gutenhaag']
+len_doc_chunks: 7, len Ämter-Spalte: 2
+FIRST HOFSTAAT = L
+ this is the full relation: {'related_person': <Person: Herberstein, Karl Leopold >}
+USED first hofstaat in chunk get nm hst: L
+old: 1694-09-24;Wien, new: 1694-09-24;Wien
+rel, chunk sdw: 1694-09-24;Wien
+ this is the full relation: {'related_person': <Person: Herberstein, Karl Leopold >, 'start_date_written': '1694-09-24;Wien'}
+USED first hofstaat in chunk get nm hst: L
+inner date: <1685-12-20 - 1686-03-27>
+new_i_date: <1685-12-20 - 1686-03-27>
+old: 1685-12-20/1686-03-27<1685-12-20 - 1686-03-27>, new: 1685-12-20/1686-03-27<1685-12-20 - 1686-03-27>
+inner date: <1704-00-00)Kämmerer>
+new_i_date: <1704-06-30)Kämmerer>

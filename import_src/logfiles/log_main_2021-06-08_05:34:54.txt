@@ -1,0 +1,47 @@
+working on row: 2183
+r_fun: replaced ), with: ) ,
+r_fun: replaced ;W with: ; W
+r_fun: replaced )K with: ) K
+r_fun: replaced ), with: ) ,
+r_fun: replaced ;W with: ; W
+r_fun: replaced ), with: ) ,
+r_fun: replaced ); with: ) ;
+r_fun: replaced )1 with: ) 1
+r_fun: replaced )) with: ) )
+Herberstein
+t_tit = Graf; Freiherr auf Neuburg u. Gutenhaag
+t_list = ['Graf', 'Freiherr auf Neuburg u. Gutenhaag']
+len_doc_chunks: 6, len Ämter-Spalte: 2
+FIRST HOFSTAAT = L
+old: 1694-09-24, new: 1694-09-24<1694-09-24>
+rel, chunk sdw: 1694-09-24<1694-09-24>
+ this is the full relation: {'related_person': <Person: Herberstein, Karl Leopold >, 'start_date_written': '1694-09-24<1694-09-24>'}
+USED first hofstaat in chunk get nm hst: L
+inner date: <1685-12-20 - 1686-03-27>
+new_i_date: <1685-12-20 - 1686-03-27>
+old: 1685-12-20/1686-03-27<1685-12-20 - 1686-03-27>, new: 1685-12-20/1686-03-27<1685-12-20 - 1686-03-27>
+rel, chunk sdw: 1685-12-20/1686-03-27<1685-12-20 - 1686-03-27>
+ this is the full relation: {'related_person': <Person: Herberstein, Karl Leopold >, 'start_date_written': '1685-12-20/1686-03-27<1685-12-20 - 1686-03-27>'}
+USED first hofstaat in chunk get nm hst: L
+inner date: <1704-06-30>
+new_i_date: <1704-06-30>
+old: bis 1704<1704-06-30>, new: bis 1704<1704-06-30>
+old: 1694-09-24, new: 1694-09-24<1694-09-24>
+rel, chunk sdw: bis 1704<1704-06-30>
+rel, chunk edw: bis 1704<1704-06-30>
+ this is the full relation: {'related_person': <Person: Herberstein, Karl Leopold >, 'start_date_written': 'bis 1704<1704-06-30>', 'end_date_written': '1694-09-24<1694-09-24>'}
+USED first hofstaat in chunk get nm hst: L
+inner date: <1685-12-20 - 1686-03-27>
+new_i_date: <1685-12-20 - 1686-03-27>
+old: 1685-12-20/1686-03-27<1685-12-20 - 1686-03-27>, new: 1685-12-20/1686-03-27<1685-12-20 - 1686-03-27>
+rel, chunk sdw: 1685-12-20/1686-03-27<1685-12-20 - 1686-03-27>
+ this is the full relation: {'related_person': <Person: Herberstein, Karl Leopold >, 'start_date_written': '1685-12-20/1686-03-27<1685-12-20 - 1686-03-27>'}
+USED first hofstaat in chunk get nm hst: L
+ this is the full relation: {'related_person': <Person: Herberstein, Karl Leopold >}
+USED first hofstaat in chunk get nm hst: L
+inner date: <1703-1705>
+new_i_date: <1703-1705>
+old: ? 1703-1705<1703-1705>, new: ? 1703-1705<1703-1705>
+rel, chunk sdw: ? 1703-1705<1703-1705>
+ this is the full relation: {'related_person': <Person: Herberstein, Karl Leopold >, 'start_date_written': '? 1703-1705<1703-1705>'}
+USED first hofstaat in chunk get nm hst: L
