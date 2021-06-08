@@ -2,7 +2,7 @@ import os, django, re
 
 from viecpro_import_app.import_src.create_database_objects import create_all
 
-os.environ["DJANGO_SETTINGS_MODULE"] = "django_settings.viecpro_testing"
+os.environ["DJANGO_SETTINGS_MODULE"] = "django_settings.viecpro_remote"
 django.setup()
 from copy import deepcopy
 import time
