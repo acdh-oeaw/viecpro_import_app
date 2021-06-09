@@ -83,10 +83,9 @@ logger.setLevel(logging.DEBUG)
 )
 def run_import(
 
-    #todo: how to resolve this with get_data_variables
     username=None,
     django_settings="django_settings.viecpro_remote",
-    collection="Import Collection",
+    collection="Full HSV Import",
     spacy_model="de_VieCPro_HZAB",
     #existing_annotations="data/viecpro_HZAB_funktion_0.jsonl",
     existing_annotations="data/viecpro_HSV_0.jsonl",
@@ -139,7 +138,7 @@ def run_import(
             col, crt = Collection.objects.get_or_create(name=cfg.collection)
             if me:
                 reversion.set_user(me)
-            reversion.set_comment(f"First full HSV test import. Import rows {offs} - {off_end}")
+            reversion.set_comment(f"First full HSV test-import. Importing rows {offs} - {off_end}")
             src_base = {
                 "orig_filename": f"{path_df}",
                 "pubinfo": f"File from GIT commit {subprocess.check_output(['git', 'show-ref', 'HEAD']).strip()}",

@@ -5,7 +5,7 @@ from import_src.file_processing import get_list_abbreviations, get_lst_hofst, ge
 path = pathlib.Path().absolute()
 
 def run_hardcode():
-    collection = "Import Collection"
+    collection = "Full HSV Import"
     spacy_model = "de_VieCPro_HZAB"
     existing_annotations = str(path / "data/viecpro_HZAB_funktion_0.jsonl")
     path_df = str(path / "data/1_Hofzahlamtsbücher-HZAB-2020-12-06.xlsx")

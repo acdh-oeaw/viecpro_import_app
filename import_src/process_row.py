@@ -470,7 +470,23 @@ def chunk_process_amt(c_A, r_A, c_H, inst, nm_hst, idx_chunk, row, amt_test):
             ln_minus = len(f"{amt_name} ({nm_hst})") - 250
             logger.debug(f"{amt_name[:-ln_minus]} ({nm_hst})")
             amt_name = f"{amt_name[:-ln_minus]} ({nm_hst})"
-        inst2, created = Institution.objects.get_or_create(name=amt_name)
+        try:
+            inst2, created = Institution.objects.get_or_create(name=amt_name)
+        except:
+            try:
+                inst2, inst3, created = get_or_create_amt(
+                    row)
+                if created:
+                    InstitutionInstitution.objects.create(
+                        related_institutionA=inst3,
+                        related_institutionB=inst,
+                        relation_type=rl_teil_von,
+                    )
+            except Exception as e:
+                inst2 = amt_dummy
+                inst3 = False
+                logger.debug(f"Exception in Amt function: {e}")
+
 
     elif isinstance(r_A, str) and idx_chunk == 0:
         try:
