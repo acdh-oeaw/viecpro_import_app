@@ -7,6 +7,7 @@ env_variables.py
 settings/settings.yaml
 django_settings/*
 django_settings/viecpro_testing.py
+django_settings/viecpro_remote.py
 __pycache__/
 settings/.DS_*
 .DS_*
