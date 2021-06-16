@@ -1,4 +1,7 @@
 from spacy.tokens import Span
+import logging
+
+logger = logging.getLogger("comp_logger")
 
 class ExtendEntities(object):
     name = "extend_entities"
@@ -19,7 +22,7 @@ class ExtendEntities(object):
             if d_end.i != ent.end - 1 and str(d_end) in [".", "/"] and d_end.i not in lst_ids:
                 s1 = Span(doc, start=ent.start, end=d_end.i + 1, label=ent.label_)
                 new_ents.append(s1)
-                print(f"extended entity: old entity: {ent}, new entity: {s1}")
+                logger.info(f"extended entity: old entity: {ent}, new entity: {s1}")
             else:
                 new_ents.append(ent)
         doc.ents = new_ents

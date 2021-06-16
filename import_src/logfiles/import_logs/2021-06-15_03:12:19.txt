@@ -1,0 +1,37 @@
+----------------
+Import MetaInfo:
+
+username: GPirgie
+django_settings: django_settings.viecpro_remote
+collection: Sample HSV Import 14-6-21 – Amt/Hofstaat bugfix; CStandhartinger
+spacy_model: using local model
+existing_annotations: data/viecpro_HSV_0.jsonl
+path_df: data/3_HSV-angepasst-IMPORT.xlsx
+path_hofstaat: data/Kürzel-Hofstaate-EX-ACC-2021-06-02.xlsx
+path_aemter: data/Kürzel-Ämter-ACC-EX-2021-02-08.xlsx
+path_abbreviations: data/EXCEL-ACCESS_Kürzel-Titel-Orden-2021-01-28.xlsx
+logger_level: 20
+collection_team: ['MRomberg', 'MKaiser', 'CStandhartinger']
+use_stopvalues: False
+is_test: False
+sample_frame: None
+without_testing: True
+log_msg: Third Test Import; test ämter/hofstaat; test title-bugfix
+----------------
+
+
+get_model >>> Used config cfg class for model configuration
+----------------
+Using the local model: models/viecpro_ner_hsv_5-21/
+
+NLP-pipeline:
+	ner
+	use_existing_annotations
+	add_brackets
+	rename_functions
+	remove_names
+	date_prepocissions
+	create_chunks
+----------------
+
+

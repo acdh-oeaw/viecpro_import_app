@@ -1,3 +1,6 @@
+import logging
+
+logger = logging.getLogger("comp_logger")
 
 class RemoveNames(object):
     name = "remove_names"

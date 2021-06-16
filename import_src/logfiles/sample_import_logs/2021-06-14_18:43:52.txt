@@ -1,0 +1,203 @@
+----------------
+Import MetaInfo:
+
+username: None
+django_settings: django_settings.hsv_settings
+collection: Import HSV full 14-6-21
+spacy_model: using local model
+existing_annotations: data/viecpro_HSV_0.jsonl
+path_df: data/3_HSV-angepasst-IMPORT.xlsx
+path_hofstaat: data/Kürzel-Hofstaate-EX-ACC-2021-06-02.xlsx
+path_aemter: data/Kürzel-Ämter-ACC-EX-2021-02-08.xlsx
+path_abbreviations: data/EXCEL-ACCESS_Kürzel-Titel-Orden-2021-01-28.xlsx
+logger_level: 20
+collection_team: ['MRomberg', 'MKaiser', 'CStandhartinger']
+use_stopvalues: False
+is_test: False
+sample_frame: using sample frame
+without_testing: True
+log_msg: None
+----------------
+
+
+get_model >>> Used config cfg class for model configuration
+----------------
+Using the local model: models/viecpro_ner_hsv_5-21/
+
+NLP-pipeline:
+	ner
+	use_existing_annotations
+	add_brackets
+	rename_functions
+	remove_names
+	date_prepocissions
+	create_chunks
+----------------
+
+
+
+--------- Start of row | 20 | -------------- 
+run_sample_import >>> Working with pd-Series
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> Abensberg-Traun (Abensperg-Traun, Abensperg , Traun)
+person_process_field_familienname >>> fam1: Abensberg-Traun
+person_process_field_familienname >>> fam2: <re.Match object; span=(16, 52), match='(Abensperg-Traun, Abensperg , Traun)'>
+person_process_field_titel >>> t_tit = Graf
+person_process_field_titel >>> t_list = ['Graf']
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc.ents at start of call = (Landmarschall, 1658-09-30 / 1698-00-00, Kämmerer, 1669-03-26 / 1701-00-00 / 1704-00-00, OKäA, Geh. Rat, ksl., Landmarschall, Ö, 1698-00-00, Geh. Rat, 1701-00-00 / 1704-00-00, GR, Landmarschall, Generallandoberst, NÖ, 1701-00-00, NÖ-R, Geh. Konferenzrat, 1701-00-00 / 1704-00-00, GK, Generallandoberst, 1701-00-00, NÖ, Generallandoberst, 1704-00-00, Ö-udE, Landmarschall, Generallandoberst, Ö-udE., 1704-00-00, NÖ-LG)
+NLP COMPONENT >>> UseExistingAnnotations.py >>> compare docs
+NLP COMPONENT >>> UseExistingAnnotations.py >>> THIS WAS LOGGED :20, Landmarschall (1658-09-30 / 1698-00-00) \ Empfang des Kaisers vor Wien \ NÖ; Kämmerer (1669-03-26 / 1701-00-00 / 1704-00-00) \ Eid \ OKäA; Geh. Rat, ksl., Landmarschall in Ö (1698-00-00) \ Liste RGV; Geh. Rat (1701-00-00 / 1704-00-00) \ GR; Landmarschall , Generallandoberst NÖ (1701-00-00) \ NÖ-R; Geh. Konferenzrat (1701-00-00 / 1704-00-00) GK; Generallandoberst (1701-00-00) \ NÖ; Generallandoberst (1704-00-00) \ Ö-udE; Landmarschall , Generallandoberst in Ö-udE. (1704-00-00) \ NÖ-LG, [{'start': 0, 'end': 13, 'token_start': 0, 'token_end': 0, 'label': 'FUNKTION'}, {'start': 15, 'end': 38, 'token_start': 2, 'token_end': 12, 'label': 'DATUM'}, {'start': 77, 'end': 85, 'token_start': 23, 'token_end': 23, 'label': 'FUNKTION'}, {'start': 87, 'end': 123, 'token_start': 25, 'token_end': 41, 'label': 'DATUM'}, {'start': 133, 'end': 137, 'token_start': 46, 'token_end': 46, 'label': 'AMT'}, {'start': 139, 'end': 147, 'token_start': 48, 'token_end': 50, 'label': 'FUNKTION'}, {'start': 155, 'end': 168, 'token_start': 55, 'token_end': 55, 'label': 'FUNKTION'}, {'start': 172, 'end': 173, 'token_start': 57, 'token_end': 57, 'label': 'AMT'}, {'start': 175, 'end': 185, 'token_start': 59, 'token_end': 63, 'label': 'DATUM'}, {'start': 200, 'end': 208, 'token_start': 69, 'token_end': 71, 'label': 'FUNKTION'}, {'start': 210, 'end': 233, 'token_start': 73, 'token_end': 83, 'label': 'DATUM'}, {'start': 237, 'end': 239, 'token_start': 86, 'token_end': 86, 'label': 'FUNKTION'}, {'start': 241, 'end': 254, 'token_start': 88, 'token_end': 88, 'label': 'FUNKTION'}, {'start': 257, 'end': 274, 'token_start': 90, 'token_end': 90, 'label': 'FUNKTION'}, {'start': 275, 'end': 277, 'token_start': 91, 'token_end': 91, 'label': 'AMT'}, {'start': 279, 'end': 289, 'token_start': 93, 'token_end': 97, 'label': 'DATUM'}, {'start': 293, 'end': 297, 'token_start': 100, 'token_end': 100, 'label': 'AMT'}, {'start': 299, 'end': 316, 'token_start': 102, 'token_end': 104, 'label': 'FUNKTION'}, {'start': 318, 'end': 341, 'token_start': 106, 'token_end': 116, 'label': 'DATUM'}, {'start': 343, 'end': 345, 'token_start': 118, 'token_end': 118, 'label': 'AMT'}, {'start': 347, 'end': 364, 'token_start': 120, 'token_end': 120, 'label': 'FUNKTION'}, {'start': 366, 'end': 376, 'token_start': 122, 'token_end': 126, 'label': 'DATUM'}, {'start': 380, 'end': 382, 'token_start': 129, 'token_end': 129, 'label': 'AMT'}, {'start': 384, 'end': 401, 'token_start': 131, 'token_end': 131, 'label': 'FUNKTION'}, {'start': 403, 'end': 413, 'token_start': 133, 'token_end': 137, 'label': 'DATUM'}, {'start': 417, 'end': 422, 'token_start': 140, 'token_end': 140, 'label': 'AMT'}, {'start': 424, 'end': 437, 'token_start': 142, 'token_end': 142, 'label': 'FUNKTION'}, {'start': 440, 'end': 457, 'token_start': 144, 'token_end': 144, 'label': 'FUNKTION'}, {'start': 461, 'end': 467, 'token_start': 146, 'token_end': 146, 'label': 'AMT'}, {'start': 469, 'end': 479, 'token_start': 148, 'token_end': 152, 'label': 'DATUM'}, {'start': 483, 'end': 488, 'token_start': 155, 'token_end': 155, 'label': 'AMT'}]
+NLP COMPONENT >>> UseExistingAnnotations.py >>> lst_ents = [Landmarschall, 1658-09-30 / 1698-00-00, Kämmerer, 1669-03-26 / 1701-00-00 / 1704-00-00, OKäA, Geh. Rat, Landmarschall, Ö, 1698-00-00, Geh. Rat, 1701-00-00 / 1704-00-00, GR, Landmarschall, Generallandoberst, NÖ, 1701-00-00, NÖ-R, Geh. Konferenzrat, 1701-00-00 / 1704-00-00, GK, Generallandoberst, 1701-00-00, NÖ, Generallandoberst, 1704-00-00, Ö-udE, Landmarschall, Generallandoberst, Ö-udE., 1704-00-00, NÖ-LG]
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc.ents at end of call = (Landmarschall, 1658-09-30 / 1698-00-00, Kämmerer, 1669-03-26 / 1701-00-00 / 1704-00-00, OKäA, Geh. Rat, Landmarschall, Ö, 1698-00-00, Geh. Rat, 1701-00-00 / 1704-00-00, GR, Landmarschall, Generallandoberst, NÖ, 1701-00-00, NÖ-R, Geh. Konferenzrat, 1701-00-00 / 1704-00-00, GK, Generallandoberst, 1701-00-00, NÖ, Generallandoberst, 1704-00-00, Ö-udE, Landmarschall, Generallandoberst, Ö-udE., 1704-00-00, NÖ-LG)
+NLP COMPONENT >>> RenameFunctions.py >>> removing Ö from ents
+NLP COMPONENT >>> CreateChunks.py >>> Chunk AMT = OKäA
+NLP COMPONENT >>> CreateChunks.py >>> Chunk AMT = NÖ
+NLP COMPONENT >>> CreateChunks.py >>> In else clause of chunks, chunk = {'DATUM': ['1701-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Landmarschall', 'Generallandoberst'], 'AMT': 'NÖ'}
+NLP COMPONENT >>> CreateChunks.py >>> Chunk AMT = GK
+NLP COMPONENT >>> CreateChunks.py >>> Chunk AMT = NÖ
+NLP COMPONENT >>> CreateChunks.py >>> Chunk AMT = Ö-udE
+NLP COMPONENT >>> CreateChunks.py >>> Chunk AMT = Ö-udE.
+NLP COMPONENT >>> CreateChunks.py >>> In else clause of chunks, chunk = {'DATUM': ['1704-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Landmarschall', 'Generallandoberst'], 'AMT': 'Ö-udE.'}
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(11) = [{'DATUM': ['1658-09-30 / 1698-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Landmarschall'], 'AMT': None}, {'DATUM': ['1669-03-26 / 1701-00-00 / 1704-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Kämmerer'], 'AMT': 'OKäA'}, {'DATUM': ['1698-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Geh. Rat', 'Landmarschall'], 'AMT': None}, {'DATUM': ['1701-00-00 / 1704-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Geh. Rat', 'GR'], 'AMT': None}, {'DATUM': ['1701-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Landmarschall', 'Generallandoberst'], 'AMT': 'NÖ'}, {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': [], 'AMT': None}, {'DATUM': ['1701-00-00 / 1704-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Geh. Konferenzrat'], 'AMT': 'GK'}, {'DATUM': ['1701-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Generallandoberst'], 'AMT': 'NÖ'}, {'DATUM': ['1704-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Generallandoberst'], 'AMT': 'Ö-udE'}, {'DATUM': ['1704-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Landmarschall', 'Generallandoberst'], 'AMT': 'Ö-udE.'}, {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': [], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': ['1658-09-30 / 1698-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Landmarschall'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	1: chunk: {'DATUM': ['1669-03-26 / 1701-00-00 / 1704-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Kämmerer'], 'AMT': 'OKäA'}
+NLP COMPONENT >>> CreateChunks.py >>> 	2: chunk: {'DATUM': ['1698-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Geh. Rat', 'Landmarschall'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	3: chunk: {'DATUM': ['1701-00-00 / 1704-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Geh. Rat', 'GR'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	4: chunk: {'DATUM': ['1701-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Landmarschall', 'Generallandoberst'], 'AMT': 'NÖ'}
+NLP COMPONENT >>> CreateChunks.py >>> 	5: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': [], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	6: chunk: {'DATUM': ['1701-00-00 / 1704-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Geh. Konferenzrat'], 'AMT': 'GK'}
+NLP COMPONENT >>> CreateChunks.py >>> 	7: chunk: {'DATUM': ['1701-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Generallandoberst'], 'AMT': 'NÖ'}
+NLP COMPONENT >>> CreateChunks.py >>> 	8: chunk: {'DATUM': ['1704-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Generallandoberst'], 'AMT': 'Ö-udE'}
+NLP COMPONENT >>> CreateChunks.py >>> 	9: chunk: {'DATUM': ['1704-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Landmarschall', 'Generallandoberst'], 'AMT': 'Ö-udE.'}
+NLP COMPONENT >>> CreateChunks.py >>> 	10: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': [], 'AMT': None}
+process_chunks >>> len_doc_chunks: 11, len Ämter-Spalte: 8
+helper_hsv_match_hofstaate >>> r_H = L
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': ['1658-09-30 / 1698-00-00'], 'HOFSTAAT': 'L', 'FUNKTION': ['Landmarschall'], 'AMT': None}
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': ['1669-03-26 / 1701-00-00 / 1704-00-00'], 'HOFSTAAT': 'L', 'FUNKTION': ['Kämmerer'], 'AMT': 'OKäA'}
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': ['1698-00-00'], 'HOFSTAAT': 'L', 'FUNKTION': ['Geh. Rat', 'Landmarschall'], 'AMT': None}
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': ['1701-00-00 / 1704-00-00'], 'HOFSTAAT': 'L', 'FUNKTION': ['Geh. Rat', 'GR'], 'AMT': None}
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': ['1701-00-00'], 'HOFSTAAT': 'L', 'FUNKTION': ['Landmarschall', 'Generallandoberst'], 'AMT': 'NÖ'}
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': [], 'HOFSTAAT': 'L', 'FUNKTION': [], 'AMT': None}
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': ['1701-00-00 / 1704-00-00'], 'HOFSTAAT': 'L', 'FUNKTION': ['Geh. Konferenzrat'], 'AMT': 'GK'}
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': ['1701-00-00'], 'HOFSTAAT': 'L', 'FUNKTION': ['Generallandoberst'], 'AMT': 'NÖ'}
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': ['1704-00-00'], 'HOFSTAAT': 'L', 'FUNKTION': ['Generallandoberst'], 'AMT': 'Ö-udE'}
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': ['1704-00-00'], 'HOFSTAAT': 'L', 'FUNKTION': ['Landmarschall', 'Generallandoberst'], 'AMT': 'Ö-udE.'}
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': [], 'HOFSTAAT': 'L', 'FUNKTION': [], 'AMT': None}
+helper_hsv_match_amt_with_funct >>> r_A = GR; KR; NÖ; NÖ-LG; NÖ-R; OKäA; Ö-udE.;
+process_chunks >>> cD ['1658-09-30 / 1698-00-00'], cF ['Landmarschall'], cH L, CA GR
+helper_hsv_post_process_dates >>> old: 1658-09-30 / 1698-00-00, new: 1658-09-30 / 1698-00-00
+chunk_process_datum >>> rel, chunk sdw: 1658-09-30 / 1698-00-00
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abensberg-Traun, Otto Ehrenreich>, 'start_date_written': '1658-09-30 / 1698-00-00'}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: GR
+chunk_process_amt_NEW >>> c_A was: GR and amt after matching with amt index is: L1
+chunk_process_amt_NEW >>>  Return value of inst2 = L1 (L1 (Ks.))
+chunk_create_relations >>> create realtions called for c_F ['Landmarschall']
+parse_date_range_individual >>> APIS: Could not interpret date: <class 'ValueError'>
+parse_date >>>  APIS: Could not parse date: ' 1658-09-30/1698-00-00 ' due to error Could not interpret date.: 
+process_chunks >>> cD ['1669-03-26 / 1701-00-00 / 1704-00-00'], cF ['Kämmerer'], cH L, CA OKäA
+helper_hsv_post_process_dates >>> old: 1669-03-26 / 1701-00-00 / 1704-00-00, new: 1669-03-26 / 1701-00-00 / 1704-00-00
+chunk_process_datum >>> rel, chunk sdw: 1669-03-26 / 1701-00-00 / 1704-00-00
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abensberg-Traun, Otto Ehrenreich>, 'start_date_written': '1669-03-26 / 1701-00-00 / 1704-00-00'}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: OKäA
+chunk_process_amt_NEW >>> c_A was: OKäA and amt after matching with amt index is: L
+chunk_process_amt_NEW >>>  Return value of inst2 = L (L1 (Ks.))
+chunk_create_relations >>> create realtions called for c_F ['Kämmerer']
+parse_date_range_individual >>> APIS: Could not interpret date: <class 'ValueError'>
+parse_date >>>  APIS: Could not parse date: ' 1669-03-26/1701-00-00/1704-00-00 ' due to error Could not interpret date.: 
+process_chunks >>> cD ['1698-00-00'], cF ['Geh. Rat', 'Landmarschall'], cH L, CA Dummy Amt
+helper_hsv_post_process_dates >>> old: 1698-00-00, new: 1698-00-00<1698-06-30>
+chunk_process_datum >>> rel, chunk sdw: 1698-00-00<1698-06-30>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abensberg-Traun, Otto Ehrenreich>, 'start_date_written': '1698-00-00<1698-06-30>'}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: Dummy Amt
+chunk_process_amt_NEW >>> c_A was: Dummy Amt and amt after matching with amt index is: Dummy Amt
+chunk_process_amt_NEW >>>  Return value of inst2 = Dummy Amt (L1 (Ks.))
+chunk_create_relations >>> create realtions called for c_F ['Geh. Rat', 'Landmarschall']
+process_chunks >>> cD ['1701-00-00 / 1704-00-00'], cF ['Geh. Rat', 'GR'], cH L, CA Dummy Amt
+helper_hsv_post_process_dates >>> old: 1701-00-00 / 1704-00-00, new: 1701-00-00 / 1704-00-00
+chunk_process_datum >>> rel, chunk sdw: 1701-00-00 / 1704-00-00
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abensberg-Traun, Otto Ehrenreich>, 'start_date_written': '1701-00-00 / 1704-00-00'}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: Dummy Amt
+chunk_process_amt_NEW >>> c_A was: Dummy Amt and amt after matching with amt index is: Dummy Amt
+chunk_process_amt_NEW >>>  Return value of inst2 = Dummy Amt (L1 (Ks.))
+chunk_create_relations >>> create realtions called for c_F ['Geh. Rat', 'GR']
+parse_date_range_individual >>> APIS: Could not interpret date: <class 'ValueError'>
+parse_date >>>  APIS: Could not parse date: ' 1701-00-00/1704-00-00 ' due to error Could not interpret date.: 
+parse_date_range_individual >>> APIS: Could not interpret date: <class 'ValueError'>
+parse_date >>>  APIS: Could not parse date: ' 1701-00-00/1704-00-00 ' due to error Could not interpret date.: 
+process_chunks >>> cD ['1701-00-00'], cF ['Landmarschall', 'Generallandoberst'], cH L, CA NÖ
+helper_hsv_post_process_dates >>> old: 1701-00-00, new: 1701-00-00<1701-06-30>
+chunk_process_datum >>> rel, chunk sdw: 1701-00-00<1701-06-30>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abensberg-Traun, Otto Ehrenreich>, 'start_date_written': '1701-00-00<1701-06-30>'}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: NÖ
+chunk_process_amt_NEW >>> c_A was: NÖ and amt after matching with amt index is: L1
+chunk_process_amt_NEW >>>  Return value of inst2 = L1 (L1 (Ks.))
+chunk_create_relations >>> create realtions called for c_F ['Landmarschall', 'Generallandoberst']
+process_chunks >>> cD [], cF [], cH L, CA Dummy Amt
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abensberg-Traun, Otto Ehrenreich>}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: Dummy Amt
+chunk_process_amt_NEW >>> c_A was: Dummy Amt and amt after matching with amt index is: Dummy Amt
+chunk_process_amt_NEW >>>  Return value of inst2 = Dummy Amt (L1 (Ks.))
+chunk_create_relations >>> create realtions called for c_F []
+process_chunks >>> cD ['1701-00-00 / 1704-00-00'], cF ['Geh. Konferenzrat'], cH L, CA GK
+helper_hsv_post_process_dates >>> old: 1701-00-00 / 1704-00-00, new: 1701-00-00 / 1704-00-00
+chunk_process_datum >>> rel, chunk sdw: 1701-00-00 / 1704-00-00
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abensberg-Traun, Otto Ehrenreich>, 'start_date_written': '1701-00-00 / 1704-00-00'}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: GK
+chunk_process_amt_NEW >>> c_A was: GK and amt after matching with amt index is: L1
+chunk_process_amt_NEW >>>  Return value of inst2 = L1 (L1 (Ks.))
+chunk_create_relations >>> create realtions called for c_F ['Geh. Konferenzrat']
+parse_date_range_individual >>> APIS: Could not interpret date: <class 'ValueError'>
+parse_date >>>  APIS: Could not parse date: ' 1701-00-00/1704-00-00 ' due to error Could not interpret date.: 
+process_chunks >>> cD ['1701-00-00'], cF ['Generallandoberst'], cH L, CA NÖ
+helper_hsv_post_process_dates >>> old: 1701-00-00, new: 1701-00-00<1701-06-30>
+chunk_process_datum >>> rel, chunk sdw: 1701-00-00<1701-06-30>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abensberg-Traun, Otto Ehrenreich>, 'start_date_written': '1701-00-00<1701-06-30>'}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: NÖ
+chunk_process_amt_NEW >>> c_A was: NÖ and amt after matching with amt index is: L1
+chunk_process_amt_NEW >>>  Return value of inst2 = L1 (L1 (Ks.))
+chunk_create_relations >>> create realtions called for c_F ['Generallandoberst']
+process_chunks >>> cD ['1704-00-00'], cF ['Generallandoberst'], cH L, CA Ö-udE
+helper_hsv_post_process_dates >>> old: 1704-00-00, new: 1704-00-00<1704-06-30>
+chunk_process_datum >>> rel, chunk sdw: 1704-00-00<1704-06-30>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abensberg-Traun, Otto Ehrenreich>, 'start_date_written': '1704-00-00<1704-06-30>'}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: Ö-udE
+chunk_process_amt_NEW >>> c_A was: Ö-udE and amt after matching with amt index is: Ö-udE
+chunk_process_amt_NEW >>>  Return value of inst2 = Ö-udE (L1 (Ks.))
+chunk_create_relations >>> create realtions called for c_F ['Generallandoberst']
+process_chunks >>> cD ['1704-00-00'], cF ['Landmarschall', 'Generallandoberst'], cH L, CA Ö-udE.
+helper_hsv_post_process_dates >>> old: 1704-00-00, new: 1704-00-00<1704-06-30>
+chunk_process_datum >>> rel, chunk sdw: 1704-00-00<1704-06-30>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abensberg-Traun, Otto Ehrenreich>, 'start_date_written': '1704-00-00<1704-06-30>'}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: Ö-udE.
+chunk_process_amt_NEW >>> c_A was: Ö-udE. and amt after matching with amt index is: Ö-udE.
+chunk_process_amt_NEW >>>  Return value of inst2 = Ö-udE. (L1 (Ks.))
+chunk_create_relations >>> create realtions called for c_F ['Landmarschall', 'Generallandoberst']
+process_chunks >>> cD [], cF [], cH L, CA Dummy Amt
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abensberg-Traun, Otto Ehrenreich>}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: Dummy Amt
+chunk_process_amt_NEW >>> c_A was: Dummy Amt and amt after matching with amt index is: Dummy Amt
+chunk_process_amt_NEW >>>  Return value of inst2 = Dummy Amt (L1 (Ks.))
+chunk_create_relations >>> create realtions called for c_F []

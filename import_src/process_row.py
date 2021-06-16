@@ -1,43 +1,26 @@
-import os, django, re
-
-from viecpro_import_app.import_src.create_database_objects import create_all
-
-os.environ["DJANGO_SETTINGS_MODULE"] = "django_settings.viecpro_remote"
-django.setup()
-from copy import deepcopy
-import time
-
-from import_src.file_processing import (
-    resolve_abbreviations,
-)
-from apis_core.apis_entities.models import Person
-from apis_core.apis_vocabularies.models import Title
-from apis_core.apis_metainfo.models import Source, Text
-from apis_core.apis_relations.models import (
-    PersonInstitution,
-    InstitutionInstitution,
-)
-from apis_core.apis_labels.models import Label
-from apis_core.apis_vocabularies.models import (
-    TextType,
-)
-
-from import_src.create_database_objects import *
+import re
 import logging
 
-logger = logging.getLogger(__name__)
-stream_handler = logging.StreamHandler()
-logger.addHandler(stream_handler)
-timestamp = time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime())
-filehandler = logging.FileHandler(f"import_src/logfiles/log_main_{timestamp}.txt", mode="w")
-logger.addHandler(filehandler)
-logger.setLevel(logging.INFO)
+from viecpro_import_app.import_src.create_database_objects import create_all
+from copy import deepcopy
+from import_src.file_processing import resolve_abbreviations
 
+from apis_core.apis_entities.models import Person
+from apis_core.apis_vocabularies.models import Title, InstitutionType
+from apis_core.apis_metainfo.models import Source, Text
+from apis_core.apis_relations.models import PersonInstitution, InstitutionInstitution
+from apis_core.apis_labels.models import Label
+from apis_core.apis_vocabularies.models import TextType
+from import_src.create_database_objects import *
+import math
 
 global cfg
 
+logger = logging.getLogger("import_logger")
+funclogger = logging.getLogger("func_logger")
 
 def person_process_field_vorname(r_vor):
+    funclogger.info(f"r_vor")
     keep = [", sen.", ", jun.", ", der jüngere", ", die jüngere"]
     if isinstance(r_vor, str):
         temp = r_vor.replace("(?)", "?")
@@ -58,12 +41,12 @@ def person_process_field_vorname(r_vor):
 
 
 def person_process_field_familienname(r_fam, idx):
-    logger.info(cfg.df.Familienname.iloc[idx])
+    funclogger.info(cfg.df.Familienname.iloc[idx])
     if isinstance(r_fam, str):
         if ", de" in r_fam:
-            logger.info(f"Init test: 'de in fam' INPUT: {r_fam} END INPUT, ROW:{idx}")
+            funclogger.info(f"Init test: 'de in fam' INPUT: {r_fam} END INPUT, ROW:{idx}")
         if ", von" in r_fam:
-            logger.info(f"Init test: 'von in fam' INPUT: {r_fam} END INPUT, ROW:{idx}")
+            funclogger.info(f"Init test: 'von in fam' INPUT: {r_fam} END INPUT, ROW:{idx}")
         familienname = r_fam
         familienname = familienname.replace("(?)", "?")
     else:
@@ -75,15 +58,15 @@ def person_process_field_familienname(r_fam, idx):
         #labels_fam = False
         for idx_fam, familienname in enumerate(familienname.split(", oo")):
             if "(" in familienname:
-                fam1_ = familienname.split(" (")[0]
+                fam1_ = familienname.split(" (")[0].strip()
                 fam2 = re.search(r"\(([^\)]+)\)", familienname)
-                logger.info(f"fam1: {fam1_}")
-                logger.info(f"fam2: {fam2}")
+                funclogger.info(f"fam1: {fam1_}")
+                funclogger.info(f"fam2: {fam2}")
                 if fam2:
                     if ";" in fam2.group(1):
                         fam2 = fam2.group(1).split(";")
                         fam2 = [x.strip() for x in fam2]
-                    elif not ", von" in fam2.group(1) and not ", de" in fam2.group(1):
+                    elif not ", von" in fam2.group(1) and not ", de" in fam2.group(1) and not ", d'" in fam2.group(1): # todo added this to catch , d' names. are there other variants?
                         fam2 = fam2.group(1).split(",")
                         fam2 = [x.strip() for x in fam2]
                     else:
@@ -91,15 +74,15 @@ def person_process_field_familienname(r_fam, idx):
                         temp_.append(fam2.group(1).strip())
                         fam2 = temp_
             elif "[" in familienname:
-                fam1_ = familienname.split(" [")[0]
+                fam1_ = familienname.split(" [")[0].strip()
                 fam2 = re.search(r"\[([^\]]+)\]", familienname)
-                logger.info(f"fam1: {fam1_}")
-                logger.info(f"fam2: {fam2}")
+                funclogger.info(f"fam1: {fam1_}")
+                funclogger.info(f"fam2: {fam2}")
                 if fam2:
                     if ";" in fam2.group(1):
                         fam2 = fam2.group(1).split(";")
                         fam2 = [x.strip() for x in fam2]
-                    elif not ", von" in fam2.group(1) and not ", de" in fam2.group(1):
+                    elif not ", von" in fam2.group(1) and not ", de" in fam2.group(1) and not ", d'" in fam2.group(1):
                         fam2 = fam2.group(1).split(",")
                         fam2 = [x.strip() for x in fam2]
                     else:
@@ -107,7 +90,10 @@ def person_process_field_familienname(r_fam, idx):
                         temp_.append(fam2.group(1).strip())
                         fam2 = temp_
             else:
-                fam1_ = familienname
+                fam1_ = familienname.strip()
+                funclogger.info(f"Used fam1_ = familienname.strip(), fam1_ = {fam1_}")
+                if "," in fam1_:
+                    funclogger.info(f"WHAT TO DO WITH THESE NAME: {fam1_}")
                 fam2 = False
             if fam2:
                 fam_temp = deepcopy(fam2)
@@ -155,9 +141,9 @@ def person_process_field_familienname(r_fam, idx):
         labels_fam.append(sn_alternative)
     if isinstance(r_fam, str):
         if ", de" in r_fam:
-            logger.debug(f"sn {sn}, labels_fam {labels_fam}, labels_fam_hzt {labels_fam_hzt}")
+            funclogger.debug(f"sn {sn}, labels_fam {labels_fam}, labels_fam_hzt {labels_fam_hzt}")
         if ", von" in r_fam:
-            logger.debug(f"sn {sn}, labels_fam {labels_fam}, labels_fam_hzt {labels_fam_hzt}")
+            funclogger.debug(f"sn {sn}, labels_fam {labels_fam}, labels_fam_hzt {labels_fam_hzt}")
 
     return sn, labels_fam, labels_fam_hzt
 
@@ -209,7 +195,7 @@ def person_process_field_lebensdaten(r_leb, pers_dic):
             birth = None
 
         else:
-            logger.info(f"NOT PARSED LEBENSDATEN -> {r_leb}")
+            funclogger.info(f"NOT PARSED LEBENSDATEN -> {r_leb}")
             birth = None
             death = None
         if birth:
@@ -233,37 +219,45 @@ def person_process_field_titel(r_tit, pers):
                   'Freiherr 1710 - 06 - 28 "Edler Herr von Ludwigstorff, Freiherr von Goldlamb',
                   ]
 
-    logger.warning(f"t_tit = {r_tit}")
+    funclogger.warning(f"t_tit = {r_tit}")
     if r_tit in change.keys():
         r_tit = change[r_tit]
     t_list, subst = re.subn(r"\(.*\)", "", r_tit)
     t_list = [x.strip() for x in t_list.split(";")] # changed from "," to ";" for HSV
-    logger.warning(f"t_list = {t_list}")
+    funclogger.warning(f"t_list = {t_list}")
 
-    def create_title(tit):
+    def create_title(tit, pers):
         if re.search(r"\d{4}", tit):
 
             tit_res = resolve_abbreviations(tit, cfg.list_abbreviations)
             date = re.search(r"(\d{4}){1}(-\d{2}-\d{2}){0,1}", tit).group(0)
             date = helper_hsv_post_process_dates(date)
-            logger.warning(f"tit_res: {tit_res}, date after processing: {date}")
-            Label.objects.create(label_type=lt_titel_datiert, temp_entity=pers, label=tit_res, start_date_written=date)
+            funclogger.warning(f"tit_res: {tit_res}, date after processing: {date}")
+            Label.objects.create(
+                label_type=lt_titel_datiert,
+                temp_entity=pers,
+                label=tit_res,
+                start_date_written=date
+            )
 
         t2, created = Title.objects.get_or_create(
             name=resolve_abbreviations(tit, cfg.list_abbreviations)
         )
-        pers.title.add(
-            t2)
+        pers.title.add(t2)
+
+        return pers
 
     for tit in t_list:
         if "," in tit and tit not in dont_split:
-            logger.warning(f"Komma in tit: {tit}")
+            funclogger.warning(f"Komma in tit: {tit}")
             for t in tit.split(","):
                 t = t.strip()
-                create_title(t)
-                logger.warning(f"CREATING SPLIT TITLE {t} from {tit}")
+                pers = create_title(t, pers)
+                funclogger.warning(f"CREATING SPLIT TITLE {t} from {tit}")
         else:
-            create_title(tit)
+            pers = create_title(tit, pers)
+
+    return pers
 
 
 
@@ -307,24 +301,24 @@ def create_and_process_doc(r_F, idx):
 def helper_hsv_post_process_dates(date):
     if "<" in date and ">" in date:
         i_date = re.search(r"<.*>", date).group(0)
-        logger.info(f"inner date: {i_date}")
+        funclogger.info(f"inner date: {i_date}")
         new_i_date = deepcopy(i_date)
         new_i_date = new_i_date.replace("-00-00", "-06-30")
-        logger.info(f"new_i_date: {new_i_date}")
+        funclogger.info(f"new_i_date: {new_i_date}")
         new_date = re.sub(i_date, new_i_date, date)
     else:
-        if len(date) == 10:
+        if len(date.strip()) == 10:
             if "-00-00" in date:
-                i_date = "<"+date[:4]+"-06-30>"
-                new_date = date+i_date
+                i_date = "<"+date[:4]+"-06-30>" #note: sliced down to replace orig  f.e. 1667-00-00 with 1667<1667-06-30>
+                new_date = date[:4]+i_date
             else:
                 new_date = f"{date}<{date}>"
-        elif len(date) == 4:
-            new_date = f"{date}<{date}>"
+        elif len(date.strip()) == 4:
+            new_date = f"{date}<{date}-06-30>"
         else:
             new_date = date
 
-    logger.info(f"old: {date}, new: {new_date}")
+    funclogger.info(f"old: {date}, new: {new_date}")
 
     return new_date
 
@@ -335,66 +329,58 @@ def chunk_process_datum(c_D, rel):
         c_D[0] = helper_hsv_post_process_dates(c_D[0])
         if "bis" in c_D[0]:
             rel["end_date_written"] = c_D[0]
-            logger.info(f"rel, chunk edw: {c_D[0]}")
+            funclogger.info(f"rel, chunk edw: {c_D[0]}")
         else:
             rel["start_date_written"] = c_D[0]
-            logger.info(f"rel, chunk sdw: {c_D[0]}")
+            funclogger.info(f"rel, chunk sdw: {c_D[0]}")
 
     elif len(c_D) == 2:
         c_D[0] = helper_hsv_post_process_dates(c_D[0])
         c_D[1] = helper_hsv_post_process_dates(c_D[1])
         rel["start_date_written"] = c_D[0]
-        logger.info(f"rel, chunk sdw: {c_D[0]}")
+        funclogger.info(f"rel, chunk sdw: {c_D[0]}")
 
         rel["end_date_written"] = c_D[1]
-        logger.info(f"rel, chunk edw: {c_D[0]}")
-    logger.info(f" this is the full relation: {rel}")
+        funclogger.info(f"rel, chunk edw: {c_D[0]}")
+    funclogger.info(f" this is the full relation: {rel}")
 
     return rel
 
 
-def chunk_get_nm_hst(c_H, r_H, idx_chunk, first_hs):
-    test_hs = False
-    if c_H:
-        test_hs = True
-        if c_H in cfg.lst_hofst.keys():
-            nm_hst = cfg.lst_hofst[c_H][0]
-        else:
-            nm_hst = c_H
-    elif first_hs:
-        test_hs = True
-        nm_hst = first_hs
-        logger.warning(f"USED first hofstaat in chunk get nm hst: {nm_hst}")
-
-    # elif isinstance(r_H, str) and idx_chunk == 0:  # write first hofstaat - no longer needed in hsv #todo commented out because no lonnger needed
-    #     test_hs = True
-    #     nm_hst = r_H.strip()
-    #     for hst in [x.strip() for x in r_H.split(";")]:
-    #         if hst in cfg.lst_hofst.keys():
-    #             nm_hst = cfg.lst_hofst[hst][0]
+def chunk_get_nm_hst(c_H):
+    funclogger.info(f"c_H = {c_H}")
+    if c_H in cfg.lst_hofst.keys():
+        nm_hst = cfg.lst_hofst[c_H][0]
     else:
-        nm_hst = "Dummy Hofstaat"
+        nm_hst = c_H
 
-    return nm_hst, test_hs
+    return nm_hst
 
-def chunk_create_institution(nm_hst, test_hs, pers):
-    #inst_type_hst, created = InstitutionType.objects.get_or_create(name="Hofstaat")
+def chunk_create_institution(nm_hst, pers):
+    inst_type_hst, created = InstitutionType.objects.get_or_create(name="Hofstaat")
     inst, created = Institution.objects.get_or_create(
         name=nm_hst, kind=inst_type_hst
-
     )
 
-    inst.collection.add(col_unsicher)
-    if test_hs:
+    inst.collection.add(col_unsicher) # todo: ?
+    # if test_hs:
+    #     PersonInstitution.objects.get_or_create(
+    #         related_institution=inst, related_person=pers, relation_type=rl_pers_hst
+    #     )
+
+    #This is used now instead of test_hs
+    if nm_hst != "Dummy Hofstaat":
+        funclogger.info(f"nm_hst is not Dummy Hofstaat: {nm_hst}")
         PersonInstitution.objects.get_or_create(
-            related_institution=inst, related_person=pers, relation_type=rl_pers_hst
-        )
+                 related_institution=inst, related_person=pers, relation_type=rl_pers_hst
+             )
 
     return inst
 
 
+#todo NOT USED at the moment.
 def get_or_create_amt(row):
-    beh_name = re.match(r"^(.+)[/\\(]", row["Amt/Behörde"])
+    beh_name = re.match(r"^(.+)[/\\(]", row["Amt/Behörde"]) # simply splits on / and ignores everythin after.
     if beh_name:
         amt = beh_name.group(1).strip()
     else:
@@ -402,24 +388,27 @@ def get_or_create_amt(row):
     try:
         row_target = cfg.df_aemter_index[amt]
     except:
+        funclogger.info(f"couldnt find matching Amt entry for {amt}")
         raise ValueError(f"couldnt find matching Amt entry for {amt}")
 
-    if isinstance(row.iloc[11], str):
-        logger.warning(f" row iloc 11, row iloc 7: {row.iloc[11]} --- {row.iloc[7]}")
-        if row.iloc[11] in cfg.lst_hofst.keys():
-            name_hst_1 = cfg.lst_hofst[row.iloc[11]][0]
+    r_H = row["Hofstaat"]
+    if isinstance(r_H, str):
+        funclogger.warning(f"r_H: {r_H}")
+        if r_H in cfg.lst_hofst.keys():
+            name_hst_1 = cfg.lst_hofst[r_H][0]
         else:
-            name_hst_1 = row.iloc[11]
+            name_hst_1 = r_H
     else:
         name_hst_1 = "Dummy Hofstaat"
 
-    test_unsicher = False
+    test_unsicher = False #todo: ?
     if name_hst_1 == "UNSICHER - Collection, manuelle Entscheidung":
         name_hst_1 = "UNSICHER"
         test_unsicher = True
     name_hst_1 = name_hst_1.replace('Hofstaat', '').strip()
 
-    logger.warning(f"row target_iloc[7]: {row_target.iloc[7]}")
+    funclogger.warning(f"row target_iloc[7]: {row_target.iloc[7]}")
+
     inst_type, c3 = InstitutionType.objects.get_or_create(name=row_target.iloc[7])
     amt_ent, created = Institution.objects.get_or_create(name=f'{row_target["APIS-Vereinheitlichung"]} ({name_hst_1})', kind=inst_type)
     amt_ent.collection.add(col_unsicher)
@@ -436,7 +425,7 @@ def get_or_create_amt(row):
 
 
 def create_text_entries(row, pers, src_base, map_text_type, columns=(5,18)):
-    for idx in range(5,18):
+    for idx in range(len(cfg.df.columns)): # todo note: changed. to import all columns
         if isinstance(row.iloc[idx], str):
             col_name = cfg.df.columns[idx]
             if col_name not in map_text_type.keys():
@@ -451,24 +440,27 @@ def create_text_entries(row, pers, src_base, map_text_type, columns=(5,18)):
     return map_text_type
 
 
+#Todo Not used at the moment, Completely Refactored into new version below. Delete and Rename Version below.
 def chunk_process_amt(c_A, r_A, c_H, inst, nm_hst, idx_chunk, row, amt_test):
 
     if c_A is not None and amt_test:
-        logger.warning("c_A is not none and amt_test is True")
+        funclogger.warning("c_A is not none and amt_test is True")
         if c_A.strip() in cfg.df_aemter_index.keys():
             amt = cfg.df_aemter_index[c_A.strip()].iloc[8]
+
         else:
             amt = c_A.strip()
+        amt = c_A.strip()
 
         if c_H is not None: # removed: idx_chunk == 0 or
             amt_name = f"{amt} ({nm_hst})"
         else:
             amt_name = f"{amt} (Dummy Hofstaat)"
-        logger.debug(amt_name)
+        funclogger.debug(amt_name)
         if len(amt_name) > 254:
-            logger.debug(f"len amtname {(len(amt_name) - 250)}")
+            funclogger.debug(f"len amtname {(len(amt_name) - 250)}")
             ln_minus = len(f"{amt_name} ({nm_hst})") - 250
-            logger.debug(f"{amt_name[:-ln_minus]} ({nm_hst})")
+            funclogger.debug(f"{amt_name[:-ln_minus]} ({nm_hst})")
             amt_name = f"{amt_name[:-ln_minus]} ({nm_hst})"
         try:
             inst2, created = Institution.objects.get_or_create(name=amt_name)
@@ -485,7 +477,7 @@ def chunk_process_amt(c_A, r_A, c_H, inst, nm_hst, idx_chunk, row, amt_test):
             except Exception as e:
                 inst2 = amt_dummy
                 inst3 = False
-                logger.debug(f"Exception in Amt function: {e}")
+                funclogger.debug(f"Exception in Amt function: {e}")
 
 
     elif isinstance(r_A, str) and idx_chunk == 0:
@@ -501,10 +493,10 @@ def chunk_process_amt(c_A, r_A, c_H, inst, nm_hst, idx_chunk, row, amt_test):
         except Exception as e:
             inst2 = amt_dummy
             inst3 = False
-            logger.debug(f"Exception in Amt function: {e}")
+            funclogger.debug(f"Exception in Amt function: {e}")
 
     elif c_A is not None:
-        logger.warning("c_A is not none")
+        funclogger.warning("c_A is not none")
         if c_A.strip() in cfg.df_aemter_index.keys():
             amt = cfg.df_aemter_index[c_A.strip()].iloc[8]
         else:
@@ -514,11 +506,11 @@ def chunk_process_amt(c_A, r_A, c_H, inst, nm_hst, idx_chunk, row, amt_test):
             amt_name = f"{amt} ({nm_hst})"
         else:
             amt_name = f"{amt} (Dummy Hofstaat)"
-        logger.debug(amt_name)
+        funclogger.debug(amt_name)
         if len(amt_name) > 254:
-            logger.debug(f"len amtname {(len(amt_name) - 250)}")
+            funclogger.debug(f"len amtname {(len(amt_name) - 250)}")
             ln_minus = len(f"{amt_name} ({nm_hst})") - 250
-            logger.debug(f"{amt_name[:-ln_minus]} ({nm_hst})")
+            funclogger.debug(f"{amt_name[:-ln_minus]} ({nm_hst})")
             amt_name = f"{amt_name[:-ln_minus]} ({nm_hst})"
         inst2, created = Institution.objects.get_or_create(name=amt_name)
 
@@ -529,7 +521,60 @@ def chunk_process_amt(c_A, r_A, c_H, inst, nm_hst, idx_chunk, row, amt_test):
     return inst2
 
 
+def chunk_process_amt_NEW(c_A, inst, nm_hst, row):
+
+    if c_A:
+        funclogger.info(f"c_A in if c_A true: {c_A}")
+      #  if c_A.strip() in cfg.df_aemter_index.keys(): # todo this was causing 50% of the problems!
+       #     amt = cfg.df_aemter_index[c_A.strip()].iloc[8]
+       # else:
+            #  amt = c_A.strip()
+
+        # Resolving amt with entry in df_aemter_index
+        amt = c_A.strip()
+        if amt in cfg.df_aemter_index.keys():
+            resolved = cfg.df_aemter_index[amt].iloc[9]
+            if isinstance(resolved, str):
+                amt = resolved
+            else:
+                funclogger.info(f"Resolved amt was nan: {resolved}")
+            funclogger.info(f"c_A was: {c_A} and amt after matching with amt index is: {amt}, type amt: {type(amt)}")
+        else:
+            funclogger.info(f"amt {amt} was not in df_aemter_index") # todo: implement that missing aemter (and unresolved aemter) are logged to another file!
+        amt_name = f"{amt} ({nm_hst})"
+
+        if len(amt_name) > 254:
+            funclogger.debug(f"len amtname {(len(amt_name) - 250)}")
+            ln_minus = len(f"{amt_name} ({nm_hst})") - 250
+            funclogger.debug(f"{amt_name[:-ln_minus]} ({nm_hst})")
+            amt_name = f"{amt_name[:-ln_minus]} ({nm_hst})"
+        try:
+            inst2, created = Institution.objects.get_or_create(name=amt_name) #todo returned mutiple insitutions objects when attempting import.
+        except:
+            inst2_set = Institution.objects.all().filter(name=amt_name)
+            inst2 = inst2_set[0]
+            funclogger.info(f"exception caught and handled here. Multiple Institutions for {amt_name}")
+        # except: # todo this was also removed. Is this still needed?
+        #     try:
+        #         inst2, inst3, created = get_or_create_amt(
+        #             row)
+        #         if created:
+        #             InstitutionInstitution.objects.create(
+        #                 related_institutionA=inst3,
+        #                 related_institutionB=inst,
+        #                 relation_type=rl_teil_von,
+        #             )
+    else:
+        funclogger.info(f"Else was called, c_A was false (is this even possible?) c_A = '{c_A}'")
+        inst2, created = Institution.objects.get_or_create(
+            name=f"Dummy Amt ({nm_hst})"
+        )
+
+    funclogger.info(f" Return value of inst2 = {inst2}")
+    return inst2
+
 def chunk_create_relations(c_F, rel):
+    funclogger.info(f"create relations called for c_F {c_F}")
     if len(c_F) > 0:
         for rel_type in c_F:
             try:
@@ -537,33 +582,54 @@ def chunk_create_relations(c_F, rel):
                  created,
                  ) = PersonInstitutionRelation.objects.get_or_create(name=rel_type)
                 rel["relation_type"] = rel_t_obj
+                if created:
+                    funclogger.info(f"PersonInstitutionRelation created returned: {created}; rel['relation_type'] = {rel_t_obj}")
+                else:
+                    funclogger.info(f"PersonInstitutionRelation created returned: {created}; rel['relation_type'] = {rel_t_obj}")
                 PersonInstitution.objects.create(**rel)
 
             except Exception as e:
-                logger.debug(f"Exception: {e}")
+                funclogger.info(f"Exception: {e}")
 
 
-def helper_hsv_match_amt_with_funct(doc, r_A, r_H):
-    amt_test = False
+def helper_hsv_match_amt_with_funct(doc, r_A):
+
+    first_amt = None
+    funclogger.info(f"r_A = {r_A}")
+
 
     if isinstance(r_A, str):
         ab_split = r_A.split(";")
+        first_amt = ab_split[0].strip()
+        first_amt = first_amt.split("/")[0]
 
         if len(ab_split) == len(doc._.chunks):
 
             for c,a in zip(doc._.chunks, ab_split):
                 a = a.split("/")[0]
-                if c["AMT"]:
-                    logger.warning(f"chunk Amt already exists: {c['AMT']}")
-                c["AMT"] = a
+                if not c["AMT"]:
+                    c["AMT"] = a
+                funclogger.info(f"r_A equals len(Chunks) -> c[amt] = {c['AMT']}")
+        else:
+            for idx, c in enumerate(doc._.chunks):
+                if not c["AMT"] and idx == 0 and first_amt:
+                    c["AMT"] = first_amt
+                elif not c["AMT"]:
+                    c["AMT"] = "Dummy Amt"
 
-                logger.warning(c["FUNKTION"])
-            amt_test = True
 
-    return doc, amt_test
+    for c in doc._.chunks:
+        funclogger.info(f"Before check for empty amt, c[amt] = '{c['AMT']}'")
+        if not c["AMT"] or c["AMT"] == "" or c["AMT"] == " ":
+            c["AMT"] = "Dummy Amt"
+            funclogger.info(f"Caught Empty Amt -> c[amt] set to = {c['AMT']}")
+
+    return doc
+
 
 def helper_hsv_match_hofstaate(doc, r_H):
     first_hs = None
+    funclogger.info(f"r_H = {r_H}")
     if isinstance(r_H, str):
         hs_split = r_H.split(";")
         first_hs = hs_split[0].strip()
@@ -572,19 +638,28 @@ def helper_hsv_match_hofstaate(doc, r_H):
 
             for c, h in zip(doc._.chunks, hs_split):
                 h = h.split("/")[0] #
-                logger.warning(f"HOFSTAATE PROCESSING ----> h: {h}")
-                if c["HOFSTAAT"]:
-                    # if chunk hofstaat already exists, don't match with hofstaatsspalte.
-                    logger.warning(f"chunk Hofstaat already exists: {c['HOFSTAAT']}")
-                    pass
-                else:
-                    logger.warning("NO CHUNK HOFSTAAT")
+                funclogger.warning(f"HOFSTAATE PROCESSING ----> h: {h}")
+                if not c["HOFSTAAT"]:
+                    funclogger.warning("NO CHUNK HOFSTAAT")
                     c["HOFSTAAT"] = h.strip()
-                    logger.warning(f"chunk Hofstaat set to: {c['HOFSTAAT']}")
+                    funclogger.warning(f"chunk Hofstaat set to: {c['HOFSTAAT']}")
 
-    logger.warning(f"FIRST HOFSTAAT = {first_hs}")
+        elif first_hs:
+            for c in doc._.chunks:
+                if not c["HOFSTAAT"]:
+                    c["HOFSTAAT"] = first_hs
 
-    return doc, first_hs
+    else:
+        for c in doc._.chunks:
+            if not c["HOFSTAAT"]:
+                c["HOFSTAAT"] = "Dummy Hofstaat"
+
+            funclogger.info(f"chunk Hofstaat = {c['HOFSTAAT']}")
+
+    for c in doc._.chunks:
+        funclogger.info(f"chunk is -- > {c}")
+
+    return doc
 
 
 def process_chunks(doc, pers, row):
@@ -597,113 +672,113 @@ def process_chunks(doc, pers, row):
     r_H = row["Hofstaat"]
     r_A = row["Amt/Behörde"]
 
-    logger.info(f"len_doc_chunks: {len(doc._.chunks)}, len Ämter-Spalte: {len(aemter_behörde)}")
+    funclogger.info(f"len_doc_chunks: {len(doc._.chunks)}, len Ämter-Spalte: {len(aemter_behörde)}")
 
-
-    doc, first_hs = helper_hsv_match_hofstaate(doc, r_H)
-    doc, amt_test =  helper_hsv_match_amt_with_funct(doc, r_A, r_H)
-
+    doc = helper_hsv_match_hofstaate(doc, r_H)
+    doc = helper_hsv_match_amt_with_funct(doc, r_A)
 
 
     for idx_chunk, c in enumerate(doc._.chunks):
-
 
         c_D = c["DATUM"]
         c_F = c["FUNKTION"]
         c_H = c["HOFSTAAT"]
         c_A = c["AMT"]
 
+        funclogger.info(f"cD {c_D}, cF {c_F}, cH {c_H}, CA {c_A}")
 
         rel = {"related_person": pers}
         if c_D is not None:
             rel = chunk_process_datum(c_D, rel)
 
-        nm_hst, test_hs = chunk_get_nm_hst(c_H, r_H, idx_chunk, first_hs)
+
+        nm_hst = chunk_get_nm_hst(c_H)
 
         test_unsicher = False
         if nm_hst == "UNSICHER - Collection, manuelle Entscheidung":
             nm_hst = "UNSICHER"
             test_unsicher = True
 
-        inst = chunk_create_institution(nm_hst, test_hs, pers) # first inst ist der hofstaat
+        inst = chunk_create_institution(nm_hst, pers) # first inst ist der hofstaat
 
-        inst2 = chunk_process_amt(c_A, r_A, c_H, inst, nm_hst, idx_chunk, row, amt_test)
+        inst2 = chunk_process_amt_NEW(c_A, inst, nm_hst, row)
 
         rel["related_institution"] = inst2
 
         chunk_create_relations(c_F, rel)
         try:
-            logger.debug(f"{row.orig_index} -- {pers} -- {rel}")
+            funclogger.info(f" Source Person Relation: {row.orig_index} -- {pers} -- {rel}")
         except AttributeError as e:
-            logger.debug(f"{pers.source.orig_id} -- {pers} -- {rel}")
-
-
+            funclogger.info(f" Source Person Relation: {pers.source.orig_id} -- {pers} -- {rel}")
 
     return pers
 
 
-def process_row(idx, row, src_base, conf):
+def process_row(idx, row, src_base, conf, split_collection):
     global cfg
     cfg = conf
 
-    if idx == 20000:
-        return None
-    else:
-        logger.info(f"working on row: {idx}")
+    if cfg.create_all:
         create_all()
+        cfg.create_all = False
 
-        r_vor = row["Vorname"]
-        r_fam = row["Familienname"]
-        r_ges = row["Geschlecht"]
-        r_leb = row["Lebensdaten"]
-        r_fun = row["Funktion"]
-        r_tit = row["Titel"]
+    r_vor = row["Vorname"]
+    r_fam = row["Familienname"]
+    r_ges = row["Geschlecht"]
+    r_leb = row["Lebensdaten"]
+    r_fun = row["Funktion"]
+    r_tit = row["Titel"]
 
-        if isinstance(r_fun, str):
-            # this is a rough solution for the problem with missing whitespaces after ')' or ',' etc.
-            # todo: make sure that references to the source entry are not using the substitute r_fun value created here
-            def replacer(match):
-                replacement = match.group(0)[:-1]+" "+match.group(0)[-1:]
-                logger.info(f"r_fun: replaced {match.group(0)} with: {replacement}")
-                return replacement
-            pattern = re.compile(r"(\)|\,|;)\S")
-            r_fun = re.sub(pattern, replacer, r_fun)
+    if isinstance(r_fun, str):
+        # this is a rough solution for the problem with missing whitespaces after ')' or ',' etc.
+        # todo: make sure that references to the source entry are not using the substitute r_fun value created here
+        # todo: something similar should be run as the very first pipeline component, as the NER can't resolve these cases!
+        def replacer(match):
+            replacement = match.group(0)[:-1]+" "+match.group(0)[-1:]
+            funclogger.info(f"r_fun: replaced {match.group(0)} with: {replacement}")
+            return replacement
+        pattern = re.compile(r"(\)|\,|;)\S")
+        r_fun = re.sub(pattern, replacer, r_fun)
 
-        vorname = person_process_field_vorname(r_vor)
+    vorname = person_process_field_vorname(r_vor)
 
-        vn, vn_alternative = helper_process_names(vorname[0])
-        if vn_alternative:
-            vorname.append(vn_alternative)
+    vn, vn_alternative = helper_process_names(vorname[0])
+    if vn_alternative:
+        vorname.append(vn_alternative)
 
-        sn, labels_fam, labels_fam_hzt = person_process_field_familienname(r_fam, idx)
+    sn, labels_fam, labels_fam_hzt = person_process_field_familienname(r_fam, idx)
 
-        pers_dic = {"first_name": vn, "name": sn}
-        pers_dic = person_process_field_gender(r_ges, pers_dic)
-        pers_dic = person_process_field_lebensdaten(r_leb, pers_dic)
-
-
-        src_base["orig_id"] = idx
-        src = Source.objects.create(**src_base)
-
-        pers_dic["source"] = src
-
-        pers = Person.objects.create(**pers_dic)
-
-        if isinstance(r_tit, str):
-            person_process_field_titel(r_tit, pers)
-
-        person_create_person_labels(pers, vorname, labels_fam, labels_fam_hzt)
-
-        map_text_type = {}
-        map_text_type = create_text_entries(row, pers, src_base, map_text_type)
-        col, created = Collection.objects.get_or_create(name="Import HZAB full 10-3-21")
-        pers.collection.add(col)
-
-        if not isinstance(r_fun, str):
-            return pers
-
-        doc = create_and_process_doc(r_fun, idx)
-        pers = process_chunks(doc, pers, row)
+    pers_dic = {"first_name": vn, "name": sn}
+    pers_dic = person_process_field_gender(r_ges, pers_dic)
+    pers_dic = person_process_field_lebensdaten(r_leb, pers_dic)
 
 
+    src_base["orig_id"] = idx
+    src = Source.objects.create(**src_base)
+
+    pers_dic["source"] = src
+
+    pers = Person.objects.create(**pers_dic)
+
+    if isinstance(r_tit, str):
+        pers = person_process_field_titel(r_tit, pers)
+
+
+    person_create_person_labels(pers, vorname, labels_fam, labels_fam_hzt)
+
+    map_text_type = {}
+    map_text_type = create_text_entries(row, pers, src_base, map_text_type)
+    col, created = Collection.objects.get_or_create(name=cfg.collection)
+    s_col, crt = Collection.objects.get_or_create(name=split_collection)
+
+    pers.collection.add(col)
+    pers.collection.add(s_col)
+
+    if not isinstance(r_fun, str):
         return pers
+
+    doc = create_and_process_doc(r_fun, idx)
+    pers = process_chunks(doc, pers, row)
+
+
+

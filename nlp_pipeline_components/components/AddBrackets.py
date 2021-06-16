@@ -1,4 +1,7 @@
 from spacy.tokens import Span
+import logging
+
+logger = logging.getLogger("comp_logger")
 
 class AddBrackets(object):
     name = "add_brackets"

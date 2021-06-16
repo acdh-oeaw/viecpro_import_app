@@ -1,0 +1,61 @@
+----------------
+Import MetaInfo:
+
+username: None
+django_settings: django_settings.hsv_settings
+collection: Sample HSV Import 14-6-21 – Amt/Hofstaat bugfix; CStandhartinger
+spacy_model: using local model
+existing_annotations: data/viecpro_HSV_0.jsonl
+path_df: data/3_HSV-angepasst-IMPORT.xlsx
+path_hofstaat: data/Kürzel-Hofstaate-EX-ACC-2021-06-02.xlsx
+path_aemter: data/Kürzel-Ämter-ACC-EX-2021-02-08.xlsx
+path_abbreviations: data/EXCEL-ACCESS_Kürzel-Titel-Orden-2021-01-28.xlsx
+logger_level: 20
+collection_team: ['MRomberg', 'MKaiser', 'CStandhartinger']
+use_stopvalues: False
+is_test: False
+sample_frame: using sample frame
+without_testing: True
+log_msg: None
+----------------
+
+
+get_model >>> Used config cfg class for model configuration
+----------------
+Using the local model: models/viecpro_ner_hsv_5-21/
+
+NLP-pipeline:
+	ner
+	use_existing_annotations
+	add_brackets
+	rename_functions
+	remove_names
+	date_prepocissions
+	create_chunks
+----------------
+
+
+
+--------- Start of row | 10 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> [Salzbrunner?]
+person_process_field_familienname >>> fam1: [Salzbrunner?]
+person_process_field_familienname >>> fam2: <re.Match object; span=(0, 14), match='[Salzbrunner?]'>
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammerdienerin'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammerdienerin'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 1
+helper_hsv_match_hofstaate >>> r_H = EM
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: EM
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: EM
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': [], 'HOFSTAAT': 'EM', 'FUNKTION': ['Kammerdienerin'], 'AMT': None}
+helper_hsv_match_amt_with_funct >>> r_A = (Kammer- , Hoffräulein)
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] = (Kammer- , Hoffräulein)
+helper_hsv_match_amt_with_funct >>> Before check for empty amt, c[amt] = '(Kammer- , Hoffräulein)'
+process_chunks >>> cD [], cF ['Kammerdienerin'], cH EM, CA (Kammer- , Hoffräulein)
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: [Salzbrunner?], Maria Käterl >}
+chunk_get_nm_hst >>> c_H = EM
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: EM (Ksin.)
+chunk_process_amt_NEW >>> c_A in if c_A true: (Kammer- , Hoffräulein)

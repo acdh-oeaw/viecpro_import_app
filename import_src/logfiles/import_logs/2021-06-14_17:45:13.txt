@@ -1,0 +1,451 @@
+----------------
+Import MetaInfo:
+
+username: None
+django_settings: django_settings.hsv_settings
+collection: Import HSV full 14-6-21
+spacy_model: using local model
+existing_annotations: data/viecpro_HSV_0.jsonl
+path_df: data/3_HSV-angepasst-IMPORT.xlsx
+path_hofstaat: data/Kürzel-Hofstaate-EX-ACC-2021-06-02.xlsx
+path_aemter: data/Kürzel-Ämter-ACC-EX-2021-02-08.xlsx
+path_abbreviations: data/EXCEL-ACCESS_Kürzel-Titel-Orden-2021-01-28.xlsx
+logger_level: 20
+collection_team: ['MRomberg', 'MKaiser', 'CStandhartinger']
+use_stopvalues: False
+is_test: False
+sample_frame: None
+without_testing: True
+log_msg: None
+----------------
+
+
+get_model >>> Used config cfg class for model configuration
+----------------
+Using the local model: models/viecpro_ner_hsv_5-21/
+
+NLP-pipeline:
+	ner
+	use_existing_annotations
+	add_brackets
+	rename_functions
+	remove_names
+	date_prepocissions
+	create_chunks
+----------------
+
+
+collection_counter = [(0, 'MRomberg (HSV)'), (3414, 'MKaiser (HSV)'), (6828, 'CStandhartinger (HSV)')]
+
+--------- Start of row | 0 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> (?) [Mayr]
+person_process_field_familienname >>> fam1: ?
+person_process_field_familienname >>> fam2: <re.Match object; span=(2, 8), match='[Mayr]'>
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kanzlist'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kanzlist'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 1
+helper_hsv_match_hofstaate >>> r_H = nan
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = None
+helper_hsv_match_amt_with_funct >>> r_A = NÖ-LG / Kanzleiverwandte
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] = NÖ-LG 
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: ?, Georg Ehrenreich>}
+chunk_get_nm_hst >>> c_H = Dummy Hofstaat
+chunk_process_amt_NEW >>> c_A in if c_A true: NÖ-LG 
+chunk_process_amt_NEW >>>  Return value of inst2 = L1 (Dummy Hofstaat)
+chunk_create_relations >>> create realtions called for c_F ['Kanzlist']
+
+--------- Start of row | 1 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> (?)verl
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Registrant'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Registrant'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 1
+helper_hsv_match_hofstaate >>> r_H = nan
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = None
+helper_hsv_match_amt_with_funct >>> r_A = NÖ-Expedition
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] = NÖ-Expedition
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: ?verl, Johann>}
+chunk_get_nm_hst >>> c_H = Dummy Hofstaat
+chunk_process_amt_NEW >>> c_A in if c_A true: NÖ-Expedition
+chunk_process_amt_NEW >>>  Return value of inst2 = L1 (Dummy Hofstaat)
+chunk_create_relations >>> create realtions called for c_F ['Registrant']
+
+--------- Start of row | 2 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> (Argumentin?)
+person_process_field_familienname >>> fam1: (Argumentin?)
+person_process_field_familienname >>> fam2: <re.Match object; span=(0, 13), match='(Argumentin?)'>
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': ['1699-01-01', 'bis 1704<1704-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Krankenwarterin'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': ['1699-01-01', 'bis 1704<1704-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Krankenwarterin'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 1
+helper_hsv_match_hofstaate >>> r_H = AW
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: AW
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: AW
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = AW
+helper_hsv_match_amt_with_funct >>> r_A =  / Frauenzimmer
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] =  
+helper_hsv_post_process_dates >>> old: 1699-01-01, new: 1699-01-01<1699-01-01>
+helper_hsv_post_process_dates >>> inner date: <1704-06-30>
+helper_hsv_post_process_dates >>> new_i_date: <1704-06-30>
+helper_hsv_post_process_dates >>> old: bis 1704<1704-06-30>, new: bis 1704<1704-06-30>
+chunk_process_datum >>> rel, chunk sdw: 1699-01-01<1699-01-01>
+chunk_process_datum >>> rel, chunk edw: 1699-01-01<1699-01-01>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: (Argumentin?), Anna Susanna>, 'start_date_written': '1699-01-01<1699-01-01>', 'end_date_written': 'bis 1704<1704-06-30>'}
+chunk_get_nm_hst >>> c_H = AW
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: AW (Kgin.)
+chunk_process_amt_NEW >>> c_A in if c_A true:  
+chunk_process_amt_NEW >>>  Return value of inst2 = L1 (AW (Kgin.))
+chunk_create_relations >>> create realtions called for c_F ['Krankenwarterin']
+
+--------- Start of row | 3 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> [Bisegg]
+person_process_field_familienname >>> fam1: [Bisegg]
+person_process_field_familienname >>> fam2: <re.Match object; span=(0, 8), match='[Bisegg]'>
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Guardadamas'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Guardadamas'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 0
+helper_hsv_match_hofstaate >>> r_H = EM
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: EM
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: EM
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = EM
+helper_hsv_match_amt_with_funct >>> r_A = nan
+helper_hsv_match_amt_with_funct >>> r_A NOT equals len(Chunks) -> c[amt] = Dummy Amt
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: [Bisegg], NN>}
+chunk_get_nm_hst >>> c_H = EM
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: EM (Ksin.)
+chunk_process_amt_NEW >>> c_A in if c_A true: Dummy Amt
+chunk_process_amt_NEW >>>  Return value of inst2 = Dummy Amt (EM (Ksin.))
+chunk_create_relations >>> create realtions called for c_F ['Guardadamas']
+
+--------- Start of row | 4 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> [Brunnet]
+person_process_field_familienname >>> fam1: [Brunnet]
+person_process_field_familienname >>> fam2: <re.Match object; span=(0, 9), match='[Brunnet]'>
+person_process_field_titel >>> t_tit = Don
+person_process_field_titel >>> t_list = ['Don']
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammerdiener'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammerdiener'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 0
+helper_hsv_match_hofstaate >>> r_H = EM
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: EM
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: EM
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = EM
+helper_hsv_match_amt_with_funct >>> r_A = nan
+helper_hsv_match_amt_with_funct >>> r_A NOT equals len(Chunks) -> c[amt] = Dummy Amt
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: [Brunnet], Petro>}
+chunk_get_nm_hst >>> c_H = EM
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: EM (Ksin.)
+chunk_process_amt_NEW >>> c_A in if c_A true: Dummy Amt
+chunk_process_amt_NEW >>>  Return value of inst2 = Dummy Amt (EM (Ksin.))
+chunk_create_relations >>> create realtions called for c_F ['Kammerdiener']
+
+--------- Start of row | 5 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> [Glewelio]
+person_process_field_familienname >>> fam1: [Glewelio]
+person_process_field_familienname >>> fam2: <re.Match object; span=(0, 10), match='[Glewelio]'>
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammerdiener', 'Garderobist'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammerdiener', 'Garderobist'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 0
+helper_hsv_match_hofstaate >>> r_H = EM
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: EM
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: EM
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = EM
+helper_hsv_match_amt_with_funct >>> r_A = nan
+helper_hsv_match_amt_with_funct >>> r_A NOT equals len(Chunks) -> c[amt] = Dummy Amt
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: [Glewelio], Adam>}
+chunk_get_nm_hst >>> c_H = EM
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: EM (Ksin.)
+chunk_process_amt_NEW >>> c_A in if c_A true: Dummy Amt
+chunk_process_amt_NEW >>>  Return value of inst2 = Dummy Amt (EM (Ksin.))
+chunk_create_relations >>> create realtions called for c_F ['Kammerdiener', 'Garderobist']
+
+--------- Start of row | 6 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> [Gouisconi]
+person_process_field_familienname >>> fam1: [Gouisconi]
+person_process_field_familienname >>> fam2: <re.Match object; span=(0, 11), match='[Gouisconi]'>
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammerdienerin'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammerdienerin'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 1
+helper_hsv_match_hofstaate >>> r_H = EM
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: EM
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: EM
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = EM
+helper_hsv_match_amt_with_funct >>> r_A = (Kammer- , Hoffräulein)
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] = (Kammer- , Hoffräulein)
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: [Gouisconi], Cäcilia>}
+chunk_get_nm_hst >>> c_H = EM
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: EM (Ksin.)
+chunk_process_amt_NEW >>> c_A in if c_A true: (Kammer- , Hoffräulein)
+chunk_process_amt_NEW >>>  Return value of inst2 = (Kammer- , Hoffräulein) (EM (Ksin.))
+chunk_create_relations >>> create realtions called for c_F ['Kammerdienerin']
+
+--------- Start of row | 7 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> [Koch]
+person_process_field_familienname >>> fam1: [Koch]
+person_process_field_familienname >>> fam2: <re.Match object; span=(0, 6), match='[Koch]'>
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammersekretär'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammersekretär'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 0
+helper_hsv_match_hofstaate >>> r_H = EM
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: EM
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: EM
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = EM
+helper_hsv_match_amt_with_funct >>> r_A = nan
+helper_hsv_match_amt_with_funct >>> r_A NOT equals len(Chunks) -> c[amt] = Dummy Amt
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: [Koch], Georg>}
+chunk_get_nm_hst >>> c_H = EM
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: EM (Ksin.)
+chunk_process_amt_NEW >>> c_A in if c_A true: Dummy Amt
+chunk_process_amt_NEW >>>  Return value of inst2 = Dummy Amt (EM (Ksin.))
+chunk_create_relations >>> create realtions called for c_F ['Kammersekretär']
+
+--------- Start of row | 8 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> [Lengler]
+person_process_field_familienname >>> fam1: [Lengler]
+person_process_field_familienname >>> fam2: <re.Match object; span=(0, 9), match='[Lengler]'>
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammertürhüter'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammertürhüter'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 0
+helper_hsv_match_hofstaate >>> r_H = EM
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: EM
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: EM
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = EM
+helper_hsv_match_amt_with_funct >>> r_A = nan
+helper_hsv_match_amt_with_funct >>> r_A NOT equals len(Chunks) -> c[amt] = Dummy Amt
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: [Lengler], Claudius>}
+chunk_get_nm_hst >>> c_H = EM
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: EM (Ksin.)
+chunk_process_amt_NEW >>> c_A in if c_A true: Dummy Amt
+chunk_process_amt_NEW >>>  Return value of inst2 = Dummy Amt (EM (Ksin.))
+chunk_create_relations >>> create realtions called for c_F ['Kammertürhüter']
+
+--------- Start of row | 9 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> [Possio]
+person_process_field_familienname >>> fam1: [Possio]
+person_process_field_familienname >>> fam2: <re.Match object; span=(0, 8), match='[Possio]'>
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammerdiener'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammerdiener'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 0
+helper_hsv_match_hofstaate >>> r_H = EM
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: EM
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: EM
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = EM
+helper_hsv_match_amt_with_funct >>> r_A = nan
+helper_hsv_match_amt_with_funct >>> r_A NOT equals len(Chunks) -> c[amt] = Dummy Amt
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: [Possio], Anton Ludwig >}
+chunk_get_nm_hst >>> c_H = EM
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: EM (Ksin.)
+chunk_process_amt_NEW >>> c_A in if c_A true: Dummy Amt
+chunk_process_amt_NEW >>>  Return value of inst2 = Dummy Amt (EM (Ksin.))
+chunk_create_relations >>> create realtions called for c_F ['Kammerdiener']
+
+--------- Start of row | 10 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> [Salzbrunner?]
+person_process_field_familienname >>> fam1: [Salzbrunner?]
+person_process_field_familienname >>> fam2: <re.Match object; span=(0, 14), match='[Salzbrunner?]'>
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammerdienerin'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammerdienerin'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 1
+helper_hsv_match_hofstaate >>> r_H = EM
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: EM
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: EM
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = EM
+helper_hsv_match_amt_with_funct >>> r_A = (Kammer- , Hoffräulein)
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] = (Kammer- , Hoffräulein)
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: [Salzbrunner?], Maria Käterl >}
+chunk_get_nm_hst >>> c_H = EM
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: EM (Ksin.)
+chunk_process_amt_NEW >>> c_A in if c_A true: (Kammer- , Hoffräulein)
+chunk_process_amt_NEW >>>  Return value of inst2 = (Kammer- , Hoffräulein) (EM (Ksin.))
+chunk_create_relations >>> create realtions called for c_F ['Kammerdienerin']
+
+--------- Start of row | 11 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> [Tanner]
+person_process_field_familienname >>> fam1: [Tanner]
+person_process_field_familienname >>> fam2: <re.Match object; span=(0, 8), match='[Tanner]'>
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammertürhüter'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kammertürhüter'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 0
+helper_hsv_match_hofstaate >>> r_H = EM
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: EM
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: EM
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = EM
+helper_hsv_match_amt_with_funct >>> r_A = nan
+helper_hsv_match_amt_with_funct >>> r_A NOT equals len(Chunks) -> c[amt] = Dummy Amt
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: [Tanner], Georg>}
+chunk_get_nm_hst >>> c_H = EM
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: EM (Ksin.)
+chunk_process_amt_NEW >>> c_A in if c_A true: Dummy Amt
+chunk_process_amt_NEW >>>  Return value of inst2 = Dummy Amt (EM (Ksin.))
+chunk_create_relations >>> create realtions called for c_F ['Kammertürhüter']
+
+--------- Start of row | 12 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> Aach (Ach, Arch)
+person_process_field_familienname >>> fam1: Aach
+person_process_field_familienname >>> fam2: <re.Match object; span=(5, 16), match='(Ach, Arch)'>
+person_process_field_titel >>> t_tit = Graf
+person_process_field_titel >>> t_list = ['Graf']
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': ['1657-07-16', 'bis 1677<1677-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Kämmerer', 'Kämmerer, wirkl.'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': ['1657-07-16', 'bis 1677<1677-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Kämmerer', 'Kämmerer, wirkl.'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 1
+helper_hsv_match_hofstaate >>> r_H = L
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: L
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: L
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = L
+helper_hsv_match_amt_with_funct >>> r_A = OKäA
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] = OKäA
+helper_hsv_post_process_dates >>> old: 1657-07-16, new: 1657-07-16<1657-07-16>
+helper_hsv_post_process_dates >>> inner date: <1677-06-30>
+helper_hsv_post_process_dates >>> new_i_date: <1677-06-30>
+helper_hsv_post_process_dates >>> old: bis 1677<1677-06-30>, new: bis 1677<1677-06-30>
+chunk_process_datum >>> rel, chunk sdw: 1657-07-16<1657-07-16>
+chunk_process_datum >>> rel, chunk edw: 1657-07-16<1657-07-16>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Aach, Prosper >, 'start_date_written': '1657-07-16<1657-07-16>', 'end_date_written': 'bis 1677<1677-06-30>'}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: OKäA
+chunk_process_amt_NEW >>>  Return value of inst2 = L (L1 (Ks.))
+chunk_create_relations >>> create realtions called for c_F ['Kämmerer', 'Kämmerer, wirkl.']
+
+--------- Start of row | 13 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> Abel
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': ['1663-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Rottmeister'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': ['1663-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Rottmeister'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 1
+helper_hsv_match_hofstaate >>> r_H = LW
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: LW
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: LW
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = LW
+helper_hsv_match_amt_with_funct >>> r_A =  / Trabantengarde
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] =  
+helper_hsv_post_process_dates >>> old: 1663-00-00, new: 1663-00-00<1663-06-30>
+chunk_process_datum >>> rel, chunk sdw: 1663-00-00<1663-06-30>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abel, Johann>, 'start_date_written': '1663-00-00<1663-06-30>'}
+chunk_get_nm_hst >>> c_H = LW
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: LW
+chunk_process_amt_NEW >>> c_A in if c_A true:  
+chunk_process_amt_NEW >>>  Return value of inst2 = L1 (LW)
+chunk_create_relations >>> create realtions called for c_F ['Rottmeister']
+
+--------- Start of row | 14 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> Abel
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': ['1701-04-01'], 'HOFSTAAT': None, 'FUNKTION': ['Hartschier'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': ['1701-04-01'], 'HOFSTAAT': None, 'FUNKTION': ['Hartschier'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 1
+helper_hsv_match_hofstaate >>> r_H = J
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: J
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: J
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = J
+helper_hsv_match_amt_with_funct >>> r_A =  / Hartschierenleibgarde
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] =  
+helper_hsv_post_process_dates >>> old: 1701-04-01, new: 1701-04-01<1701-04-01>
+chunk_process_datum >>> rel, chunk sdw: 1701-04-01<1701-04-01>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abel, Johann Heinrich>, 'start_date_written': '1701-04-01<1701-04-01>'}
+chunk_get_nm_hst >>> c_H = J
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: J1 (Ehzg.)
+chunk_process_amt_NEW >>> c_A in if c_A true:  
+chunk_process_amt_NEW >>>  Return value of inst2 = L1 (J1 (Ehzg.))
+chunk_create_relations >>> create realtions called for c_F ['Hartschier']
+
+--------- Start of row | 15 | -------------- 
+replacer >>> r_fun: replaced ); with: ) ;
+replacer >>> r_fun: replaced ); with: ) ;
+replacer >>> r_fun: replaced ); with: ) ;
+replacer >>> r_fun: replaced ); with: ) ;
+replacer >>> r_fun: replaced ); with: ) ;
+replacer >>> r_fun: replaced ); with: ) ;
+replacer >>> r_fun: replaced ); with: ) ;
+replacer >>> r_fun: replaced ); with: ) ;
+replacer >>> r_fun: replaced ); with: ) ;
+replacer >>> r_fun: replaced ), with: ) ,
+replacer >>> r_fun: replaced ); with: ) ;
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> Abele
+person_process_field_titel >>> t_tit = Freiherr
+person_process_field_titel >>> t_list = ['Freiherr']
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc.ents at start of call = (Geh. Rat, Sekretär, 1672/73-00-00, Geh. Konferenzrat, 1672/73-00-00, Sekretär, 1672/73-00-00, 1680-00-00, Referendar, 1674/75-00-00, 1677-00-00, Rat, Hof-, 1675/76-00-00, Rat, ksl., 1675/76-00-00, 1677-00-00, Referendar, Konferenzen, 1675/76-00-00, Rat, ksl., Ö Expedition, Sekretär, Konferenzen, 1677-00-00, Hofrat, 1677-00-00, Hofkammerpräsident, 1681, 1683, Geh. Rat, 1685-11-01 / ab)
+NLP COMPONENT >>> UseExistingAnnotations.py >>> compare docs
+NLP COMPONENT >>> UseExistingAnnotations.py >>> THIS WAS LOGGED :15, Geh. Rat , Sekretär (1672/73-00-00) ; Geh. Konferenzrat (1672/73-00-00) ; Sekretär (1672/73-00-00 bis 1680-00-00) ; Referendar (1674/75-00-00 bis 1677-00-00) ; Rat, Hof- (1675/76-00-00) ; Rat, ksl. (1675/76-00-00 bis 1677-00-00) ; Referendar in allen Konferenzen (1675/76-00-00) ; Rat, ksl. der Ö Expedition; Sekretär in allen Konferenzen (1677-00-00) ; Hofrat (1677-00-00) ; Hofkammerpräsident (1681 bis 1683) , (Parvenue) ;Geh. Rat (1685-11-01 / ab dann 2.000 fl Gehalt, [{'start': 0, 'end': 8, 'token_start': 0, 'token_end': 2, 'label': 'FUNKTION'}, {'start': 11, 'end': 19, 'token_start': 4, 'token_end': 4, 'label': 'FUNKTION'}, {'start': 21, 'end': 34, 'token_start': 6, 'token_end': 12, 'label': 'DATUM'}, {'start': 37, 'end': 54, 'token_start': 15, 'token_end': 17, 'label': 'FUNKTION'}, {'start': 56, 'end': 69, 'token_start': 19, 'token_end': 25, 'label': 'DATUM'}, {'start': 72, 'end': 80, 'token_start': 28, 'token_end': 28, 'label': 'FUNKTION'}, {'start': 82, 'end': 95, 'token_start': 30, 'token_end': 36, 'label': 'DATUM'}, {'start': 100, 'end': 110, 'token_start': 38, 'token_end': 42, 'label': 'DATUM'}, {'start': 113, 'end': 123, 'token_start': 45, 'token_end': 45, 'label': 'FUNKTION'}, {'start': 125, 'end': 138, 'token_start': 47, 'token_end': 53, 'label': 'DATUM'}, {'start': 143, 'end': 153, 'token_start': 55, 'token_end': 59, 'label': 'DATUM'}, {'start': 156, 'end': 165, 'token_start': 62, 'token_end': 64, 'label': 'FUNKTION'}, {'start': 167, 'end': 180, 'token_start': 66, 'token_end': 72, 'label': 'DATUM'}, {'start': 183, 'end': 192, 'token_start': 75, 'token_end': 78, 'label': 'FUNKTION'}, {'start': 194, 'end': 207, 'token_start': 80, 'token_end': 86, 'label': 'DATUM'}, {'start': 212, 'end': 222, 'token_start': 88, 'token_end': 92, 'label': 'DATUM'}, {'start': 225, 'end': 235, 'token_start': 95, 'token_end': 95, 'label': 'FUNKTION'}, {'start': 245, 'end': 256, 'token_start': 98, 'token_end': 98, 'label': 'FUNKTION'}, {'start': 258, 'end': 271, 'token_start': 100, 'token_end': 106, 'label': 'DATUM'}, {'start': 274, 'end': 283, 'token_start': 109, 'token_end': 112, 'label': 'FUNKTION'}, {'start': 288, 'end': 300, 'token_start': 114, 'token_end': 115, 'label': 'AMT'}, {'start': 302, 'end': 310, 'token_start': 117, 'token_end': 117, 'label': 'FUNKTION'}, {'start': 333, 'end': 343, 'token_start': 122, 'token_end': 126, 'label': 'DATUM'}, {'start': 346, 'end': 352, 'token_start': 129, 'token_end': 129, 'label': 'FUNKTION'}, {'start': 354, 'end': 364, 'token_start': 131, 'token_end': 135, 'label': 'DATUM'}, {'start': 367, 'end': 385, 'token_start': 138, 'token_end': 138, 'label': 'FUNKTION'}, {'start': 387, 'end': 391, 'token_start': 140, 'token_end': 140, 'label': 'DATUM'}, {'start': 396, 'end': 400, 'token_start': 142, 'token_end': 142, 'label': 'DATUM'}, {'start': 404, 'end': 422, 'token_start': 146, 'token_end': 148, 'label': 'FUNKTION'}, {'start': 424, 'end': 439, 'token_start': 150, 'token_end': 156, 'label': 'DATUM'}]
+NLP COMPONENT >>> UseExistingAnnotations.py >>> lst_ents = [Geh. Rat, Sekretär, 1672/73-00-00, Geh. Konferenzrat, 1672/73-00-00, Sekretär, 1672/73-00-00, 1680-00-00, Referendar, 1674/75-00-00, 1677-00-00, Rat, Hof-, 1675/76-00-00, Rat, ksl., 1675/76-00-00, 1677-00-00, Referendar, Konferenzen, 1675/76-00-00, Rat, ksl., Ö Expedition, Sekretär, 1677-00-00, Hofrat, 1677-00-00, Hofkammerpräsident, 1681, 1683, Parvenue) ;, . Rat (1685-11-]
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc.ents at end of call = (Geh. Rat, Sekretär, 1672/73-00-00, Geh. Konferenzrat, 1672/73-00-00, Sekretär, 1672/73-00-00, 1680-00-00, Referendar, 1674/75-00-00, 1677-00-00, Rat, Hof-, 1675/76-00-00, Rat, ksl., 1675/76-00-00, 1677-00-00, Referendar, Konferenzen, 1675/76-00-00, Rat, ksl., Ö Expedition, Sekretär, 1677-00-00, Hofrat, 1677-00-00, Hofkammerpräsident, 1681, 1683, Parvenue) ;, . Rat (1685-11-)
+NLP COMPONENT >>> CreateChunks.py >>> Chunk AMT = Ö Expedition
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(12) = [{'DATUM': ['1672/73-00-00<1672-06-30 - 73-00-00>'], 'HOFSTAAT': None, 'FUNKTION': ['Geh. Rat', 'Sekretär'], 'AMT': None}, {'DATUM': ['1672/73-00-00<1672-06-30 - 73-00-00>'], 'HOFSTAAT': None, 'FUNKTION': ['Geh. Konferenzrat'], 'AMT': None}, {'DATUM': ['1672/73-00-00<1672-06-30 - 73-00-00>', 'bis 1680<1680-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Sekretär'], 'AMT': None}, {'DATUM': ['1674/75-00-00<1674-06-30 - 75-00-00>', 'bis 1677<1677-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Referendar'], 'AMT': None}, {'DATUM': ['1675/76-00-00<1675-06-30 - 76-00-00>'], 'HOFSTAAT': None, 'FUNKTION': ['Hofrat'], 'AMT': None}, {'DATUM': ['1675/76-00-00<1675-06-30 - 76-00-00>', 'bis 1677<1677-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Rat, ksl.'], 'AMT': None}, {'DATUM': ['1675/76-00-00<1675-06-30 - 76-00-00>'], 'HOFSTAAT': None, 'FUNKTION': ['Referendar', 'Konferenzen'], 'AMT': None}, {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Rat, ksl.'], 'AMT': 'Ö Expedition'}, {'DATUM': ['1677-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Sekretär'], 'AMT': None}, {'DATUM': ['1677-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Hofrat'], 'AMT': None}, {'DATUM': ['1681', 'bis 1683<1683-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Hofkammerpräsident'], 'AMT': None}, {'DATUM': ['. Rat (1685-11-'], 'HOFSTAAT': None, 'FUNKTION': ['Parvenue) ;'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': ['1672/73-00-00<1672-06-30 - 73-00-00>'], 'HOFSTAAT': None, 'FUNKTION': ['Geh. Rat', 'Sekretär'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	1: chunk: {'DATUM': ['1672/73-00-00<1672-06-30 - 73-00-00>'], 'HOFSTAAT': None, 'FUNKTION': ['Geh. Konferenzrat'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	2: chunk: {'DATUM': ['1672/73-00-00<1672-06-30 - 73-00-00>', 'bis 1680<1680-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Sekretär'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	3: chunk: {'DATUM': ['1674/75-00-00<1674-06-30 - 75-00-00>', 'bis 1677<1677-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Referendar'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	4: chunk: {'DATUM': ['1675/76-00-00<1675-06-30 - 76-00-00>'], 'HOFSTAAT': None, 'FUNKTION': ['Hofrat'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	5: chunk: {'DATUM': ['1675/76-00-00<1675-06-30 - 76-00-00>', 'bis 1677<1677-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Rat, ksl.'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	6: chunk: {'DATUM': ['1675/76-00-00<1675-06-30 - 76-00-00>'], 'HOFSTAAT': None, 'FUNKTION': ['Referendar', 'Konferenzen'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	7: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Rat, ksl.'], 'AMT': 'Ö Expedition'}
+NLP COMPONENT >>> CreateChunks.py >>> 	8: chunk: {'DATUM': ['1677-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Sekretär'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	9: chunk: {'DATUM': ['1677-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Hofrat'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	10: chunk: {'DATUM': ['1681', 'bis 1683<1683-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Hofkammerpräsident'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	11: chunk: {'DATUM': ['. Rat (1685-11-'], 'HOFSTAAT': None, 'FUNKTION': ['Parvenue) ;'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 12, len Ämter-Spalte: 6
+helper_hsv_match_hofstaate >>> r_H = L
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = L
+helper_hsv_match_amt_with_funct >>> r_A = GK; Ö-HKz; GR / Sekretarien; HK; Ö Expedition; 
+helper_hsv_post_process_dates >>> inner date: <1672-06-30 - 73-00-00>
+helper_hsv_post_process_dates >>> new_i_date: <1672-06-30 - 73-06-30>
+helper_hsv_post_process_dates >>> old: 1672/73-00-00<1672-06-30 - 73-00-00>, new: 1672/73-00-00<1672-06-30 - 73-06-30>
+chunk_process_datum >>> rel, chunk sdw: 1672/73-00-00<1672-06-30 - 73-06-30>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Abele, Christoph>, 'start_date_written': '1672/73-00-00<1672-06-30 - 73-06-30>'}
+chunk_get_nm_hst >>> c_H = None

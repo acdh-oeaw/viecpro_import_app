@@ -1,6 +1,9 @@
 from spacy.tokens import Span, Doc
 from copy import deepcopy
 import re
+import logging
+
+logger = logging.getLogger("comp_logger")
 
 class CreateChunks(object):
     name = "create_chunks"
@@ -13,14 +16,13 @@ class CreateChunks(object):
     def __call__(self, doc):
         chunks = []
         chunk = deepcopy(self._ctrl)
-        lst_chunks = re.finditer(r";", doc.text) # todo: u. sometimes part of function name, exclude this case to not split then
+        lst_chunks = re.finditer(r";", doc.text) # todo: OLD u. sometimes part of function name, exclude this case to not split then
         lst_chunks = [x.span()[0] for x in lst_chunks]
         if len(lst_chunks) > 0:
             c_idx = (0, lst_chunks[0])
         else:
             c_idx = None
         for ent in doc.ents:
-            print(ent, ent)
             if c_idx is not None:
                 if ent.end_char > c_idx[1]:
                     chunks.append(chunk)
@@ -46,13 +48,19 @@ class CreateChunks(object):
                     chunk["FUNKTION"].append(ent._.renamed.strip())
             elif ent.label_ == "HOFSTAAT" and chunk["HOFSTAAT"] is None:
                 chunk["HOFSTAAT"] = ent.text
+                logger.info(f"Chunk HOFSTAAT = {chunk['HOFSTAAT']}")
             elif ent.label_ == "AMT" and chunk["AMT"] is None:
                 chunk["AMT"] = ent.text
+                logger.info(f"Chunk AMT = {chunk['AMT']}")
+
             else:
                 chunks.append(chunk)
-                chunk = deepcopy(self._ctrl)
+                logger.info(f"In else clause of chunks, chunk = {chunk}")
+                chunk = deepcopy(self._ctrl) # todo why? this overwrites the chunks, or?
         chunks.append(chunk)
         doc._.chunks = chunks
-
+        logger.info(f"this was finally written, chunk({len(chunks)}) = {chunks}")
+        for pos, c in enumerate(chunks):
+            logger.info(f"\t{pos}: chunk: {c}")
 
         return doc

@@ -1,5 +1,8 @@
 import re
 from spacy.tokens import Span
+import logging
+
+logger = logging.getLogger("comp_logger")
 
 class ExtendFunctions(object):
     name = "extend_func_ents"
@@ -15,12 +18,12 @@ class ExtendFunctions(object):
                 start = ent.start
                 end = ent.end
                 next2 = doc[end:end + 2]
-                print(f"**{next2}**")
+                logger.info(f"**{next2}**")
                 if re.match(r",\s[a-zA-ZäöüÄÖÜ]{1,}-", str(next2)):
                     print(str(ent), "-----> next =", next2)
                     extended = Span(doc, start, end + 2, "FUNKTION")
                     new_ents.append(extended)
-                    print("New ent ------> = ", extended)
+                    logger.info(f"New ent ------> = {extended}")
                 # doc.ents.replace(fun, extended)
                 else:
                     new_ents.append(ent)

@@ -20,8 +20,12 @@ def resolve_abbreviations(txt, list_abbreviations):
 def get_lst_hofst(df_hofstaat):
     lst_hofst = dict()
     for idx, row in df_hofstaat.iterrows():
-        hst = [x.strip() for x in row.iloc[1].split(";")]
-        alt_name = None
+        if isinstance(row.iloc[1], str):
+            hst = [x.strip() for x in row.iloc[1].split(";")]
+            alt_name = None
+        else:
+            breakpoint()
+            pass
         if isinstance(row.iloc[2], str):
             alt_name = row.iloc[2]
         for ab in hst:

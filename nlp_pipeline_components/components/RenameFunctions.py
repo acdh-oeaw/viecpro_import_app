@@ -1,5 +1,8 @@
 from spacy.tokens import Span
 import re
+import logging
+
+logger = logging.getLogger("comp_logger")
 
 class RenameFunctions(object):
     name = "rename_functions"
@@ -30,7 +33,7 @@ class RenameFunctions(object):
             if test:
                 new_ents.append(ent)
             else:
-                print(f"removing {ent} from ents")
+                logger.info(f"removing {ent} from ents")
         doc.ents = new_ents
         new_ents = []
         for ent in doc.ents:

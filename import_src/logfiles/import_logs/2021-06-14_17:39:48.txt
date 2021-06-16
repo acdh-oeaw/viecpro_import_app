@@ -1,0 +1,53 @@
+----------------
+Import MetaInfo:
+
+username: None
+django_settings: django_settings.hsv_settings
+collection: Import HSV full 14-6-21
+spacy_model: using local model
+existing_annotations: data/viecpro_HSV_0.jsonl
+path_df: data/3_HSV-angepasst-IMPORT.xlsx
+path_hofstaat: data/Kürzel-Hofstaate-EX-ACC-2021-06-02.xlsx
+path_aemter: data/Kürzel-Ämter-ACC-EX-2021-02-08.xlsx
+path_abbreviations: data/EXCEL-ACCESS_Kürzel-Titel-Orden-2021-01-28.xlsx
+logger_level: 20
+collection_team: ['MRomberg', 'MKaiser', 'CStandhartinger']
+use_stopvalues: False
+is_test: False
+sample_frame: None
+without_testing: True
+log_msg: None
+----------------
+
+
+get_model >>> Used config cfg class for model configuration
+----------------
+Using the local model: models/viecpro_ner_hsv_5-21/
+
+NLP-pipeline:
+	ner
+	use_existing_annotations
+	add_brackets
+	rename_functions
+	remove_names
+	date_prepocissions
+	create_chunks
+----------------
+
+
+collection_counter = [(0, 'MRomberg (HSV)'), (3414, 'MKaiser (HSV)'), (6828, 'CStandhartinger (HSV)')]
+
+--------- Start of row | 0 | -------------- 
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> (?) [Mayr]
+person_process_field_familienname >>> fam1: ?
+person_process_field_familienname >>> fam2: <re.Match object; span=(2, 8), match='[Mayr]'>
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kanzlist'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': [], 'HOFSTAAT': None, 'FUNKTION': ['Kanzlist'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 1
+helper_hsv_match_hofstaate >>> FIRST HOFSTAAT = None
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] = NÖ-LG 
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: ?, Georg Ehrenreich>}
+chunk_get_nm_hst >>> c_H = None

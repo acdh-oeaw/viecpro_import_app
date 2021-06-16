@@ -1,0 +1,80 @@
+----------------
+Import MetaInfo:
+
+username: None
+django_settings: django_settings.hsv_settings
+collection: Sample HSV Import 14-6-21 – Amt/Hofstaat bugfix; CStandhartinger
+spacy_model: using local model
+existing_annotations: data/viecpro_HSV_0.jsonl
+path_df: data/3_HSV-angepasst-IMPORT.xlsx
+path_hofstaat: data/Kürzel-Hofstaate-EX-ACC-2021-06-02.xlsx
+path_aemter: data/Kürzel-Ämter-ACC-EX-2021-02-08.xlsx
+path_abbreviations: data/EXCEL-ACCESS_Kürzel-Titel-Orden-2021-01-28.xlsx
+logger_level: 20
+collection_team: ['MRomberg', 'MKaiser', 'CStandhartinger']
+use_stopvalues: False
+is_test: False
+sample_frame: using sample frame
+without_testing: True
+log_msg: None
+----------------
+
+
+get_model >>> Used config cfg class for model configuration
+----------------
+Using the local model: models/viecpro_ner_hsv_5-21/
+
+NLP-pipeline:
+	ner
+	use_existing_annotations
+	add_brackets
+	rename_functions
+	remove_names
+	date_prepocissions
+	create_chunks
+----------------
+
+
+
+--------- Start of row | 422 | -------------- 
+run_sample_import >>> Working with pd-Series
+replacer >>> r_fun: replaced ); with: ) ;
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> Binder, von
+person_process_field_familienname >>> Init test: 'von in fam' INPUT: Binder, von END INPUT, ROW:422
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(2) = [{'DATUM': ['1669-00-00', 'bis 1704<1704-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Reichshofrat'], 'AMT': None}, {'DATUM': ['1701-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Envoye'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': ['1669-00-00', 'bis 1704<1704-06-30>'], 'HOFSTAAT': None, 'FUNKTION': ['Reichshofrat'], 'AMT': None}
+NLP COMPONENT >>> CreateChunks.py >>> 	1: chunk: {'DATUM': ['1701-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Envoye'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 2, len Ämter-Spalte: 2
+helper_hsv_match_hofstaate >>> r_H = L
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': ['1669-00-00', 'bis 1704<1704-06-30>'], 'HOFSTAAT': 'L', 'FUNKTION': ['Reichshofrat'], 'AMT': None}
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': ['1701-00-00'], 'HOFSTAAT': 'L', 'FUNKTION': ['Envoye'], 'AMT': None}
+helper_hsv_match_amt_with_funct >>> r_A = RHR / Ritter- , Gelehrtenstand, AC; Abgesandte
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] = RHR 
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] =  Abgesandte
+process_chunks >>> cD ['1669-00-00', 'bis 1704<1704-06-30>'], cF ['Reichshofrat'], cH L, CA RHR 
+helper_hsv_post_process_dates >>> old: 1669-00-00, new: 1669-00-00<1669-06-30>
+helper_hsv_post_process_dates >>> inner date: <1704-06-30>
+helper_hsv_post_process_dates >>> new_i_date: <1704-06-30>
+helper_hsv_post_process_dates >>> old: bis 1704<1704-06-30>, new: bis 1704<1704-06-30>
+chunk_process_datum >>> rel, chunk sdw: 1669-00-00<1669-06-30>
+chunk_process_datum >>> rel, chunk edw: 1669-00-00<1669-06-30>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Binder, von, Johann Friedrich>, 'start_date_written': '1669-00-00<1669-06-30>', 'end_date_written': 'bis 1704<1704-06-30>'}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: RHR 
+chunk_process_amt_NEW >>> c_A was: RHR  and amt after matching with amt index is: RHR
+chunk_process_amt_NEW >>>  Return value of inst2 = RHR (L1 (Ks.))
+chunk_create_relations >>> create relations called for c_F ['Reichshofrat']
+process_chunks >>> cD ['1701-00-00'], cF ['Envoye'], cH L, CA  Abgesandte
+helper_hsv_post_process_dates >>> old: 1701-00-00, new: 1701-00-00<1701-06-30>
+chunk_process_datum >>> rel, chunk sdw: 1701-00-00<1701-06-30>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Binder, von, Johann Friedrich>, 'start_date_written': '1701-00-00<1701-06-30>'}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true:  Abgesandte
+chunk_process_amt_NEW >>> c_A was:  Abgesandte and amt after matching with amt index is: Abgesandte
+chunk_process_amt_NEW >>>  Return value of inst2 = Abgesandte (L1 (Ks.))
+chunk_create_relations >>> create relations called for c_F ['Envoye']

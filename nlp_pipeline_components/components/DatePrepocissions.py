@@ -1,5 +1,9 @@
 from spacy.tokens import Span
 import re
+import logging
+
+logger = logging.getLogger("comp_logger")
+#logger.info(f"{__name__} - added to pipeline")
 
 class DatePrepocissions(object):
     name = "date_prepocissions"
