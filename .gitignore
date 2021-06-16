@@ -15,3 +15,4 @@ django_settings*
 webpage
 webpage*
 notebook*
+import_src/logfiles/*

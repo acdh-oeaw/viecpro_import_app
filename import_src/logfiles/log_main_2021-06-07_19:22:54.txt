@@ -1,4 +1,0 @@
-working on row: 0
-(?) [Mayr]
-fam1: ?
-fam2: <re.Match object; span=(2, 8), match='[Mayr]'>
