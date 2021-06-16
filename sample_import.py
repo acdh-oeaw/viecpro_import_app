@@ -24,10 +24,10 @@ def run_sample_import(path_df="data/3_HSV-angepasst-IMPORT.xlsx",
     if sample_list:
         msg = "Using sample list"
 
-        list = deepcopy(sample_list)
+        liste = deepcopy(sample_list)
         try:
-            list = list[1:-1].split(",")
-            sample_list = [int(element.strip()) for element in list]
+            liste = liste[1:-1].split(",")
+            sample_list = [int(element.strip()) for element in liste]
             sample = sample.iloc[sample_list]
         except:
             raise ValueError("Couldn't interpret list, use format [int,int,int,int] or '[int, int, int, int]'")
