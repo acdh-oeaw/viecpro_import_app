@@ -1,3 +1,5 @@
+import pickle
+
 import reversion
 import subprocess
 from copy import deepcopy
@@ -6,7 +8,7 @@ import spacy
 import logging
 import time
 import pandas as pd
-from import_src.import_logger.import_logger_config import init_logger, init_funclogger, init_complogger
+from import_src.import_logger.import_logger_config import init_logger, init_funclogger, init_complogger, init_caselogger
 from import_src.file_processing import (
     get_list_abbreviations,
     get_lst_hofst,
@@ -124,7 +126,7 @@ def run_import(
 
     username=None,
     django_settings="django_settings.hsv_settings",
-    collection="Sample HSV Import 14-6-21 – Amt/Hofstaat bugfix; CStandhartinger",
+    collection="2021-06-22 TEST IMPORT HSV - fix missing functions, fix aemter/hofstaate, fix inst-inst relations",
     spacy_model=None, # Expects an imported Model, that already contains the pipeline components.
     existing_annotations="data/viecpro_HSV_0.jsonl",
     path_df="data/3_HSV-angepasst-IMPORT.xlsx",
@@ -160,14 +162,17 @@ def run_import(
         logfolder = "import_logs"
 
     logfile = f"import_src/logfiles/{logfolder}/{timestamp}.txt"
+    case_logfile = f"import_src/logfiles/case_logs/{timestamp}.txt"
 
     #////////////// LOG IMPORT METAINFO /////////////////
     init_logger(level=logger_level, logfile=logfile)
     init_funclogger(level=logger_level, logfile=logfile)
     init_complogger(level=logger_level, logfile=logfile)
+    init_caselogger(level=logger_level, logfile=case_logfile, case="test_case")
 
     logger = logging.getLogger("import_logger")
     funclogger = logging.getLogger("func_logger")
+
     using_local_model = lambda x=spacy_model: "using local model" if not x else x
     using_sample_frame = lambda : "using sample frame" if sample_frame is not None else "None"
 
@@ -223,9 +228,8 @@ def run_import(
     cfg.collection = collection
     cfg.df_aemter = pd.read_excel(path_aemter, header=2, engine="openpyxl")
     cfg.df_hofstaat = pd.read_excel(path_hofstaat, engine="openpyxl")
-    cfg.df_abbreviations = pd.read_excel(
-        path_abbreviations, sheet_name="Titel", header=3, engine="openpyxl"
-    )
+    cfg.df_abbreviations = pd.read_excel(path_abbreviations, sheet_name="Titel", header=3, engine="openpyxl")
+
     try:
         cfg.df = pd.read_excel(path_df, sheet_name="Original", engine="openpyxl")
     except:
@@ -296,7 +300,7 @@ def run_sample_import(sample_frame, logger, funclogger, process_row, cfg, tstamp
 #Full Import is the original import
 #Full Import is split into a specific Collection for each team_member
 def run_full_import(cfg, username, path_df, logger, process_row, User, TC, ignore_list):
-
+    caselogger = logging.getLogger("case_logger")
     splitcount = len(TC)
     me = False
     if username is not None:
@@ -322,13 +326,17 @@ def run_full_import(cfg, username, path_df, logger, process_row, User, TC, ignor
                 "orig_filename": f"{path_df}",
                 "pubinfo": f"File from GIT commit {subprocess.check_output(['git', 'show-ref', 'HEAD']).strip()}",
             }
-
+            ignore_list = [i for i in range(3414, len(cfg.df))]
+            with  open("data/duplicate_indices.pkl", "rb") as file:
+                selection_list = pickle.load(file)
             for idx, row in cfg.df.loc[offs:off_end].iterrows():
                 if idx in ignore_list:
                     #todo: implement that re-imported persons are first deleted! Use orig_id + collection (!!) to delete them first
                     logger.info(f"-----> IGNORING row | {idx}|")
                 else:
+                    #if idx in selection_list: # todo: remove this after test
                     logger.info(f"\n--------- Start of row | {idx} | -------------- ")
+                    #caselogger.info(f"\n--------- Start of row | {idx} | -------------- ")
                     process_row(idx, row, src_base, cfg, split_collection) # todo: note removed return pers here
 
 

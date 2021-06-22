@@ -1,0 +1,528 @@
+
+--------- Start of row | 0 | -------------- 
+
+--------- Start of row | 1 | -------------- 
+
+--------- Start of row | 2 | -------------- 
+Dummy Amt
+
+--------- Start of row | 3 | -------------- 
+Dummy Amt
+
+--------- Start of row | 4 | -------------- 
+Dummy Amt
+
+--------- Start of row | 5 | -------------- 
+Dummy Amt
+
+--------- Start of row | 6 | -------------- 
+(Kammer- , Hoffräulein)
+
+--------- Start of row | 7 | -------------- 
+Dummy Amt
+
+--------- Start of row | 8 | -------------- 
+Dummy Amt
+
+--------- Start of row | 9 | -------------- 
+Dummy Amt
+
+--------- Start of row | 10 | -------------- 
+(Kammer- , Hoffräulein)
+
+--------- Start of row | 11 | -------------- 
+Dummy Amt
+
+--------- Start of row | 12 | -------------- 
+
+--------- Start of row | 13 | -------------- 
+Dummy Amt
+
+--------- Start of row | 14 | -------------- 
+Dummy Amt
+
+--------- Start of row | 15 | -------------- 
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Ö Expedition
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+
+--------- Start of row | 16 | -------------- 
+
+--------- Start of row | 17 | -------------- 
+
+--------- Start of row | 18 | -------------- 
+
+--------- Start of row | 19 | -------------- 
+VodM.
+
+--------- Start of row | 20 | -------------- 
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Ö-udE
+Ö-udE.
+Dummy Amt
+
+--------- Start of row | 21 | -------------- 
+
+--------- Start of row | 22 | -------------- 
+
+--------- Start of row | 23 | -------------- 
+
+--------- Start of row | 24 | -------------- 
+
+--------- Start of row | 25 | -------------- 
+Dummy Amt
+
+--------- Start of row | 26 | -------------- 
+
+--------- Start of row | 27 | -------------- 
+
+--------- Start of row | 28 | -------------- 
+
+--------- Start of row | 29 | -------------- 
+
+--------- Start of row | 30 | -------------- 
+
+--------- Start of row | 31 | -------------- 
+
+--------- Start of row | 32 | -------------- 
+Dummy Amt
+
+--------- Start of row | 33 | -------------- 
+
+--------- Start of row | 34 | -------------- 
+
+--------- Start of row | 35 | -------------- 
+
+--------- Start of row | 36 | -------------- 
+Dummy Amt
+
+--------- Start of row | 37 | -------------- 
+
+--------- Start of row | 38 | -------------- 
+
+--------- Start of row | 39 | -------------- 
+
+--------- Start of row | 40 | -------------- 
+
+--------- Start of row | 41 | -------------- 
+
+--------- Start of row | 42 | -------------- 
+
+--------- Start of row | 43 | -------------- 
+
+--------- Start of row | 44 | -------------- 
+Dummy Amt
+
+--------- Start of row | 45 | -------------- 
+
+--------- Start of row | 46 | -------------- 
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+
+--------- Start of row | 47 | -------------- 
+
+--------- Start of row | 48 | -------------- 
+
+--------- Start of row | 49 | -------------- 
+Jusitz-Bancodeputation
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Ritterstandsausschuß
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Waisenrat
+
+--------- Start of row | 50 | -------------- 
+Dummy Amt
+jurid. Doktorenkollegiums
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+
+--------- Start of row | 51 | -------------- 
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+
+--------- Start of row | 52 | -------------- 
+
+--------- Start of row | 53 | -------------- 
+
+--------- Start of row | 54 | -------------- 
+
+--------- Start of row | 55 | -------------- 
+S.n.)
+
+--------- Start of row | 56 | -------------- 
+
+--------- Start of row | 57 | -------------- 
+
+--------- Start of row | 58 | -------------- 
+
+--------- Start of row | 59 | -------------- 
+
+--------- Start of row | 60 | -------------- 
+jur. Fakultät
+Dummy Amt
+Dummy Amt
+
+--------- Start of row | 61 | -------------- 
+
+--------- Start of row | 62 | -------------- 
+
+--------- Start of row | 63 | -------------- 
+
+--------- Start of row | 64 | -------------- 
+
+--------- Start of row | 65 | -------------- 
+
+--------- Start of row | 66 | -------------- 
+
+--------- Start of row | 67 | -------------- 
+
+--------- Start of row | 68 | -------------- 
+
+--------- Start of row | 69 | -------------- 
+
+--------- Start of row | 70 | -------------- 
+
+--------- Start of row | 71 | -------------- 
+
+--------- Start of row | 72 | -------------- 
+
+--------- Start of row | 73 | -------------- 
+Dummy Amt
+
+--------- Start of row | 74 | -------------- 
+OÖ Expedition
+Dummy Amt
+
+--------- Start of row | 75 | -------------- 
+
+--------- Start of row | 76 | -------------- 
+
+--------- Start of row | 77 | -------------- 
+Dummy Amt
+Dummy Amt
+
+--------- Start of row | 78 | -------------- 
+Dummy Amt
+NÖ Stände
+
+--------- Start of row | 79 | -------------- 
+Geh. Sekretär
+
+--------- Start of row | 80 | -------------- 
+Dummy Amt
+
+--------- Start of row | 81 | -------------- 
+Dummy Amt
+
+--------- Start of row | 82 | -------------- 
+
+--------- Start of row | 83 | -------------- 
+(Kammerdienerinnen)
+
+--------- Start of row | 84 | -------------- 
+Dummy Amt
+
+--------- Start of row | 85 | -------------- 
+
+--------- Start of row | 86 | -------------- 
+
+--------- Start of row | 87 | -------------- 
+
+--------- Start of row | 88 | -------------- 
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+
+--------- Start of row | 89 | -------------- 
+
+--------- Start of row | 90 | -------------- 
+OJäA
+
+--------- Start of row | 91 | -------------- 
+
+--------- Start of row | 92 | -------------- 
+
+--------- Start of row | 93 | -------------- 
+Dummy Amt
+
+--------- Start of row | 94 | -------------- 
+
+--------- Start of row | 95 | -------------- 
+
+--------- Start of row | 96 | -------------- 
+
+--------- Start of row | 97 | -------------- 
+
+--------- Start of row | 98 | -------------- 
+OJäA
+
+--------- Start of row | 99 | -------------- 
+Dummy Amt
+
+--------- Start of row | 100 | -------------- 
+
+--------- Start of row | 101 | -------------- 
+
+--------- Start of row | 102 | -------------- 
+
+--------- Start of row | 103 | -------------- 
+
+--------- Start of row | 104 | -------------- 
+
+--------- Start of row | 105 | -------------- 
+
+--------- Start of row | 106 | -------------- 
+
+--------- Start of row | 107 | -------------- 
+Dummy Amt
+
+--------- Start of row | 108 | -------------- 
+
+--------- Start of row | 109 | -------------- 
+
+--------- Start of row | 110 | -------------- 
+
+--------- Start of row | 111 | -------------- 
+Dummy Amt
+
+--------- Start of row | 112 | -------------- 
+
+--------- Start of row | 113 | -------------- 
+
+--------- Start of row | 114 | -------------- 
+Dummy Amt
+
+--------- Start of row | 115 | -------------- 
+
+--------- Start of row | 116 | -------------- 
+
+--------- Start of row | 117 | -------------- 
+Dummy Amt
+Dummy Amt
+Dummy Amt
+Dummy Amt
+
+--------- Start of row | 118 | -------------- 
+Dummy Amt
+Dummy Amt
+Dummy Amt
+
+--------- Start of row | 119 | -------------- 
+
+--------- Start of row | 120 | -------------- 
+
+--------- Start of row | 121 | -------------- 
+Dummy Amt
+
+--------- Start of row | 122 | -------------- 
+
+--------- Start of row | 123 | -------------- 
+
+--------- Start of row | 124 | -------------- 
+
+--------- Start of row | 125 | -------------- 
+
+--------- Start of row | 126 | -------------- 
+
+--------- Start of row | 127 | -------------- 
+Dummy Amt
+
+--------- Start of row | 128 | -------------- 
+
+--------- Start of row | 129 | -------------- 
+Dummy Amt
+Dummy Amt
+
+--------- Start of row | 130 | -------------- 
+Dummy Amt
+
+--------- Start of row | 131 | -------------- 
+(Mannspersonen)
+
+--------- Start of row | 132 | -------------- 
+(Kammerbedienstete (Las de la Camara))
+
+--------- Start of row | 133 | -------------- 
+
+--------- Start of row | 134 | -------------- 
+Dummy Amt
+
+--------- Start of row | 135 | -------------- 
+Dummy Amt
+
+--------- Start of row | 136 | -------------- 
+
+--------- Start of row | 137 | -------------- 
+
+--------- Start of row | 138 | -------------- 
+
+--------- Start of row | 139 | -------------- 
+
+--------- Start of row | 140 | -------------- 
+
+--------- Start of row | 141 | -------------- 
+
+--------- Start of row | 142 | -------------- 
+Dummy Amt
+
+--------- Start of row | 143 | -------------- 
+
+--------- Start of row | 144 | -------------- 
+
+--------- Start of row | 145 | -------------- 
+
+--------- Start of row | 146 | -------------- 
+
+--------- Start of row | 147 | -------------- 
+NÖ-LG?
+
+--------- Start of row | 148 | -------------- 
+
+--------- Start of row | 149 | -------------- 
+
+--------- Start of row | 150 | -------------- 
+
+--------- Start of row | 151 | -------------- 
+
+--------- Start of row | 152 | -------------- 
+
+--------- Start of row | 153 | -------------- 
+Dummy Amt
+
+--------- Start of row | 154 | -------------- 
+
+--------- Start of row | 155 | -------------- 
+
+--------- Start of row | 156 | -------------- 
+
+--------- Start of row | 157 | -------------- 
+
+--------- Start of row | 158 | -------------- 
+
+--------- Start of row | 159 | -------------- 
+
+--------- Start of row | 160 | -------------- 
+
+--------- Start of row | 161 | -------------- 
+Dummy Amt
+
+--------- Start of row | 162 | -------------- 
+Dummy Amt
+
+--------- Start of row | 163 | -------------- 
+
+--------- Start of row | 164 | -------------- 
+
+--------- Start of row | 165 | -------------- 
+
+--------- Start of row | 166 | -------------- 
+
+--------- Start of row | 167 | -------------- 
+
+--------- Start of row | 168 | -------------- 
+
+--------- Start of row | 169 | -------------- 
+
+--------- Start of row | 170 | -------------- 
+
+--------- Start of row | 171 | -------------- 
+Dummy Amt
+
+--------- Start of row | 172 | -------------- 
+
+--------- Start of row | 173 | -------------- 
+
+--------- Start of row | 174 | -------------- 
+
+--------- Start of row | 175 | -------------- 
+
+--------- Start of row | 176 | -------------- 
+
+--------- Start of row | 177 | -------------- 
+
+--------- Start of row | 178 | -------------- 
+
+--------- Start of row | 179 | -------------- 
+
+--------- Start of row | 180 | -------------- 
+
+--------- Start of row | 181 | -------------- 
+
+--------- Start of row | 182 | -------------- 
+
+--------- Start of row | 183 | -------------- 
+
+--------- Start of row | 184 | -------------- 
+
+--------- Start of row | 185 | -------------- 
+
+--------- Start of row | 186 | -------------- 
+
+--------- Start of row | 187 | -------------- 
+
+--------- Start of row | 188 | -------------- 
+
+--------- Start of row | 189 | -------------- 
+
+--------- Start of row | 190 | -------------- 
+
+--------- Start of row | 191 | -------------- 
+
+--------- Start of row | 192 | -------------- 
+
+--------- Start of row | 193 | -------------- 
+
+--------- Start of row | 194 | -------------- 
+Abgesandte
+Abgesandte
+
+--------- Start of row | 195 | -------------- 
+
+--------- Start of row | 196 | -------------- 
+
+--------- Start of row | 197 | -------------- 
+
+--------- Start of row | 198 | -------------- 

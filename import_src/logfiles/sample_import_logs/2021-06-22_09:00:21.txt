@@ -1,0 +1,71 @@
+----------------
+Import MetaInfo:
+
+username: None
+django_settings: django_settings.hsv_settings
+collection: 2021-06-22 TEST IMPORT HSV - fix missing functions, fix aemter/hofstaate, fix inst-inst relations
+spacy_model: using local model
+existing_annotations: data/viecpro_HSV_0.jsonl
+path_df: data/3_HSV-angepasst-IMPORT.xlsx
+path_hofstaat: data/Kürzel-Hofstaate-EX-ACC-2021-06-02.xlsx
+path_aemter: data/Kürzel-Ämter-ACC-EX-2021-02-08.xlsx
+path_abbreviations: data/EXCEL-ACCESS_Kürzel-Titel-Orden-2021-01-28.xlsx
+logger_level: 20
+collection_team: ['MRomberg', 'MKaiser', 'CStandhartinger']
+use_stopvalues: False
+is_test: False
+sample_frame: using sample frame
+without_testing: True
+log_msg: None
+----------------
+
+
+get_model >>> Used config cfg class for model configuration
+----------------
+Using the local model: models/viecpro_ner_hsv_5-21/
+
+NLP-pipeline:
+	ner
+	use_existing_annotations
+	add_brackets
+	rename_functions
+	remove_names
+	date_prepocissions
+	create_chunks
+----------------
+
+
+
+--------- Start of row | 1323 | -------------- 
+run_sample_import >>> Working with pd-Series
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> Faxarda (Gafarda)
+person_process_field_familienname >>> fam1: Faxarda
+person_process_field_familienname >>> fam2: <re.Match object; span=(8, 17), match='(Gafarda)'>
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': ['1666-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Hofmeisterin'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': ['1666-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Hofmeisterin'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 1
+helper_hsv_match_hofstaate >>> r_H = MMT
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: MMT
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: MMT
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': ['1666-00-00'], 'HOFSTAAT': 'MMT', 'FUNKTION': ['Hofmeisterin'], 'AMT': None}
+helper_hsv_match_amt_with_funct >>> r_A = OMeA (Weibspersonen)
+helper_hsv_match_amt_with_funct >>> replaced amt 'OMeA (Weibspersonen)' with 'OMeA'
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] = OMeA (Weibspersonen)
+helper_hsv_match_amt_with_funct >>> Before check for empty amt, c[amt] = 'OMeA (Weibspersonen)'
+process_chunks >>> cD ['1666-00-00'], cF ['Hofmeisterin'], cH MMT, CA OMeA (Weibspersonen)
+helper_hsv_post_process_dates >>> old: 1666-00-00, new: 1666<1666-06-30>
+chunk_process_datum >>> rel, chunk sdw: 1666<1666-06-30>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Faxarda, Leonora>, 'start_date_written': '1666<1666-06-30>'}
+chunk_get_nm_hst >>> c_H = MMT
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: MMT (Ksin.)
+chunk_process_amt_NEW >>> c_A in if c_A true: OMeA (Weibspersonen)
+chunk_process_amt_NEW >>> amt OMeA (Weibspersonen) was not in df_aemter_index
+chunk_process_amt_NEW >>> Exception in Amt function: local variable 'row_target' referenced before assignment
+chunk_process_amt_NEW >>>  Return value of inst2 = OMeA (Weibspersonen) (MMT (Ksin.))
+chunk_create_relations >>> create relations called for c_F ['Hofmeisterin']
+chunk_create_relations >>> PersonInstitutionRelation created returned: False; rel['relation_type'] = Hofmeisterin
+process_chunks >>>  Source Person Relation: 1323 -- Faxarda, Leonora -- {'related_person': <Person: Faxarda, Leonora>, 'start_date_written': '1666<1666-06-30>', 'related_institution': <Institution: OMeA (Weibspersonen) (MMT (Ksin.))>, 'relation_type': <PersonInstitutionRelation: Hofmeisterin>}

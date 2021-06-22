@@ -24,3 +24,10 @@ def init_complogger(level, logfile):
     complogger.addHandler(file_handler)
     complogger.setLevel(level)
 
+def init_caselogger(level, logfile, case):
+    caselogger = logging.getLogger("case_logger")
+    file_handler = logging.FileHandler(logfile, mode="a")
+    formatter = logging.Formatter(f"%(message)s")
+    file_handler.setFormatter(formatter)
+    caselogger.addHandler(file_handler)
+    caselogger.setLevel(level)

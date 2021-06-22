@@ -1,0 +1,70 @@
+----------------
+Import MetaInfo:
+
+username: None
+django_settings: django_settings.hsv_settings
+collection: Sample HSV Import 14-6-21 – Amt/Hofstaat bugfix; CStandhartinger
+spacy_model: using local model
+existing_annotations: data/viecpro_HSV_0.jsonl
+path_df: data/3_HSV-angepasst-IMPORT.xlsx
+path_hofstaat: data/Kürzel-Hofstaate-EX-ACC-2021-06-02.xlsx
+path_aemter: data/Kürzel-Ämter-ACC-EX-2021-02-08.xlsx
+path_abbreviations: data/EXCEL-ACCESS_Kürzel-Titel-Orden-2021-01-28.xlsx
+logger_level: 20
+collection_team: ['MRomberg', 'MKaiser', 'CStandhartinger']
+use_stopvalues: False
+is_test: False
+sample_frame: using sample frame
+without_testing: True
+log_msg: None
+----------------
+
+
+get_model >>> Used config cfg class for model configuration
+----------------
+Using the local model: models/viecpro_ner_hsv_5-21/
+
+NLP-pipeline:
+	ner
+	use_existing_annotations
+	add_brackets
+	rename_functions
+	remove_names
+	date_prepocissions
+	create_chunks
+----------------
+
+
+
+--------- Start of row | 139 | -------------- 
+run_sample_import >>> Working with pd-Series
+person_process_field_vorname >>> r_vor
+person_process_field_familienname >>> Anurso, de
+person_process_field_familienname >>> Init test: 'de in fam' INPUT: Anurso, de END INPUT, ROW:139
+person_process_field_familienname >>> Used fam1_ = familienname.strip(), fam1_ = Anurso, de
+person_process_field_familienname >>> WHAT TO DO WITH THESE NAME: Anurso, de
+NLP COMPONENT >>> UseExistingAnnotations.py >>> Entered call
+NLP COMPONENT >>> UseExistingAnnotations.py >>> doc._excel_row was not in annotations.keys
+NLP COMPONENT >>> CreateChunks.py >>> this was finally written, chunk(1) = [{'DATUM': ['1704-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Agent'], 'AMT': None}]
+NLP COMPONENT >>> CreateChunks.py >>> 	0: chunk: {'DATUM': ['1704-00-00'], 'HOFSTAAT': None, 'FUNKTION': ['Agent'], 'AMT': None}
+process_chunks >>> len_doc_chunks: 1, len Ämter-Spalte: 1
+helper_hsv_match_hofstaate >>> r_H = L
+helper_hsv_match_hofstaate >>> HOFSTAATE PROCESSING ----> h: L
+helper_hsv_match_hofstaate >>> NO CHUNK HOFSTAAT
+helper_hsv_match_hofstaate >>> chunk Hofstaat set to: L
+helper_hsv_match_hofstaate >>> chunk is -- > {'DATUM': ['1704-00-00'], 'HOFSTAAT': 'L', 'FUNKTION': ['Agent'], 'AMT': None}
+helper_hsv_match_amt_with_funct >>> r_A = HKR / Agenten
+helper_hsv_match_amt_with_funct >>> r_A equals len(Chunks) -> c[amt] = HKR 
+helper_hsv_match_amt_with_funct >>> Before check for empty amt, c[amt] = 'HKR '
+process_chunks >>> cD ['1704-00-00'], cF ['Agent'], cH L, CA HKR 
+helper_hsv_post_process_dates >>> old: 1704-00-00, new: 1704<1704-06-30>
+chunk_process_datum >>> rel, chunk sdw: 1704<1704-06-30>
+chunk_process_datum >>>  this is the full relation: {'related_person': <Person: Anurso, de, Augustin Jakob>, 'start_date_written': '1704<1704-06-30>'}
+chunk_get_nm_hst >>> c_H = L
+chunk_create_institution >>> nm_hst is not Dummy Hofstaat: L1 (Ks.)
+chunk_process_amt_NEW >>> c_A in if c_A true: HKR 
+chunk_process_amt_NEW >>> c_A was: HKR  and amt after matching with amt index is: Hofkriegsrat (Behörde), type amt: <class 'str'>
+chunk_process_amt_NEW >>>  Return value of inst2 = Hofkriegsrat (Behörde) (L1 (Ks.))
+chunk_create_relations >>> create relations called for c_F ['Agent']
+chunk_create_relations >>> PersonInstitutionRelation created returned: False; rel['relation_type'] = Agent
+process_chunks >>>  Source Person Relation: 139 -- Anurso, de, Augustin Jakob -- {'related_person': <Person: Anurso, de, Augustin Jakob>, 'start_date_written': '1704<1704-06-30>', 'related_institution': <Institution: Hofkriegsrat (Behörde) (L1 (Ks.))>, 'relation_type': <PersonInstitutionRelation: Agent>}
