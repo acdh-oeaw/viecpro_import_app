@@ -125,8 +125,8 @@ from chain_tests import run_chained_tests
 def run_import(
 
     username=None,
-    django_settings="django_settings.hsv_settings",
-    collection="2021-06-22 TEST IMPORT HSV - fix missing functions, fix aemter/hofstaate, fix inst-inst relations",
+    django_settings="django_settings.viecpro_remote",
+    collection="Import HSV full 22-6-21",
     spacy_model=None, # Expects an imported Model, that already contains the pipeline components.
     existing_annotations="data/viecpro_HSV_0.jsonl",
     path_df="data/3_HSV-angepasst-IMPORT.xlsx",
@@ -306,7 +306,7 @@ def run_full_import(cfg, username, path_df, logger, process_row, User, TC, ignor
     if username is not None:
         me = User.objects.get(username=username)
     Doc.set_extension("excel_row", default=-1, force=True)
-    lst_offs = list(range(0, len(cfg.df), int(len(cfg.df) / splitcount) + 1))#[:1] #todo: if slicing should be allowed, it would need to be added at another point. here it will break zip
+    lst_offs = list(range(0, len(cfg.df), int(len(cfg.df) / splitcount) + 1))
     collection_counter = zip(lst_offs, TC)
     loglist = deepcopy(collection_counter)
     logger.info(f"collection_counter = {list(loglist)}")
@@ -316,28 +316,28 @@ def run_full_import(cfg, username, path_df, logger, process_row, User, TC, ignor
         if idx5 == len(lst_offs) - 1:
             off_end = len(cfg.df)
         else:
-            off_end = lst_offs[idx5+1]-1 # todo: there are 2 or 3 people twice in the database after the import! I think this happens here.
-        #if idx5 == 2:
-        with reversion.create_revision():
-            if me:
-                reversion.set_user(me)
-            reversion.set_comment(f"Second full HSV test-import. Fixed model and nlp-pipeline. Importing rows {offs} - {off_end}")
-            src_base = {
-                "orig_filename": f"{path_df}",
-                "pubinfo": f"File from GIT commit {subprocess.check_output(['git', 'show-ref', 'HEAD']).strip()}",
-            }
-            ignore_list = [i for i in range(3414, len(cfg.df))]
-            with  open("data/duplicate_indices.pkl", "rb") as file:
-                selection_list = pickle.load(file)
-            for idx, row in cfg.df.loc[offs:off_end].iterrows():
-                if idx in ignore_list:
-                    #todo: implement that re-imported persons are first deleted! Use orig_id + collection (!!) to delete them first
-                    logger.info(f"-----> IGNORING row | {idx}|")
-                else:
-                    #if idx in selection_list: # todo: remove this after test
-                    logger.info(f"\n--------- Start of row | {idx} | -------------- ")
-                    #caselogger.info(f"\n--------- Start of row | {idx} | -------------- ")
-                    process_row(idx, row, src_base, cfg, split_collection) # todo: note removed return pers here
+            off_end = lst_offs[idx5+1]-1
+        if idx5 == 2:
+            with reversion.create_revision():
+                if me:
+                    reversion.set_user(me)
+                reversion.set_comment(f"Full HSV Import. Importing rows {offs} - {off_end}")
+                src_base = {
+                    "orig_filename": f"{path_df}",
+                    "pubinfo": f"File from GIT commit {subprocess.check_output(['git', 'show-ref', 'HEAD']).strip()}",
+                }
+                #ignore_list = [i for i in range(3414, len(cfg.df))]
+                with  open("data/duplicate_indices.pkl", "rb") as file:
+                    selection_list = pickle.load(file)
+                for idx, row in cfg.df.loc[offs:off_end].iterrows():
+                    if idx in ignore_list:
+                        #todo: implement that re-imported persons are first deleted! Use orig_id + collection (!!) to delete them first
+                        logger.info(f"-----> IGNORING row | {idx}|")
+                    else:
+                        #if idx in selection_list: # todo: remove this after test
+                        logger.info(f"\n--------- Start of row | {idx} | -------------- ")
+                        #caselogger.info(f"\n--------- Start of row | {idx} | -------------- ")
+                        process_row(idx, row, src_base, cfg, split_collection)
 
 
 if __name__ == "__main__":
