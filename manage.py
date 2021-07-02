@@ -5,7 +5,7 @@ import sys
 if __name__ == "__main__":
     if os.getenv("DJANGO_SETTINGS_MODULE") is None:
         os.environ.setdefault(
-            "DJANGO_SETTINGS_MODULE", "django_settings.viecpro_remote"
+            "DJANGO_SETTINGS_MODULE", "django_settings.hsv_settings"
         )
     try:
         from django.core.management import execute_from_command_line

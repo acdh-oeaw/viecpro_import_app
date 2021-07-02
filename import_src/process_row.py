@@ -388,6 +388,9 @@ def get_or_create_amt(amt_name, row_target):
             name_hst_2 = cfg.lst_hofst[row_target.iloc[8]][0]
         else:
             name_hst_2 = row_target.iloc[8]
+        funclogger.info(f"name_hst_2 == {name_hst_2}")
+        funclogger.info(f"isnt_type == {inst_type}")
+
         amt_super, created2 = Institution.objects.get_or_create(name=name_hst_2, kind=inst_type)
         InstitutionInstitution.objects.create(related_institutionA_id=amt_ent.pk, related_institutionB_id=amt_super.pk, relation_type=rl_teil_von)
 
@@ -478,7 +481,6 @@ def chunk_process_amt(c_A, inst, nm_hst):
 
             except Exception as e:
                  funclogger.info(f"Exception: {e}")
-                 funclogger.info(f"exception caught and handled here. Multiple Institutions for {amt_name}")
 
         if not "Dummy" in amt_name and row_target is not None:
             try:
