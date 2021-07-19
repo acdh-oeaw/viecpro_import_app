@@ -459,7 +459,8 @@ def chunk_process_amt(c_A, inst, nm_hst):
         else:
             funclogger.info(f"amt {amt} was not in df_aemter_index")
             if not amt == "Dummy Amt":
-                caselogger.info(f"{amt}")
+                #caselogger.info(f"{amt}")
+                pass
         amt_name = f"{amt} ({nm_hst})"
 
         if len(amt_name) > 254:
