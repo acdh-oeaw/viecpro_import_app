@@ -1,4 +1,5 @@
 import os, django
+import pathlib
 
 class cfg:
 
@@ -17,6 +18,7 @@ class cfg:
     annotations = None
 
     def set_settings(value):
+        print(f"set settings called, settings set to: {value}")
         cfg.django_settings = value
         os.environ["DJANGO_SETTINGS_MODULE"] = value
         django.setup()

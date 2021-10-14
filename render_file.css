@@ -1,0 +1,115 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+#maincontainer{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+#metadata{
+    max-width: 500px;
+    margin-right: 4rem;
+}
+
+.mylist{
+      list-style-type: none;
+}
+
+.containerdiv{
+    margin: 2rem 2rem 2rem 2rem;
+}
+.containerdiv h2{
+    font-family: Arial, Helvetica, sans-serif;
+
+    margin-bottom: 1rem;
+}
+#my_header{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#textcontainer{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#my_header{
+    background-color: #82b3c9;
+    font-size: 3rem;
+    color: white;
+    padding: 2rem 2rem 2rem 2rem;
+    margin-bottom: 6rem;
+}
+#textcontainer>*{
+    height: 1.5rem;
+    margin: 0.5rem;
+}
+body{
+    color: black;
+}
+
+#my_header div{
+    padding: 0.2rem 0.8rem;
+
+
+}
+
+.header_button{
+    color: white;
+    width: 10rem;
+    heigth:2rem;
+    border-width: 0.5rem;
+    border-color: black;
+    text-decoration: None;
+    font-size: 2.5rem;
+}
+
+
+
+.header_button:hover{
+    color: lightblue;
+}
+.mytable {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+
+.mytable td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 1rem;
+
+}
+
+.mytable a{
+    text-decoration: None;
+    color: black;
+
+}
+.mytable a:hover{
+    color: blue;
+}
+
+
+.mytable tr:nth-child(even){background-color: #f2f2f2;}
+
+.mytable tr:hover {background-color: #ddd;}
+
+.mytable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+    background-color: #82b3c9;
+  color: white;
+}
+

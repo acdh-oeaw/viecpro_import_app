@@ -20,6 +20,7 @@ logger = logging.getLogger("import_logger")
 funclogger = logging.getLogger("func_logger")
 caselogger = logging.getLogger("case_logger")
 
+
 def person_process_field_vorname(r_vor):
     funclogger.info(f"r_vor")
     keep = [", sen.", ", jun.", ", der jüngere", ", die jüngere"]
@@ -55,8 +56,8 @@ def person_process_field_familienname(r_fam, idx):
     labels_fam_hzt = []
     labels_fam = False
     if isinstance(familienname, str):
-        #labels_fam_hzt = []
-        #labels_fam = False
+        # labels_fam_hzt = []
+        # labels_fam = False
         for idx_fam, familienname in enumerate(familienname.split(", oo")):
             if "(" in familienname:
                 fam1_ = familienname.split(" (")[0].strip()
@@ -67,7 +68,8 @@ def person_process_field_familienname(r_fam, idx):
                     if ";" in fam2.group(1):
                         fam2 = fam2.group(1).split(";")
                         fam2 = [x.strip() for x in fam2]
-                    elif not ", von" in fam2.group(1) and not ", de" in fam2.group(1) and not ", d'" in fam2.group(1): # todo added this to catch , d' names. are there other variants?
+                    elif not ", von" in fam2.group(1) and not ", de" in fam2.group(1) and not ", d'" in fam2.group(
+                            1):  # todo added this to catch , d' names. are there other variants?
                         fam2 = fam2.group(1).split(",")
                         fam2 = [x.strip() for x in fam2]
                     else:
@@ -124,7 +126,6 @@ def person_process_field_familienname(r_fam, idx):
                 labels_fam_hzt.append((fam1_, fam2))
     else:
         fam1 = "NEEDS REVIEW"
-
 
     sn, sn_alternative = helper_process_names(fam1)
     if sn_alternative is not None:
@@ -207,10 +208,10 @@ def person_process_field_lebensdaten(r_leb, pers_dic):
 
 
 def person_process_field_titel(r_tit, pers):
-
-    change = {"Reichsgraf; Freiherr zu Hollenburg, Finkenstein u. Thalberg, Erbschenk u. Oberstlandjägermeister in Kärnten, Herr der Herrschaft Schuckenau, Großpriesten, Obermarkersdorf u. Fugau"
-              :"Reichsgraf; Freiherr zu Hollenburg, Finkenstein u. Thalberg; Erbschenk u. Oberstlandjägermeister in Kärnten; Herr der Herrschaft Schuckenau, Großpriesten, Obermarkersdorf u. Fugau",
-              }
+    change = {
+        "Reichsgraf; Freiherr zu Hollenburg, Finkenstein u. Thalberg, Erbschenk u. Oberstlandjägermeister in Kärnten, Herr der Herrschaft Schuckenau, Großpriesten, Obermarkersdorf u. Fugau"
+        : "Reichsgraf; Freiherr zu Hollenburg, Finkenstein u. Thalberg; Erbschenk u. Oberstlandjägermeister in Kärnten; Herr der Herrschaft Schuckenau, Großpriesten, Obermarkersdorf u. Fugau",
+        }
 
     dont_split = ["Herr der Herrschaft Eschelberg, Liechtenhag u. Pottendorf",
                   "Herr der Herrschaft Wildberg, Rindegg, Reichenau",
@@ -224,12 +225,11 @@ def person_process_field_titel(r_tit, pers):
     if r_tit in change.keys():
         r_tit = change[r_tit]
     t_list, subst = re.subn(r"\(.*\)", "", r_tit)
-    t_list = [x.strip() for x in t_list.split(";")] # changed from "," to ";" for HSV
+    t_list = [x.strip() for x in t_list.split(";")]  # changed from "," to ";" for HSV
     funclogger.warning(f"t_list = {t_list}")
 
     def create_title(tit, pers):
         if re.search(r"\d{4}", tit):
-
             tit_res = resolve_abbreviations(tit, cfg.list_abbreviations)
             date = re.search(r"(\d{4}){1}(-\d{2}-\d{2}){0,1}", tit).group(0)
             date = helper_hsv_post_process_dates(date)
@@ -261,8 +261,6 @@ def person_process_field_titel(r_tit, pers):
     return pers
 
 
-
-
 def person_create_person_labels(pers, vorname, labels_fam, labels_fam_hzt):
     if len(vorname) > 1:
         for v in vorname[1:]:
@@ -289,6 +287,7 @@ def person_create_person_labels(pers, vorname, labels_fam, labels_fam_hzt):
                     temp_entity=pers,
                 )
 
+
 def create_and_process_doc(r_F, idx):
     doc = cfg.nlp.make_doc(r_F)
 
@@ -298,6 +297,7 @@ def create_and_process_doc(r_F, idx):
         doc = proc(doc)
 
     return doc
+
 
 def helper_hsv_post_process_dates(date):
     if "<" in date and ">" in date:
@@ -310,8 +310,9 @@ def helper_hsv_post_process_dates(date):
     else:
         if len(date.strip()) == 10:
             if "-00-00" in date:
-                i_date = "<"+date[:4]+"-06-30>" #note: sliced down to replace orig  f.e. 1667-00-00 with 1667<1667-06-30>
-                new_date = date[:4]+i_date
+                i_date = "<" + date[
+                               :4] + "-06-30>"  # note: sliced down to replace orig  f.e. 1667-00-00 with 1667<1667-06-30>
+                new_date = date[:4] + i_date
             else:
                 new_date = f"{date}<{date}>"
         elif len(date.strip()) == 4:
@@ -325,7 +326,6 @@ def helper_hsv_post_process_dates(date):
 
 
 def chunk_process_datum(c_D, rel):
-
     if len(c_D) == 1:
         c_D[0] = helper_hsv_post_process_dates(c_D[0])
         if "bis" in c_D[0]:
@@ -357,27 +357,26 @@ def chunk_get_nm_hst(c_H):
 
     return nm_hst
 
+
 def chunk_create_institution(nm_hst, pers):
     inst_type_hst, created = InstitutionType.objects.get_or_create(name="Hofstaat")
     inst, created = Institution.objects.get_or_create(
         name=nm_hst, kind=inst_type_hst
     )
 
-    inst.collection.add(col_unsicher) # todo: ?
+    inst.collection.add(col_unsicher)  # todo: ?
 
-    #This is used now instead of test_hs
+    # This is used now instead of test_hs
     if nm_hst != "Dummy Hofstaat":
         funclogger.info(f"nm_hst is not Dummy Hofstaat: {nm_hst}")
         PersonInstitution.objects.get_or_create(
-                 related_institution=inst, related_person=pers, relation_type=rl_pers_hst
-             )
+            related_institution=inst, related_person=pers, relation_type=rl_pers_hst
+        )
 
     return inst
 
 
-
 def get_or_create_amt(amt_name, row_target):
-
     inst_type, c3 = InstitutionType.objects.get_or_create(name=row_target.iloc[7])
     amt_ent, created = Institution.objects.get_or_create(name=amt_name, kind=inst_type)
     amt_ent.collection.add(col_unsicher)
@@ -391,14 +390,16 @@ def get_or_create_amt(amt_name, row_target):
         funclogger.info(f"name_hst_2 == {name_hst_2}")
         funclogger.info(f"isnt_type == {inst_type}")
 
-        amt_super, created2 = Institution.objects.get_or_create(name=name_hst_2, kind=inst_type)
-        InstitutionInstitution.objects.create(related_institutionA_id=amt_ent.pk, related_institutionB_id=amt_super.pk, relation_type=rl_teil_von)
+        amt_super, created2 = Institution.objects.get_or_create(name=name_hst_2, kind=inst_type)  # False!
+        InstitutionInstitution.objects.create(related_institutionA_id=amt_ent.pk, related_institutionB_id=amt_super.pk,
+                                              relation_type=rl_teil_von)
 
     funclogger.info(f"Created amt_ent {amt_ent}, amt_super {amt_super}")
     return amt_ent, amt_super, created2
 
-def create_text_entries(row, pers, src_base, map_text_type, columns=(5,18)):
-    for idx in range(len(cfg.df.columns)): # todo note: changed. to import all columns
+
+def create_text_entries(row, pers, src_base, map_text_type, columns=(5, 18)):
+    for idx in range(len(cfg.df.columns)):
         if isinstance(row.iloc[idx], str):
             col_name = cfg.df.columns[idx]
             if col_name not in map_text_type.keys():
@@ -414,30 +415,28 @@ def create_text_entries(row, pers, src_base, map_text_type, columns=(5,18)):
 
 
 def db_deduplicate_aemter(amt_name):
-
     duplicate_list = list(Institution.objects.filter(name=amt_name))
     keep = duplicate_list.pop(0)
-    for el in duplicate_list: # re_write PersonInstitution Relations
+    for el in duplicate_list:  # re_write PersonInstitution Relations
         pi_set = PersonInstitution.objects.filter(related_institution=el)
         for entry in pi_set:
             old = entry.related_institution
-            entry.related_institution=keep
+            entry.related_institution = keep
             entry.save()
             funclogger.info(f"Set PersInst Relation for {el} from {old}, {old.id} to {keep}, {keep.id}")
 
-    for el in duplicate_list: # re_write InstitutionInstitution Relations
+    for el in duplicate_list:  # re_write InstitutionInstitution Relations
         ii_set = InstitutionInstitution.objects.filter(related_institutionA=el)
         for entry in ii_set:
             old = entry.related_institutionA
-            entry.related_institutionA=keep
+            entry.related_institutionA = keep
             entry.save()
             funclogger.info(f"Set InstInst Relation for {el} from {old}, {old.id} to {keep}, {keep.id}")
 
-    while duplicate_list: # delete obsolete Institutions
+    while duplicate_list:  # delete obsolete Institutions
         remove = duplicate_list.pop()
         remove.delete()
         funclogger.info(f"Deleted obsolete Institution {remove}")
-
 
 
 def chunk_process_amt(c_A, inst, nm_hst):
@@ -448,7 +447,8 @@ def chunk_process_amt(c_A, inst, nm_hst):
         amt = c_A.strip()
         if amt in cfg.df_aemter_index.keys():
             row_target = cfg.df_aemter_index[amt]
-            resolved = row_target.iloc[5] #todo: note: used column 9 first, which is "Bedeutung (Auflösung)", changed to column 5 "APIS_Vereinheitlichung"
+            resolved = row_target.iloc[
+                5]  # todo: note: used column 9 first, which is "Bedeutung (Auflösung)", changed to column 5 "APIS_Vereinheitlichung"
 
             if isinstance(resolved, str):
                 amt = resolved
@@ -459,7 +459,7 @@ def chunk_process_amt(c_A, inst, nm_hst):
         else:
             funclogger.info(f"amt {amt} was not in df_aemter_index")
             if not amt == "Dummy Amt":
-                #caselogger.info(f"{amt}")
+                # caselogger.info(f"{amt}")
                 pass
         amt_name = f"{amt} ({nm_hst})"
 
@@ -469,19 +469,20 @@ def chunk_process_amt(c_A, inst, nm_hst):
             funclogger.debug(f"{amt_name[:-ln_minus]} ({nm_hst})")
             amt_name = f"{amt_name[:-ln_minus]} ({nm_hst})"
         try:
-            inst2, created = Institution.objects.get_or_create(name=amt_name)
+            inst2, created = Institution.objects.get_or_create(name=amt_name)  # todo: Creation without Instition Type !
 
         except Exception as e:
             funclogger.info(f"Exception caught for duplicates for amt_name {amt_name}. Calling db_deduplicate_aemter")
             db_deduplicate_aemter(amt_name)
 
             try:
-                inst2, created = Institution.objects.get_or_create(name=amt_name)
+                inst2, created = Institution.objects.get_or_create(
+                    name=amt_name)  # todo: Creation without Instition Type !
                 funclogger.info(f"Exception resolved: inst2 is for {amt_name} is {inst2}")
 
 
             except Exception as e:
-                 funclogger.info(f"Exception: {e}")
+                funclogger.info(f"Exception: {e}")
 
         if not "Dummy" in amt_name and row_target is not None:
             try:
@@ -493,23 +494,26 @@ def chunk_process_amt(c_A, inst, nm_hst):
                         relation_type=rl_teil_von,
                     )
             except Exception as e:
-                #inst2 = amt_dummy
-                #inst3 = False
+                # inst2 = amt_dummy
+                # inst3 = False
                 funclogger.info(f"Exception in Amt function: {e}")
         else:
             if row_target is None:
-                funclogger.info(f"Skipped writing InstitutionInstituion relation because row_target was None for amt {amt_name}")
+                funclogger.info(
+                    f"Skipped writing InstitutionInstituion relation because row_target was None for amt {amt_name}")
             else:
                 funclogger.info(f"Skipped writing InstitutionInstitution relation for amt_name {amt_name}")
 
     else:
         funclogger.info(f"Else was called, c_A was false (is this even possible?) c_A = '{c_A}'")
         inst2, created = Institution.objects.get_or_create(
-            name=f"Dummy Amt ({nm_hst})"
+            name=f"Dummy Amt ({nm_hst})"  # todo: Creation without Instition Type !
         )
 
     funclogger.info(f" Return value of inst2 = {inst2}")
     return inst2
+
+
 
 
 def db_deduplicate_person_institution_relation(rel_type):
@@ -545,13 +549,16 @@ def chunk_create_relations(c_F, rel):
                 PersonInstitution.objects.create(**rel)
 
                 if created:
-                    funclogger.info(f"PersonInstitutionRelation created returned: {created}; rel['relation_type'] = {rel_t_obj}")
+                    funclogger.info(
+                        f"PersonInstitutionRelation created returned: {created}; rel['relation_type'] = {rel_t_obj}")
                 else:
-                    funclogger.info(f"PersonInstitutionRelation created returned: {created}; rel['relation_type'] = {rel_t_obj}")
+                    funclogger.info(
+                        f"PersonInstitutionRelation created returned: {created}; rel['relation_type'] = {rel_t_obj}")
 
 
             except Exception as e:
-                funclogger.info(f"Exception for rel_type |{rel_type}| in Progres. Calling db_deduplicate_person_institution_relation")
+                funclogger.info(
+                    f"Exception for rel_type |{rel_type}| in Progres. Calling db_deduplicate_person_institution_relation")
                 db_deduplicate_person_institution_relation(rel_type)
                 try:
                     (rel_t_obj,
@@ -565,7 +572,6 @@ def chunk_create_relations(c_F, rel):
 
 
 def helper_hsv_match_amt_with_funct(doc, r_A):
-
     first_amt = None
     funclogger.info(f"r_A = {r_A}")
 
@@ -581,7 +587,7 @@ def helper_hsv_match_amt_with_funct(doc, r_A):
 
             for c, a in zip(doc._.chunks, ab_split):
                 a = a.split("/")[0]
-                b = re.sub(r"\(.*\)","",a).strip()
+                b = re.sub(r"\(.*\)", "", a).strip()
                 funclogger.info(f"replaced amt '{a}' with '{b}'")
                 a = b
                 if not c["AMT"]:
@@ -593,7 +599,6 @@ def helper_hsv_match_amt_with_funct(doc, r_A):
                     c["AMT"] = first_amt
                 elif not c["AMT"]:
                     c["AMT"] = "Dummy Amt"
-
 
     for c in doc._.chunks:
         funclogger.info(f"Before check for empty amt, c[amt] = '{c['AMT']}'")
@@ -614,7 +619,7 @@ def helper_hsv_match_hofstaate(doc, r_H):
         if len(hs_split) == len(doc._.chunks):
 
             for c, h in zip(doc._.chunks, hs_split):
-                h = h.split("/")[0] #
+                h = h.split("/")[0]  #
                 funclogger.warning(f"HOFSTAATE PROCESSING ----> h: {h}")
                 if not c["HOFSTAAT"]:
                     funclogger.warning("NO CHUNK HOFSTAAT")
@@ -639,10 +644,7 @@ def helper_hsv_match_hofstaate(doc, r_H):
     return doc
 
 
-
-
 def process_chunks(doc, pers, row, idx):
-
     if isinstance(row["Amt/Behörde"], str):
         aemter_behörde = row['Amt/Behörde'].split(";")
     else:
@@ -656,14 +658,12 @@ def process_chunks(doc, pers, row, idx):
     doc = helper_hsv_match_hofstaate(doc, r_H)
     doc = helper_hsv_match_amt_with_funct(doc, r_A)
 
-
     for idx_chunk, c in enumerate(doc._.chunks):
 
         c_D = c["DATUM"]
         c_F = c["FUNKTION"]
         c_H = c["HOFSTAAT"]
         c_A = c["AMT"]
-
 
         with open("data/whitespace_funcs.pkl", "rb") as file:
             missing_funcs_dict = pickle.load(file)
@@ -678,13 +678,11 @@ def process_chunks(doc, pers, row, idx):
                     c_F = [funct]
                     funclogger.info(f"Filled in Function with missing whitespace, set c_F to {c_F}")
 
-
         funclogger.info(f"cD {c_D}, cF {c_F}, cH {c_H}, CA {c_A}")
 
         rel = {"related_person": pers}
         if c_D is not None:
             rel = chunk_process_datum(c_D, rel)
-
 
         nm_hst = chunk_get_nm_hst(c_H)
 
@@ -693,7 +691,7 @@ def process_chunks(doc, pers, row, idx):
             nm_hst = "UNSICHER"
             test_unsicher = True
 
-        inst = chunk_create_institution(nm_hst, pers) # first inst ist der hofstaat
+        inst = chunk_create_institution(nm_hst, pers)  # first inst ist der hofstaat
 
         inst2 = chunk_process_amt(c_A, inst, nm_hst)
 
@@ -729,11 +727,12 @@ def process_row(idx, row, src_base, conf, split_collection):
         # todo: something similar should be run as the very first pipeline component, as the NER can't resolve these cases!
         def replacer(match):
             if not match.group(0) == ");":
-                replacement = match.group(0)[:-1]+" "+match.group(0)[-1:]
+                replacement = match.group(0)[:-1] + " " + match.group(0)[-1:]
                 funclogger.info(f"r_fun: replaced {match.group(0)} with: {replacement}")
             else:
                 replacement = match.group(0)
             return replacement
+
         pattern = re.compile(r"(\)|\,|;)\S")
         r_fun = re.sub(pattern, replacer, r_fun)
 
@@ -754,7 +753,6 @@ def process_row(idx, row, src_base, conf, split_collection):
     pers_dic = person_process_field_gender(r_ges, pers_dic)
     pers_dic = person_process_field_lebensdaten(r_leb, pers_dic)
 
-
     src_base["orig_id"] = idx
     src = Source.objects.create(**src_base)
 
@@ -764,7 +762,6 @@ def process_row(idx, row, src_base, conf, split_collection):
 
     if isinstance(r_tit, str):
         pers = person_process_field_titel(r_tit, pers)
-
 
     person_create_person_labels(pers, vorname, labels_fam, labels_fam_hzt)
 
@@ -781,6 +778,3 @@ def process_row(idx, row, src_base, conf, split_collection):
 
     doc = create_and_process_doc(r_fun, idx)
     pers = process_chunks(doc, pers, row, idx)
-
-
-

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> {{ object.id }}</title>
+    <link rel="stylesheet" href="render_file.css"></link>
+</head>
+<body>
+<div>
+    {#{% extends "apis_entities/detail_views/entity_detail_generic.html" %}#}
+    <div id="my_header">
+        <div>
+            <a class="header_button" href="output_html_{{ previous }}.html"><<</a>
+        </div>
+        <div>
+            <p id="header_title"> {{ object.source.orig_id }}</p>
+        </div>
+        <div>
+            <a class="header_button" href="output_html_{{ next }}.html">>></a>
+        </div>
+    </div>
+    <div id="maincontainer">
+        <div class="containerdiv" id="metadata">
+            <h2>Metadata</h2>
+
+            {% block info-table %}
+                <table class="mytable">
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <td>
+                            {{ object.name }}, {{ object.first_name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <td>
+                            {{ object.id }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Orig-ID
+                        </th>
+                        <td>
+                            {{ object.source.orig_id }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Gender
+                        </th>
+                        <td>
+                            {{ object.gender }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Notes
+                        </th>
+                        <td>
+                            {% if object.notes %}{{ object.notes }} {% else %} - {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            References
+                        </th>
+                        <td>
+                            {% if object.references %}{{ object.references }} {% else %} - {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <th>Titel</th>
+                        {% if titles %}
+                            <td>
+                                {% for t in titles %}
+                                    <li class="mylist"> {{ t }} </li>
+                                {% endfor %}
+                            </td>
+                        {% else %}
+                            <td> -</td>
+                        {% endif %}
+                    </tr>
+                    {% if object.start_date or object.end_date %}
+                        <tr>
+                            <th>
+                                Lifespan
+                            </th>
+                            <td>
+                                {% if object.start_date %}
+                                    <abbr title="{{ object.start_date }}">{{ object.start_date_written }}</abbr>
+                                {% endif %}
+                                {% if object.end_date %}
+                                    - <abbr title="{{ object.end_date }}">{{ object.end_date_written }}</abbr>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                <tr>
+                    <th>
+                        Collections
+                    </th>
+                    <td>
+                            {% for x in object.collection.all %}
+                                <li> {{ x }} </li>
+                            {% endfor %}
+                    </td>
+                </tr>
+
+                </table>
+            {% endblock info-table %}</div>
+        <div class="containerdiv">
+            {% if relations %}
+                <h2>Relations</h2>
+                <table class="mytable">
+                    <tr>
+                        <th>Relation</th>
+                        <th>Institution</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>References</th>
+                    </tr>
+                    {% for r in relations %}
+                        <tr>
+                            <td>{{ r.relation_type }}</td>
+                            {% if r.related_institution %}
+                                <td>
+                                    <a href="./institutions/{{ r.related_institution.name }}.html">{{ r.related_institution }}</a>
+                                    <!--{{ r.related_institution }}-->
+                                </td>
+                            {% else %}
+                                <td>{{ r.related_place }}</td>
+                            {% endif %}
+                            <td>{% if r.start_date_written %}{{ r.start_date_written }}{% else %} - {% endif %}</td>
+                            <td>{% if r.end_date_written %}{{ r.end_date_written }}{% else %} - {% endif %}</td>
+                            <td>{% if r.references%}{{ r.references }}{% else %} - {% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+
+
+        <div class="containerdiv">
+            {% if labels %}
+
+                <h2>Labels</h2>
+                <table class="mytable">
+                    {% if labels %}
+                        <tr>
+                            <th>Type</th>
+                            <th>Label</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                        {% for l in labels %}
+                            <tr>
+                                <td>{{ l.label_type }}</td>
+                                <td>{{ l.label }}</td>
+                                <td>{% if l.start_date_written %}{{ l.start_date_written }}{% else %} - {% endif %}</td>
+                                <td>{% if l.end_date_written %}{{ l.end_date_written }}{% else %} - {% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="containerdiv">
+        <h2>Original Data</h2>
+        <table class="mytable">
+            {% for x in object.text.all %}
+                <tr>
+                    <th>{{ x.kind }}</th>
+                    <td>{{ x.text }}</td>
+                </tr>
+
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+</div>
+</div>
+<!-- EDN PERSON DETAIL TEMPLATE-->
+</div>
+</body>
+</html>

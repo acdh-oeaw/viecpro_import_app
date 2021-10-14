@@ -2,7 +2,7 @@ import pathlib
 from config import cfg
 import pandas as pd
 from import_src.file_processing import get_list_abbreviations, get_lst_hofst, get_aemter_index
-path = pathlib.Path().absolute()
+path = pathlib.Path(__file__).parent #.absolute()
 
 def run_hardcode():
     collection = "Full HSV Import"

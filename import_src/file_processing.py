@@ -17,6 +17,12 @@ def resolve_abbreviations(txt, list_abbreviations):
             txt = txt.replace(r1[0], r1[1])
     return txt
 
+def resolve_abbreviations_access(txt, list_abbreviations):
+    for r1 in list_abbreviations:
+        if r1[0] in txt and r1[0] not in ["R", "Edler"]:
+            txt = txt.replace(r1[0], r1[1])
+    return txt
+
 def get_lst_hofst(df_hofstaat):
     lst_hofst = dict()
     for idx, row in df_hofstaat.iterrows():
@@ -24,14 +30,13 @@ def get_lst_hofst(df_hofstaat):
             hst = [x.strip() for x in row.iloc[1].split(";")]
             alt_name = None
         else:
-            breakpoint()
+            #breakpoint()
             pass
         if isinstance(row.iloc[2], str):
             alt_name = row.iloc[2]
         for ab in hst:
             lst_hofst[ab] = (row.iloc[4], idx, alt_name)
     return lst_hofst
-
 
 def get_aemter_index(df_aemter):
     df_aemter_index = dict()

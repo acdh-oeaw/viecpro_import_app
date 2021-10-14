@@ -1,4 +1,7 @@
 todo.md
+import_src/logfiles/*
+import_src/logfiles/access_logs/*
+rendered_files/*
 @apis_core
 apis_core/*
 environ_variables.py
@@ -16,4 +19,4 @@ webpage
 webpage*
 notebook*
 import_src/logfiles/2021*
-mybash.sh
+auto_reset_database.sh
